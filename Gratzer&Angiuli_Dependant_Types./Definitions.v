@@ -1,4 +1,4 @@
-From Stdlib Require Import Nat String.
+From Stdlib Require Import Nat List.
 From Corelib.Program Require Import Basics Tactics Wf.
 From Stdlib.Logic Require Import JMeq.
 
@@ -7,49 +7,40 @@ Require Export Relation_Definitions.
 
 (* Implementation of Dependent Types in Rocq (From Gratzer's "Principles of Dependent Type Theory") *)
 
-Inductive preType :=
-| Base : preType
-| Func (A B : preType) : preType
-| Prod (A B : preType) : preType.
+Inductive preType : nat -> Type :=
+| Base : preType 1
+| Func {n m : nat} (A : preType n) (B : preType m) : preType (n + m + 1)
+| Prod {n m : nat} (A : preType n) (B : preType m) : preType (n + m + 1).
 
 Notation "A --> B" := (Func A B) (at level 55,  right associativity).
 Notation "A ** B" := (Prod A B) (at level 60, right associativity).
 
-Inductive preContext : nat -> Type :=
-   Empty : preContext 0
-| Extend : forall{n}, preContext n -> preType -> preContext (S n).
+Inductive preContext : list nat -> Type :=
+| Empty : preContext List.nil
+| Extend {l : list nat} {n: nat} (ctx : preContext l) (T : preType n) : preContext (n :: l).
 
 Notation "ctx # A" := (Extend ctx A) (at level 50, left associativity).
 
-Fixpoint depth (A : preType) : nat :=
-  match A with
-  | Base => 0
-  | Func A B => Nat.max (depth A) (depth B) + 1
-  | Prod A B => Nat.max (depth A) (depth B) + 1
-  end.
+Lemma preContext_eq_dec :
+   forall l n l', l= n :: l' -> preContext (n :: l') = preContext l.
+Proof.
+   intros. subst. reflexivity.
+Qed.
 
-Fixpoint size {n} (ctx : preContext n) : nat :=
-  match ctx with
-  | Empty => 0
-  | Extend c T => size c + depth T
-  end.
+Lemma destruct_preCpntext {l} (ctx : preContext l) : {n : nat & {l' : list nat | l = n :: l' & { P : l = n :: l' & {H : preContext (l) = preContext (n :: l') & {T : preType n & {c : preContext l' | ctx = c # T }}}}}} + {l = List.nil}.
 
 
-Program Fixpoint wfCtx {n} (ctx : preContext n) {measure (size ctx)} : Prop :=
-   match ctx with
+Fixpoint wfCtx {l} (ctx : preContext l) {struct l} : Prop :=
+   match ctx in preContext ll return Prop with
    | Empty => True
-   | Extend c T => wfCtx c /\ wfType' (c # T)
+   | @Extend l' n c T => wfCtx c /\ @wfType' (l) l' n (eq_refl (n::l')) c T
    end
-with wfType' {n} (ctx : preContext n) : Prop :=
-  match ctx with
-  | Empty => True
-   | Extend c T =>
-         match T with
-         | Base => True
-         | Func A B => wfType' (c # A) /\ wfType' (c # B)
-         | Prod A B => wfType' (c # A) /\ wfType' (c # B)
-         end
-end.
+with wfType' nl {l} {n} {P : nl = n::l} (ctx : preContext l) (T : preType n) {struct nl} : Prop :=
+   match T in preType (m) return Prop with
+   | Base => wfCtx ctx
+   | @Func mA mB A B
+   | @Prod mA mB A B => wfCtx ctx /\ @wfType' (mA :: l) l mA (eq_refl ) ctx  A /\ @wfType' (mB :: l) l mB (eq_refl ) ctx B
+   end.
 
 
 Fixpoint is_slType (t : slType) : Prop :=
