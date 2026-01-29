@@ -6,114 +6,41 @@ Require Export Setoid.
 Require Export Relation_Definitions.
 
 (* Implementation of Dependent Types in Rocq (From Gratzer's "Principles of Dependent Type Theory") *)
+Inductive wfContext : Type :=
+   I : wfContext
+| Extend : wfContext -> wfType -> wfContext
+with wfType : Type :=
+  Base : wfType
+| Func : wfType -> wfType -> wfType
+| Prod : wfType -> wfType -> wfType.
 
-Inductive preType :=
-| Base : preType
-| Func (A B : preType) : preType
-| Prod (A B : preType) : preType.
+Scheme context_type_rec := Induction for wfContext Sort Set
+  with type_context_rec := Induction for wfType Sort Set.
+
+Notation "ctx # A" := (Extend ctx A) (at level 50, left associativity).
 
 Notation "A --> B" := (Func A B) (at level 55,  right associativity).
 Notation "A ** B" := (Prod A B) (at level 60, right associativity).
 
-Inductive preContext : nat -> Type :=
-   Empty : preContext 0
-| Extend : forall{n}, preContext n -> preType -> preContext (S n).
-
-Notation "ctx # A" := (Extend ctx A) (at level 50, left associativity).
-
-Inductive wfContext : nat -> Type :=
-   I : wfContext 0
-| Extend_wf : forall {n}, wfContext n -> wfType n -> wfContext (S n)
-with wfType : nat -> Type :=
-  Base_wf : forall {n}, wfContext n -> wfType n
-| Func_wf : forall {n}, wfContext n -> wfType n -> wfType n -> wfType n
-| Prod_wf : forall {n}, wfContext n -> wfType n -> wfType n -> wfType n.
 Notation "⊢c ctx" := (ctx : wfContext) (at level 40).
 Notation "ctx ⊢t A" := (A : wfType) (at level 40).
 
 
-Fixpoint depth (A : preType) : nat :=
-  match A with
-  | Base => 0
-  | Func A B => Nat.max (depth A) (depth B) + 1
-  | Prod A B => Nat.max (depth A) (depth B) + 1
-  end.
-
-Fixpoint size {n} (ctx : preContext n) : nat :=
-  match ctx with
-  | Empty => 0
-  | Extend c T => size c + depth T
-  end.
-
-
-Fixpoint wfCtx {n} (ctx : preContext n) : Prop :=
-   match ctx with
-   | Empty => True
-   | Extend c T =>
-   let wfType' := fix wfType' (A : preType) : Prop :=
-      match A with
-      | Base => True
-      | Func A B => wfType' A /\ wfType' B
-      | Prod A B => wfType' A /\ wfType' B
-      end
-   in
-   wfCtx c /\ wfType' T
-end.
-Notation "⊢ ctx" := (wfCtx ctx) (at level 40).
-
-Fixpoint wfType {n} (ctx : preContext n) (W : ⊢ ctx) (A : preType) : Prop :=
-  match A with
-  | Base => True
-  | Func A B => wfType ctx W A /\ wfType ctx W B
-  | Prod A B => wfType ctx W A /\ wfType ctx W B
-  end.
-Notation "ctx ⊢ A 'ty'" := (wfType ctx _ A) (at level 40).
-
-
-Lemma base_well_formed : forall {n} (ctx : preContext n) (W : ⊢ ctx),
-  wfType ctx W Base.
-Proof.
-   simpl. auto.
-Qed.
-
-Lemma func_well_formed (A B : preType) : forall {n} (ctx : preContext n) (W : ⊢ ctx),
-   wfType ctx W A /\ wfType ctx W B -> wfType ctx W (A --> B).
-Proof.
-   simpl. auto.
-Qed.
-
-Lemma prod_well_formed (A B : preType) : forall {n} (ctx : preContext n) (W : ⊢ ctx),
-   wfType ctx W A /\ wfType ctx W B -> wfType ctx W (A ** B).
-Proof.
-   simpl. auto.
-Qed.
-
-
-Example ex1 : wfType Empty I ((Base ** Base) --> Base).
+(* Example ex1 :  I ⊢t ((Base ** Base) --> Base).
 Proof.
   simpl. auto.
-Qed.
+Qed. *)
 
 
-Inductive preTerm :=
-| const (n : nat) : preTerm
-| Pair (a b : preTerm) : preTerm
-| Fst (p : preTerm) : preTerm
-| Snd (p : preTerm) : preTerm
-| Lam (b : preTerm) : preTerm
-| App (f a : preTerm) : preTerm.
+Inductive wfTerm : wfType -> Type :=
+| const (n : nat) : wfTerm Base
+| Pair (A B : wfType) : wfTerm A -> wfTerm B -> wfTerm (A ** B)
+| Fst (A B : wfType) : wfTerm (A ** B) -> wfTerm A
+| Snd (A B : wfType) : wfTerm (A ** B) -> wfTerm B
+| Lam (A B : wfType) : wfTerm B -> wfTerm (A --> B)
+| App (A B : wfType) : wfTerm (A --> B) -> wfTerm A -> wfTerm B.
 
-Fixpoint wfTerm {n} (ctx : preContext n) (A : preType) (t : preTerm) : Prop :=
-  match t,A with
-  | const _, Base => True
-  | Pair a b, A ** B => wfTerm ctx A a /\ wfTerm ctx B b
-  | Fst p, A => exists B, wfTerm ctx (A ** B) p
-  | Snd p, B => exists A, wfTerm ctx (A ** B) p
-  | Lam b, A --> B => wfTerm (ctx # A) B b
-  | App f a, B => exists A, wfTerm ctx (A --> B) f /\ wfTerm ctx A a
-  | _, _ => False
-  end.
-Notation "ctx ⊢ t ; A" := (wfTerm ctx A t) (at level 40).
+Notation "ctx ⊢ t ; A" := (t : wfTerm A) (at level 40).
 
 Fixpoint InContext (ctx : slContext) (x : slVariable) (t : slType) : Prop :=
   match ctx with
@@ -154,30 +81,6 @@ Proof.
    reflexivity.
 Qed.
 
-
-
-Inductive slTerm :=
-| const : nat -> slTerm
-| Var : slVariable -> slTerm
-| Pair : slTerm -> slTerm -> slTerm
-| Fst : slTerm -> slTerm
-| Snd : slTerm -> slTerm
-| Lam (x : slVariable) (t : slTerm) : slTerm
-| App : slTerm -> slTerm -> slTerm.
-
-Fixpoint well_formed (ctx : slContext) (A : slType) (a : slTerm) : Prop :=
-  match a,A with
-  | const _, Base => True
-  | Var x, A => InContext ctx x A
-  | Pair t1 t2, A ** B => well_formed ctx A t1 /\ well_formed ctx B t2
-  | Fst t, A => exists B, well_formed ctx (A ** B) t
-  | Snd t, B => exists A, well_formed ctx (A ** B) t
-  | Lam x t, A --> B => well_formed (Extend ctx x A) B t
-  | App f a, B => exists A, well_formed ctx (A --> B) f /\ well_formed ctx A a
-  | _, _ => False
-  end.
-
-Notation "[ ctx ⊢ t ; A ]" := (well_formed ctx A t) (at level 40).
 
 
 Add Morphism well_formed with
