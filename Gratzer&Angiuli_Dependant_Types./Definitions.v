@@ -11,11 +11,11 @@ Require Export Relation_Definitions.
 
 (** Pre-syntax definitions **)
 
-(** Convention For syntax sorts.
-   Contexts ctx: greek uppercase letters: Gamma, Delta, ...
+(** Convention For syntax sorts. On the left is fonction parameters, on the right construction to stay true to the textbook
+   Contexts ctx: greek uppercase letters: 𝚪, Δ, ...
    Types t : uppercase letters: A, B, ...
    Terms e : lowercase letters: a, b, ...
-   Substitutions g :  indexed g : g0, g1, ...
+   Substitutions g :  greak lowercase :γ, δ, μ ...
 **)
 
 Inductive preContext : Set :=
@@ -93,131 +93,152 @@ About preTerm_Context_Sub_Type_rec.
 Fixpoint ContextJG (ctx : preContext) {struct ctx} : Prop :=
   match ctx with
   | One => True
-  | CExt Gamma A => ContextJG Gamma /\ TypeJG Gamma A
+  | CExt Γ A => ContextJG Γ /\ TypeJG Γ A
   end
-  with
-   SubsJG (OutCtx : preContext) (g : preSub) (InCtx : preContext) {struct g} : Prop :=
-  (* Presupose *)
+
+with TypeJG (ctx : preContext) (t : preType) {struct t} : Prop :=
+   match t with
+   | Base Γ =>
+      Γ = ctx /\ ContextJG Γ
+   | Func Γ A B =>
+      Γ = ctx /\ ContextJG Γ /\
+      TypeJG Γ A /\ TypeJG (CExt Γ A) B
+   | Prod Γ A B =>
+      Γ = ctx /\ ContextJG Γ /\
+      TypeJG Γ A /\ TypeJG Γ B
+   | TSubst Δ B Γ g =>
+       Δ = ctx /\ ContextJG Γ /\ ContextJG Δ /\
+       TypeJG Γ B /\
+       SubsJG Δ g Γ
+   end
+
+   (* In the expression [ Δ ├ y : Γ ] Γ is viewed as the type of y *)
+with SubsJG (ctx : preContext) (g : preSub) (t : preContext) {struct g} : Prop :=
   match g with
-   | Id Gamma => OutCtx = Gamma /\ Gamma = InCtx /\ ContextJG Gamma
-   | Weak Gamma A => OutCtx = CExt Gamma A /\ Gamma = InCtx /\ ContextJG Gamma /\ TypeJG Gamma A
-   | Comp g0 g1 =>
-       exists ctx1,
-       (* Delta = ctx2, Gamma = ctx0 *)
-       SubsJG OutCtx g1 ctx1 /\
-       SubsJG ctx1 g0 InCtx
-   | Bang Gamma => OutCtx = Gamma /\ InCtx = One /\ ContextJG Gamma
-   | SExt Delta Gamma g A a =>
-         Delta = OutCtx /\ ContextJG Delta /\
-         InCtx = CExt Gamma A /\ ContextJG Gamma /\
-         TypeJG Gamma A /\
-         SubsJG Delta g Gamma /\
-         TermJG Delta (TSubst Delta A Gamma g) a
-  end
-
-  with TypeJG (OutCtx : preContext) (A : preType) {struct A} : Prop :=
-   match A with
-   | Base Gamma => Gamma = OutCtx /\ ContextJG Gamma
-   | Func Gamma A1 A2 =>
-      Gamma = OutCtx /\ ContextJG Gamma /\
-       TypeJG Gamma A1 /\ TypeJG Gamma A2
-   | Prod Gamma A1 A2 =>
-      Gamma = OutCtx /\ ContextJG Gamma /\
-       TypeJG Gamma A1 /\ TypeJG Gamma A2
-   | TSubst Delta A Gamma g =>
-         Delta = OutCtx /\
-         ContextJG Gamma /\ ContextJG Delta /\
-         SubsJG Delta g Gamma /\
-         TypeJG Gamma A
+   | Id Γ => ctx = Γ /\ Γ = t /\ ContextJG Γ
+   | Weak Γ A => ctx = CExt Γ A /\ Γ = t /\ ContextJG Γ /\ TypeJG Γ A
+   | Comp y0 y1 =>
+   exists mid : preContext,
+      SubsJG ctx y1 mid /\
+      SubsJG mid y0 t
+   | Bang Γ => ctx = Γ /\ t = One /\ ContextJG Γ
+   | SExt Δ Γ y A a =>
+      Δ = ctx /\ ContextJG Δ /\
+      CExt Γ A = t /\ ContextJG Γ /\
+      TypeJG Γ A /\
+      SubsJG Δ y Γ /\
+      TermJG Δ (TSubst Δ A Γ y) a
    end
 
-  with TermJG (ctx : preContext) (ty : preType) (e : preTerm) {struct e} : Prop :=
-  match e with
-   | Qar (Gamma, A) =>
-      let OutCtx := CExt Gamma A in
-      ContextJG Gamma /\ TypeJG Gamma A /\ ctx = OutCtx /\ ty = TSubst OutCtx A Gamma (Weak Gamma A)
-   | Const Gamma n => Gamma = ctx /\ ty = Base Gamma /\ ContextJG Gamma
-   | Pair Gamma A1 a A2 b =>
-       Gamma = ctx /\ ContextJG Gamma /\
-       TypeJG ctx A1 /\ TypeJG ctx A2 /\
-       ty = Prod ctx A1 A2 /\
-       TermJG ctx A1 a /\
-       TermJG ctx A2 b
-   | Fst Gamma (A,B) p =>
-       Gamma = ctx /\ ContextJG Gamma /\
-       ty = A /\ TypeJG ctx A /\ TypeJG ctx B /\
+with TermJG (ctx : preContext) (t : preType) (e : preTerm) {struct e} : Prop :=
+   match e with
+   | Qar (Γ, A) =>
+      let OutCtx := CExt Γ A in
+      ContextJG Γ /\ TypeJG Γ A /\ ctx = OutCtx /\ t = TSubst OutCtx A Γ (Weak Γ A)
+   | Const Γ n => Γ = ctx /\ t = Base Γ /\ ContextJG Γ
+   | Pair Γ A a B b =>
+      Γ = ctx /\ ContextJG Γ /\
+      t = Prod ctx A B /\ TypeJG ctx A /\ TypeJG ctx B /\
+      TermJG ctx A a /\
+      TermJG ctx B b
+   | Fst Γ (A,B) p =>
+       Γ = ctx /\ ContextJG Γ /\
+       t = A /\ TypeJG ctx A /\ TypeJG ctx B /\
        TermJG ctx (Prod ctx A B) p
-   | Snd Gamma (A,B) p =>
-       Gamma = ctx /\ ContextJG Gamma /\
-       ty = B /\ TypeJG ctx A /\ TypeJG ctx B /\
-       TermJG ctx (Prod ctx A B) p
-   | Lam Gamma A B b =>
-       Gamma = ctx /\ ContextJG Gamma /\
-         ty = Func ctx A B /\ TypeJG ctx A /\ TypeJG (CExt ctx A) B /\
+   | Snd Γ (A,B) p =>
+      Γ = ctx /\ ContextJG Γ /\
+      t = B /\ TypeJG ctx A /\ TypeJG ctx B /\
+      TermJG ctx (Prod ctx A B) p
+   | Lam Γ A B b =>
+       Γ = ctx /\ ContextJG Γ /\
+         t = Func ctx A B /\ TypeJG ctx A /\ TypeJG (CExt ctx A) B /\
          TermJG (CExt ctx A) B b
-   | App Gamma A f B a =>
-       Gamma = ctx /\ ContextJG Gamma /\
-         ty = B /\ TypeJG ctx A /\ TypeJG (CExt ctx A) B /\
-         TermJG ctx (Func ctx A B) f /\
-         TermJG ctx A a
-   | ESubst Delta B a Gamma g =>
-       Delta = ctx /\ ContextJG Gamma /\ ContextJG Delta /\
-         ty = TSubst Delta B Gamma g /\ TypeJG Gamma B /\
-         TermJG Gamma B a /\
-         SubsJG Delta g Gamma
-   end
-  .
+   | App Γ A f B a =>
+      Γ = ctx /\ ContextJG Γ /\
+      t = B /\ TypeJG ctx A /\ TypeJG (CExt ctx A) B /\
+      TermJG ctx (Func ctx A B) f /\
+      TermJG ctx A a
+   | ESubst Δ B a Γ g =>
+      Δ = ctx /\ ContextJG Γ /\ ContextJG Δ /\
+      t = TSubst Δ B Γ g /\ TypeJG Γ B /\
+      TermJG Γ B a /\
+      SubsJG Δ g Γ
+   end.
 
-Notation "[ ⊢ ctx ]" := (ContextJG ctx) (at level 50).
-Notation "[ Delta ⊢ g :s Gamma ]" := (SubsJG Delta g Gamma) (at level 50).
+Notation "[ ⊢ Γ ]" := (ContextJG Γ) (at level 50).
+Notation "[ Δ ⊢ g :s Γ ]" := (SubsJG Δ g Γ) (at level 50).
 Notation "[ ctx ⊢ A ]" := (TypeJG ctx A) (at level 50).
-Notation "[ ctx ⊢ t ; A ]" := (TermJG ctx A t) (at level 50).
+Notation "[ ctx ⊢ t :e A ]" := (TermJG ctx A t) (at level 50).
+
 
 (** End Syntax Judgements **)
 
 (* Example Judgements *)
+Example ex0 :
+   [ One ⊢ Base One ].
+Proof.
+   repeat split.
+Qed.
+
 Example ex1 :
    let B := Base One in
-   [ One ⊢ Func One (Prod One B B) B ].
+   [ One ⊢ Func One (Prod One B B) (Base (CExt One (Prod One B B))) ].
 Proof.
-  repeat split.
+   intros B.
+   constructor. reflexivity.
+   split. simpl. tauto.
+   split. constructor. reflexivity.
+   repeat split.
+   constructor. reflexivity.
+   repeat split.
 Qed.
 
 (** Well-formed syntax types **)
-
 Inductive wfCtx : Type := {
   ctx :> preContext;
   ctx_judg : ContextJG ctx
 }.
 
-Inductive wfType (ctx : wfCtx) : Type := {
-  ty :> preType;
-  ty_judg : TypeJG ctx ty
+Inductive wfType {ctx : wfCtx}: Type := {
+  t :> preType;
+  t_judg : TypeJG ctx t
 }.
 
-Inductive wfSub {Delta Gamma : wfCtx}: Type := {
+Inductive wfSub {Δ Γ : wfCtx}: Type := {
   sub :> preSub;
-  sub_judg : SubsJG Delta sub Gamma
+  sub_judg : SubsJG Δ sub Γ
 }.
-Inductive wfTerm (ctx : wfCtx) (A : wfType ctx) : Type := {
+
+Inductive wfTerm {ctx : wfCtx} (A : @wfType ctx) : Type := {
   term :> preTerm;
   term_judg : TermJG ctx A term
 }.
 
-(** End Well-formed syntax types **)
+(** End Well-formed syntax **)
 
-(** Construction of well-formed syntax **)
+(** Well-formed syntax constructors **)
 
-Definition wfOne : wfCtx.
+Definition wfBase {ctx : wfCtx} : @wfType ctx.
+   refine ({|
+      t := Base ctx;
+      t_judg := _
+   |}).
+   destruct ctx as [ctx ctx_judg].
+   split; [reflexivity | assumption].
+Defined.
+
+
+
+Definition wfOneCtx : wfCtx.
    refine ({|
       ctx := One;
       ctx_judg := _
    |}).
    constructor.
 Defined.
-Notation "1" := (wfOne).
+Notation "1" := (wfOneCtx).
 
-Definition wf_Ext {ctx : wfCtx} (A : @wfType ctx) : wfCtx.
+Definition wf_Ext {ctx : wfCtx} (A : @wfType ctx) : @wfCtx.
    refine ({|
       ctx := CExt ctx A;
       ctx_judg := _
@@ -227,88 +248,100 @@ Definition wf_Ext {ctx : wfCtx} (A : @wfType ctx) : wfCtx.
       simpl in *.
       split; assumption.
 Defined.
+
 Notation "ctx ,c A" := (@wf_Ext ctx A) (at level 50, left associativity).
 
 Definition wf_Id {ctx : wfCtx} : @wfSub ctx ctx.
    refine ({|
       sub := Id ctx;
       sub_judg := _
+      |}).
+     simpl.
+     repeat split.
+     apply ctx.
+Defined.
+
+Definition wf_Bang {ctx : wfCtx} : @wfSub ctx 1.
+   refine ({|
+      sub := Bang ctx;
+      sub_judg := _
    |}).
    destruct ctx as [ctx ctx_judg].
-   simpl.
-   tauto.
+   simpl in *.
+   repeat split; try assumption.
 Defined.
+Notation "!" := (wf_Bang) (at level 50).
 
 Definition proj {ctx : wfCtx} {A : @wfType ctx} : @wfSub (ctx ,c A) ctx.
    refine ({|
       sub := Weak ctx A;
       sub_judg := _
-   |}).
-   destruct ctx as [ctx ctx_judg].
-   destruct A as [A A_judg].
-   simpl in *.
-   repeat split;
-   assumption.
+      |}).
+      simpl in *.
+      repeat split; try assumption.
+      apply ctx. apply A.
 Defined.
 
 Definition wfTypeSubst
-   {Delta : wfCtx}
-   {Gamma : wfCtx}
-   (A : @wfType Gamma)
-   (g : @wfSub Delta Gamma)
-   : @wfType Delta.
+   {Δ : wfCtx}
+   {Γ : wfCtx}
+   (A : @wfType Γ)
+   (g : @wfSub Δ Γ)
+   : @wfType Δ.
+
    refine ({|
-      ty := TSubst Delta A Gamma g;
-      ty_judg := _
-   |}).
-   destruct Delta as [Delta HDelta].
-   destruct Gamma as [Gamma HGamma].
-   destruct A as [A HA].
-   destruct g as [g Hg].
+      t := TSubst Δ A Γ g;
+      t_judg := _
+      |}).
    simpl in *.
-   repeat split; assumption.
+   repeat split; try assumption.
+   apply Γ.
+   apply Δ.
+   apply A.
+   apply g.
 Defined.
+
 Notation "A '[t' g ]" := (wfTypeSubst A g) (at level 50).
 
 Definition wfTermSubst
-   {Delta : wfCtx}
-   {Gamma : wfCtx}
-   {A : @wfType Gamma}
-   (a : @wfTerm Gamma A)
-   (g : @wfSub Delta Gamma)
-   : @wfTerm Delta (A [t g]).
+   {Δ : wfCtx}
+   {Γ : wfCtx}
+   {A : @wfType Γ}
+   (a : @wfTerm Γ A)
+   (g : @wfSub Δ Γ)
+   : @wfTerm Δ (A [t g]).
    refine ({|
-      term := ESubst Delta A a Gamma g;
+      term := ESubst Δ A a Γ g;
       term_judg := _
    |}).
-   destruct Gamma as [Gamma HGamma].
-   destruct Delta as [Delta HDelta].
-   destruct A as [A HA].
-   destruct a as [a Ha].
-   destruct g as [g Hg].
    simpl in *.
    repeat split; try assumption.
+   apply Γ.
+   apply Δ.
+   apply A.
+   apply a.
+   apply g.
 Defined.
 Notation "a '[e' g ]" := (wfTermSubst a g) (at level 50).
 
 Definition wfSub_Ext
-   {Delta : wfCtx}
-   {Gamma : wfCtx}
-   {A : @wfType Gamma}
-   (g : @wfSub Delta Gamma)
-   (a : @wfTerm Delta (A [t g]))
-   : @wfSub (Delta) (Gamma ,c A).
+   {Δ : wfCtx}
+   {Γ : wfCtx}
+   {A : @wfType Γ}
+   (g : @wfSub Δ Γ)
+   (a : @wfTerm Δ (A [t g]))
+   : @wfSub (Δ) (Γ ,c A).
    refine ({|
-      sub := SExt Delta Gamma g A a;
+      sub := SExt Δ Γ g A a;
       sub_judg := _
    |}).
-   destruct Delta as [Delta HDelta].
-   destruct Gamma as [Gamma HGamma].
-   destruct A as [A HA].
-   destruct a as [a Ha].
-   destruct g as [g Hg].
    simpl in *.
    repeat split; try assumption.
+   apply Δ.
+   apply Γ.
+   apply A.
+   apply g.
+   apply a.
 Defined.
 
 Notation "g ,s a " := (wfSub_Ext g a) (at level 50).
@@ -326,9 +359,9 @@ Defined.
 
 
 Definition sub_compose
-   (Delta mid Gamma : wfCtx)
-   (g0 : @wfSub mid Gamma)
-   (g1 : @wfSub Delta mid) : @wfSub Delta Gamma.
+   (Δ mid Γ : wfCtx)
+   (g0 : @wfSub mid Γ)
+   (g1 : @wfSub Δ mid) : @wfSub Δ Γ.
 Proof.
    refine ({|
       sub := Comp g0 g1;
@@ -357,10 +390,10 @@ Inductive eq_type : relation preType :=
    eq_type A2 A3 ->
    eq_type A1 A3
 (** Enforce compatibility with substitution **)
-| EqSubstIdType : forall {Gamma : wfCtx} (A : @wfType Gamma),
+| EqSubstIdType : forall {Γ : wfCtx} (A : @wfType Γ),
    eq_type (A [t wf_Id ]) (A)
-| EqSubstCompType : forall {Delta mid Gamma : wfCtx}
-(A : @wfType Gamma) (g1 : @wfSub Delta mid) (g0 : @wfSub mid Gamma),
+| EqSubstCompType : forall {Δ mid Γ : wfCtx}
+(A : @wfType Γ) (g1 : @wfSub Δ mid) (g0 : @wfSub mid Γ),
    eq_type (A [t (g0 ∘ g1)]) ( A [t g0] [t g1])
 .
 
@@ -393,8 +426,8 @@ Add Parametric Relation (ctx :wfCtx) : (@wfType ctx) (@TypeEqJG ctx)
 
 Notation "[ ctx ⊢ A1 '==' A2 ]" := (@TypeEqJG ctx A1 A2) (at level 50).
 
-Add Parametric Morphism (Delta Gamma : wfCtx) : (wfTypeSubst )
-   with signature (@TypeEqJG Gamma  ==> eq ==> @TypeEqJG Delta)
+Add Parametric Morphism (Δ Γ : wfCtx) : (wfTypeSubst )
+   with signature (@TypeEqJG Γ  ==> eq ==> @TypeEqJG Δ)
    as TypeEqJG_mor.
 
 (*** End Equality for Types ***)
@@ -411,9 +444,9 @@ Inductive eq_sub :  relation (preSub) :=
    eq_sub gamma2 gamma3 ->
    eq_sub gamma1 gamma3
 (** Enforce compatibility with composition **)
-| EqLeftId : forall {Delta Gamma} (gamma : @wfSub Delta Gamma),
+| EqLeftId : forall {Δ Γ} (gamma : @wfSub Δ Γ),
    eq_sub (sub wf_Id ∘ gamma) (sub gamma)
-| EqRightId : forall {Delta Gamma} (gamma : @wfSub Delta Gamma),
+| EqRightId : forall {Δ Γ} (gamma : @wfSub Δ Γ),
   eq_sub (sub gamma ∘ wf_Id) (sub gamma)
 | EqCompAssoc (ctx0 ctx1 ctx2 ctx3 : wfCtx) (gamma2 : @wfSub ctx3 ctx2) (gamma1 : @wfSub ctx2 ctx1) (gamma0 : @wfSub ctx1 ctx0):
    eq_sub
@@ -423,16 +456,16 @@ Inductive eq_sub :  relation (preSub) :=
    eq_sub gamma1 gamma1' ->
    eq_sub gamma2 gamma2' ->
    eq_sub (Comp gamma1 gamma2) (Comp gamma1' gamma2')
-| EqBang : forall {Gamma} (g : @wfSub Gamma 1),
-   eq_sub (Bang Gamma) g
+| EqBang : forall {Γ} (g : @wfSub Γ 1),
+   eq_sub (Bang Γ) g
 (** Substitution former **)
-| EqSubstBeta : forall {Delta Gamma : wfCtx}
-   {A : @wfType Gamma} (g : @wfSub Delta Gamma)
-   (a : @wfTerm Delta (A [t g])),
+| EqSubstBeta : forall {Δ Γ : wfCtx}
+   {A : @wfType Γ} (g : @wfSub Δ Γ)
+   (a : @wfTerm Δ (A [t g])),
       eq_sub (proj ∘ (g ,s a)) g
-| EqSubstEta : forall {Delta Gamma : wfCtx}
-   {A : @wfType Gamma}
-   (g : @wfSub Delta (Gamma ,c A)),
+| EqSubstEta : forall {Δ Γ : wfCtx}
+   {A : @wfType Γ}
+   (g : @wfSub Δ (Γ ,c A)),
       eq_sub g ((proj ∘ g) ,s (q [e g]))
 .
 
@@ -473,10 +506,10 @@ Add Parametric Relation (delta ctx :wfCtx) : (@wfSub delta ctx) (@SubsEqJG delta
    transitivity proved by (@SubsEqJG_trans delta ctx)
    as SubsEqJG_rel.
 
-Notation "[ Delta ⊢ g1 '==' g2 :s Gamma ]" := (@SubsEqJG Delta Gamma g1 g2) (at level 50).
+Notation "[ Δ ⊢ g1 '==' g2 :s Γ ]" := (@SubsEqJG Δ Γ g1 g2) (at level 50).
 
-Add Parametric Morphism (Delta mid Gamma : wfCtx) : (@sub_compose Delta mid Gamma)
-   with signature (@SubsEqJG mid Gamma  ==> @SubsEqJG Delta mid ==> @SubsEqJG Delta Gamma)
+Add Parametric Morphism (Δ mid Γ : wfCtx) : (@sub_compose Δ mid Γ)
+   with signature (@SubsEqJG mid Γ  ==> @SubsEqJG Δ mid ==> @SubsEqJG Δ Γ)
    as SubsEqJG_mor.
 Proof.
    unfold SubsEqJG in *.
@@ -505,14 +538,14 @@ Inductive eq_term : relation preTerm :=
 (** Enforce compatibility with substitution **)
 | EqSubstIdTerm: forall {ctx : wfCtx} {A : @wfType ctx} (a : @wfTerm ctx A),
    eq_term (ESubst ctx A a ctx (Id ctx)) (a)
-| EqSubstCompTerm : forall {Delta mid Gamma : wfCtx}
-   {A : @wfType Gamma} (a : @wfTerm Gamma A)
-   (g1 : @wfSub Delta mid) (g0 : @wfSub mid Gamma),
+| EqSubstCompTerm : forall {Δ mid Γ : wfCtx}
+   {A : @wfType Γ} (a : @wfTerm Γ A)
+   (g1 : @wfSub Δ mid) (g0 : @wfSub mid Γ),
       eq_term (a [e g0 ∘ g1]) (a [e g0] [e g1])
 (** Substitution former **)
-| EqSubstBetaTerm : forall {Delta Gamma : wfCtx}
-   {A : @wfType Gamma} (g : @wfSub Delta Gamma)
-   (a : @wfTerm Delta (A [t g])) ,
+| EqSubstBetaTerm : forall {Δ Γ : wfCtx}
+   {A : @wfType Γ} (g : @wfSub Δ Γ)
+   (a : @wfTerm Δ (A [t g])) ,
       eq_term (q [e g ,s a]) a
 .
 Definition TermEqJG {ctx : wfCtx} {A : @wfType ctx} : relation (@wfTerm ctx A) := eq_term.
