@@ -3,11 +3,41 @@ From Corelib.Program Require Import Basics Tactics Wf.
 From Stdlib.Logic Require Import JMeq.
 
 Require Export Setoid.
-
 Require Export Relation_Definitions.
+
 (* Implementation of Dependent Types in Rocq (From Gratzer's "Principles of Dependent Type Theory") *)
 
 (** Syntax **)
+
+(** Custom Notation **)
+Declare Custom Entry judgements.
+(* Enter jugement mode *)
+Notation " 'J{'  e  '}'" := e (at level 0, e custom judgements at level 10).
+Notation "x" := x (in custom judgements at level 0, x ident).
+
+(* Terminal symbol *)
+Reserved Notation "'1'" (in custom judgements at level 0). (* Empty context *)
+Reserved Notation "'b'" (in custom judgements at level 0). (* Base type *)
+Reserved Notation "'Id'" (in custom judgements at level 0). (* Identity substitution *)
+Reserved Notation "!" (in custom judgements at level 0). (* Terminal substitution *)
+Reserved Notation "'q'" (in custom judgements at level 0). (* Variable term *)
+Reserved Notation "'p'" (in custom judgements at level 0). (* Projection substitution *)
+
+Reserved Notation "A [ g ]" (in custom judgements at level 1).
+
+Reserved Notation "ctx . A" (in custom judgements at level 2).
+Reserved Notation "gamma1 '∘' gamma2" (in custom judgements at level 3, left associativity).
+
+
+Reserved Notation "⊢ Γ" (in custom judgements at level 9, no associativity).
+Reserved Notation "ctx ⊢ A" (in custom judgements at level 9, no associativity).
+Reserved Notation "ctx ⊢ a : A" (in custom judgements at level 9, no associativity).
+Reserved Notation "Δ ⊢ g : Γ" (in custom judgements at level 9, no associativity).
+Reserved Notation "ctx ⊢ A == B" (in custom judgements at level 9, no associativity).
+Reserved Notation "ctx ⊢ a == b : A" (in custom judgements at level 9, no associativity).
+
+Reserved Notation "( x )" (in custom judgements, x at level 9).
+
 
 (** Pre-syntax definitions **)
 
@@ -76,10 +106,12 @@ Scheme preSub_Context_rec := Induction for preSub Sort Set
    with preContext_Sub_rec := Induction for preTerm Sort Set.
 About preSub_Context_rec.
 
+
 Scheme preType_Context_Sub_rec := Induction for preType Sort Set
    with preContext_Sub_Type_rec := Induction for preContext Sort Set
    with preSub_Type_Context_rec := Induction for preSub Sort Set.
 About preType_Context_Sub_rec.
+
 
 Scheme preTerm_Context_Sub_Type_rec := Induction for preTerm Sort Set
    with preContext_Sub_Type_Term_rec := Induction for preContext Sort Set
@@ -93,8 +125,10 @@ About preTerm_Context_Sub_Type_rec.
 Fixpoint ContextJG (ctx : preContext) {struct ctx} : Prop :=
   match ctx with
   | One => True
-  | CExt Γ A => ContextJG Γ /\ TypeJG Γ A
+  | CExt Γ A => J{ ⊢ ctx } /\
+      TypeJG Γ A
   end
+  where "⊢ Γ" := (ContextJG Γ) (in custom judgements)
 
 with TypeJG (ctx : preContext) (t : preType) {struct t} : Prop :=
    match t with
@@ -111,6 +145,7 @@ with TypeJG (ctx : preContext) (t : preType) {struct t} : Prop :=
        TypeJG Γ B /\
        SubsJG Δ g Γ
    end
+   where "ctx ⊢ A" := (TypeJG ctx A) (in custom judgements)
 
    (* In the expression [ Δ ├ y : Γ ] Γ is viewed as the type of y *)
 with SubsJG (ctx : preContext) (g : preSub) (t : preContext) {struct g} : Prop :=
@@ -163,26 +198,24 @@ with TermJG (ctx : preContext) (t : preType) (e : preTerm) {struct e} : Prop :=
       t = TSubst Δ B Γ g /\ TypeJG Γ B /\
       TermJG Γ B a /\
       SubsJG Δ g Γ
-   end.
+   end
+   .
 
-Notation "[ ⊢ Γ ]" := (ContextJG Γ) (at level 50).
-Notation "[ Δ ⊢ g :s Γ ]" := (SubsJG Δ g Γ) (at level 50).
-Notation "[ ctx ⊢ A ]" := (TypeJG ctx A) (at level 50).
-Notation "[ ctx ⊢ t :e A ]" := (TermJG ctx A t) (at level 50).
 
 
 (** End Syntax Judgements **)
 
+
 (* Example Judgements *)
 Example ex0 :
-   [ One ⊢ Base One ].
+   J{ One ⊢ Base One }.
 Proof.
    repeat split.
 Qed.
 
 Example ex1 :
    let B := Base One in
-   [ One ⊢ Func One (Prod One B B) (Base (CExt One (Prod One B B))) ].
+   J{ One ⊢ Func One (Prod One B B) (Base (CExt One (Prod One B B))) }.
 Proof.
    intros B.
    constructor. reflexivity.
@@ -249,7 +282,7 @@ Definition wf_Ext {ctx : wfCtx} (A : @wfType ctx) : @wfCtx.
       split; assumption.
 Defined.
 
-Notation "ctx ,c A" := (@wf_Ext ctx A) (at level 50, left associativity).
+Notation "ctx . A" := (@wf_Ext ctx A) (in custom judgements at level 3).
 
 Definition wf_Id {ctx : wfCtx} : @wfSub ctx ctx.
    refine ({|
@@ -270,9 +303,9 @@ Definition wf_Bang {ctx : wfCtx} : @wfSub ctx 1.
    simpl in *.
    repeat split; try assumption.
 Defined.
-Notation "!" := (wf_Bang) (at level 50).
+Notation "!" := (wf_Bang) (in custom judgements at level 0).
 
-Definition proj {ctx : wfCtx} {A : @wfType ctx} : @wfSub (ctx ,c A) ctx.
+Definition proj {ctx : wfCtx} {A : @wfType ctx} : @wfSub (wf_Ext A) ctx.
    refine ({|
       sub := Weak ctx A;
       sub_judg := _
@@ -301,7 +334,8 @@ Definition wfTypeSubst
    apply g.
 Defined.
 
-Notation "A '[t' g ]" := (wfTypeSubst A g) (at level 50).
+Notation "A [ g ]" := (wfTypeSubst A g) (in custom judgements at level 1).
+Notation "A '[t'  g  ]" := (wfTypeSubst A g) (at level 50).
 
 Definition wfTermSubst
    {Δ : wfCtx}
@@ -309,7 +343,7 @@ Definition wfTermSubst
    {A : @wfType Γ}
    (a : @wfTerm Γ A)
    (g : @wfSub Δ Γ)
-   : @wfTerm Δ (A [t g]).
+   : @wfTerm Δ (A [t g ]).
    refine ({|
       term := ESubst Δ A a Γ g;
       term_judg := _
@@ -322,7 +356,8 @@ Definition wfTermSubst
    apply a.
    apply g.
 Defined.
-Notation "a '[e' g ]" := (wfTermSubst a g) (at level 50).
+Notation "a [ g ]" := (wfTermSubst a g) (in custom judgements at level 1).
+Notation "a '[e'  g  ]" := (wfTermSubst a g) (at level 50).
 
 Definition wfSub_Ext
    {Δ : wfCtx}
@@ -330,7 +365,7 @@ Definition wfSub_Ext
    {A : @wfType Γ}
    (g : @wfSub Δ Γ)
    (a : @wfTerm Δ (A [t g]))
-   : @wfSub (Δ) (Γ ,c A).
+   : @wfSub (Δ) (wf_Ext A).
    refine ({|
       sub := SExt Δ Γ g A a;
       sub_judg := _
@@ -344,9 +379,9 @@ Definition wfSub_Ext
    apply a.
 Defined.
 
-Notation "g ,s a " := (wfSub_Ext g a) (at level 50).
+Notation "g . a " := (wfSub_Ext g a) (in custom judgements at level 3).
 
-Definition q {ctx : wfCtx} {A : @wfType ctx} : @wfTerm (ctx ,c A) (A [t proj]).
+Definition q {ctx : wfCtx} {A : @wfType ctx} : @wfTerm (wf_Ext A) (A [t proj]).
    refine ({|
       term := Qar ( ctx: preContext ,  A : preType);
       term_judg := _
@@ -359,7 +394,7 @@ Defined.
 
 
 Definition sub_compose
-   (Δ mid Γ : wfCtx)
+   {Δ mid Γ : wfCtx}
    (g0 : @wfSub mid Γ)
    (g1 : @wfSub Δ mid) : @wfSub Δ Γ.
 Proof.
@@ -373,8 +408,49 @@ Proof.
    exists mid.
    split; assumption.
 Defined.
-Notation "gamma1 '∘' gamma2" := (sub_compose _ _ _ gamma1 gamma2) (at level 40, left associativity).
+Notation "gamma1 '∘' gamma2" := (sub_compose gamma1 gamma2) (in custom judgements at level 4, left associativity).
 
+Definition wf_Func
+   {ctx : wfCtx}
+   (A : @wfType ctx)
+   (B : @wfType (wf_Ext A))
+   : @wfType ctx.
+   refine ({|
+      t := Func ctx A B;
+      t_judg := _
+   |}).
+   simpl in *.
+   repeat split; try assumption.
+   apply ctx.
+   apply A.
+   apply B.
+Defined.
+Notation "A --> B" := (wf_Func A B) (in custom judgements at level 6).
+
+Definition wf_Prod
+   {ctx : wfCtx}
+   (A : @wfType ctx)
+   (B : @wfType ctx)
+   : @wfType ctx.
+   refine ({|
+      t := Prod ctx A B;
+      t_judg := _
+   |}).
+   simpl in *.
+   repeat split; try assumption.
+   apply ctx.
+   apply A.
+   apply B.
+Defined.
+Notation "A '***' B" := (wf_Prod A B)(in custom judgements at level 5).
+
+
+(** End Constructor **)
+
+Example ex1bis :
+   [ 1 ⊢ (wfBase *** wfBase) ].
+   repeat split.
+Qed.
 
 (** Equality Judgements   **)
 
@@ -424,7 +500,7 @@ Add Parametric Relation (ctx :wfCtx) : (@wfType ctx) (@TypeEqJG ctx)
    transitivity proved by (@TypeEqJG_trans ctx)
    as TypeEqJG_rel.
 
-Notation "[ ctx ⊢ A1 '==' A2 ]" := (@TypeEqJG ctx A1 A2) (at level 50).
+Notation "ctx ⊢ A1 '==' A2" := (@TypeEqJG ctx A1 A2) (in custom judgements at level 9).
 
 Add Parametric Morphism (Δ Γ : wfCtx) : (wfTypeSubst )
    with signature (@TypeEqJG Γ  ==> eq ==> @TypeEqJG Δ)
