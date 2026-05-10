@@ -34,7 +34,6 @@ with preSubs : Set :=
 with preType : Set :=
 | ptyp_base : preType
 | ptyp_prod (A B : preType) : preType
-| ptyp_func (A B : preType) : preType
 | ptyp_subs (A : preType) (y : preSubs) : preType
 | ptyp_pi   (A : preType) (B : preType) : preType
 
@@ -43,8 +42,6 @@ with preTerm : Set :=
 | ptrm_pair (a b : preTerm) : preTerm
 | ptrm_fst  (p : preTerm) : preTerm
 | ptrm_snd  (p : preTerm) : preTerm
-| ptrm_abs  (b : preTerm) : preTerm
-| ptrm_app  (f a : preTerm) : preTerm
 | ptrm_subs (a : preTerm) (y : preSubs) : preTerm
 | ptrm_dabs (b : preTerm) : preTerm
 | ptrm_dapp (f a : preTerm) : preTerm
@@ -81,7 +78,6 @@ Notation "y # a"   := (psub_ext y a)(at level 2, left associativity) : subs_scop
 
 Notation b            := ptyp_base.
 Notation "A * B"      := (ptyp_prod A B) (at level 40, left associativity): ty_scope.
-Notation "A -> B"     := (ptyp_func A B) (at level 99, right associativity) : ty_scope.
 Notation "A [ y ]"    := (ptyp_subs A y) (at level 1): ty_scope.
 Notation "Π( A , B )" := (ptyp_pi A B) : ty_scope.
 
@@ -89,12 +85,16 @@ Notation q                 := ptrm_qar.
 Notation "( a , b )"       := (ptrm_pair a b) (no associativity): term_scope.
 Notation "'fst' p"         := (ptrm_fst p) (at level 60, right associativity): term_scope.
 Notation "'snd' p"         := (ptrm_snd p) (at level 60, right associativity): term_scope.
-Notation "λx( b )"         := (ptrm_abs b) (at level 10, right associativity): term_scope.
-Notation "f < a >"         := (ptrm_app f a) (at level 15, no associativity): term_scope.
 Notation "a [ y ]"         := (ptrm_subs a y)(at level 1): term_scope.
 Notation "'λ' ( b )"       := (ptrm_dabs b) (at level 20): term_scope.
 Notation "'app' ( f , a )" := (ptrm_dapp f a) (at level 20): term_scope.
 
+(** Unaxiomatic construction **)
+Definition psub_ext_type (y : preSubs) (A : preType) : preSubs := (y ∘ p) # q .
+Notation "y #! A" := (psub_ext_type y A)(at level 1, left associativity) : subs_scope.
+
+Definition ptyp_func (A B : preType) : preType := Π(A, B [p]).
+Notation "A -> B" := (ptyp_func A B) (at level 99, right associativity) : ty_scope.
 
 Check (1)%ctx.
 Check (1 # b)%ctx.
@@ -114,15 +114,11 @@ Check ( q ).
 Check (q, q)%term.
 Check ( fst ( q , q ) )%term.
 Check ( snd ( q , q ) )%term.
-Check ( λx( q ) )%term.
-Check ( λx( q ) < q > )%term.
 Check ( q [ id ] )%term.
 Check ( λ( q ) )%term.
 Check ( app ( λ( q ) , q ) )%term.
 
 
-Definition psub_ext_type (y : preSubs) (A : preType) : preSubs := (y ∘ p) # q .
-Notation "y #! A" := (psub_ext_type y A)(at level 1, left associativity) : subs_scope.
 Check ( id #! b )%subs.
 
 (** End Notations **)
@@ -167,9 +163,6 @@ with TypeJG : preContext -> preType -> Prop :=
    | type_prod {Γ} {A B} :
       [ Γ ⊢ A type ] -> [ Γ ⊢ B type ]
       -> [ Γ ⊢ (A * B) type ]
-   | type_func {Γ} {A B} :
-      [ Γ ⊢ A type ] -> [ Γ ⊢ B type ]
-      -> [ Γ ⊢ A -> B type ]
    | type_subs {Δ Γ} {y} {A} :
       [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ]
       -> [ Δ ⊢ A [y] type ]
@@ -192,12 +185,6 @@ with TermJG : preContext -> preType -> preTerm -> Prop :=
    | term_snd {Γ A B p} :
       [ Γ ⊢ p @ (A * B) ]
        -> [ Γ ⊢ snd p @ B ]
-   | term_abs {Γ A B b} :
-      [ Γ # A ⊢ b @ B [p] ]
-      -> [ Γ ⊢ λx(b) @ (A -> B) ]
-   | term_app {Γ A B f a} :
-      [ Γ ⊢ f @ (A -> B) ] -> [ Γ ⊢ a @ A ]
-      -> [ Γ ⊢ f < a > @ B ]
    (** Pi type p.36 **)
    | term_dabs {Γ A B b} :
       [ Γ ⊢ A type ] -> [ Γ # A ⊢ b @ B ]
@@ -257,9 +244,9 @@ with eq_type : preContext -> preType -> preType -> Prop :=
 | eq_type_prod {Γ} {A B C D} :
    [ Γ ⊢ A == C type ] -> [ Γ ⊢ B == D type ]
    -> [ Γ ⊢ (A * B) == (C * D) type ]
-| eq_type_func {Γ} {A B C D} :
-   [ Γ ⊢ A == C type ] -> [ Γ ⊢ B == D type ]
-   -> [ Γ ⊢ (A -> B) == (C -> D) type ]
+| eq_type_pi {Γ} {A B C D} :
+   [ Γ ⊢ A == C type ] -> [ Γ # A ⊢ B == D type ]
+   -> [ Γ ⊢ Π(A, B) == Π(C, D) type ]
 | eq_type_subs {Δ Γ} {y d} {A B} :
    [ Δ ⊢ y == d ~ Γ ] ->  [ Γ ⊢ A == B type ]
    -> [ Δ ⊢ A[y] == B[d] type ]
@@ -274,9 +261,6 @@ with eq_type : preContext -> preType -> preType -> Prop :=
 | eq_type_subs_prod {Δ Γ} {y} {A B} :
    [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ] -> [ Γ ⊢ B type ]
    -> [ Δ ⊢ (A * B)[y] == (A[y] * B[y]) type ]
-| eq_type_subs_func {Δ Γ} {y} {A B} :
-   [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ] -> [ Γ ⊢ B type ]
-   -> [ Δ ⊢ (A -> B)[y] == (A[y] -> B[y]) type ]
 (** Pi type p.36 **)
 | eq_type_pi_subs {Δ Γ y A B} :
    [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ] -> [ Γ # A ⊢ B type ]
@@ -294,10 +278,10 @@ with eq_term : preContext -> preType -> preTerm -> preTerm -> Prop :=
    [ Γ ⊢ p == q @ A * B ] -> [ Γ ⊢ fst p == fst q @ A ]
 | eq_term_snd {Γ} {A B} {p q} :
    [ Γ ⊢ p == q @ A * B ] -> [ Γ ⊢ snd p == snd q @ B ]
-| eq_term_abs {Γ} {A B} {a b} :
-   [ Γ # A ⊢ a == b @ B [p] ] -> [ Γ ⊢ λx(a) == λx(b) @ A -> B ]
-| eq_term_app  {Γ} {A B} {f g a b} :
-   [ Γ ⊢ f == g @ A -> B ] -> [ Γ ⊢ a == b @ A ] -> [ Γ ⊢ f < a > == g < b > @ B ]
+| eq_term_dabs {Γ} {A B} {a b} :
+   [ Γ # A ⊢ a == b @ B ] -> [ Γ ⊢ λ(a) == λ(b) @ Π(A, B) ]
+| eq_term_dapp  {Γ} {A B} {f g a b} :
+   [ Γ ⊢ f == g @ Π(A, B) ] -> [ Γ ⊢ a == b @ A ] -> [ Γ ⊢ app (f, a) == app (g, b) @ B [id#a] ]
 | eq_term_subs {Δ Γ} {y d} {A} {a b} :
    [ Δ ⊢ y == d ~ Γ ] -> [ Γ ⊢ a == b @ A ]
    -> [ Δ ⊢ a [y] == b [d] @ A [y] ]
@@ -321,12 +305,6 @@ with eq_term : preContext -> preType -> preTerm -> preTerm -> Prop :=
 | eq_term_subs_snd {Δ Γ} {y} {A B} {p} :
    [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ p @ A * B ]
    -> [ Δ ⊢ (snd p) [y] == snd (p [y]) @ B [y] ]
-| eq_term_subs_abs {Δ Γ} {y} {A B} {b} :
-   [ Δ ⊢ y ~ Γ ] -> [ Γ # A ⊢ b @ B [p] ]
-   -> [ Δ ⊢ λx(b) [y] == λx(b [(y ∘ p)#q]) @ A[y] -> B[y] ]
-| eq_term_subs_app {Δ Γ} {y} {A B} {f a} :
-   [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ f @ A -> B ] -> [ Γ ⊢ a @ A ]
-   -> [ Δ ⊢ f < a > [y] == f [y] < a [y] > @ B[y] ]
 (** βη-equivalence for pairs p.22 **)
 | eq_term_beta_fst {Γ} {A B} a b :
    [ Γ ⊢ a @ A] -> [ Γ ⊢ b @ B ]
@@ -337,13 +315,6 @@ with eq_term : preContext -> preType -> preTerm -> preTerm -> Prop :=
 | eq_term_eta_pair {Γ} {A B} p :
    [ Γ ⊢ p @ A * B ]
    -> [ Γ ⊢ p == (fst p, snd p) @ A * B ]
-(** βη-equivalence for abstractions p.22 **)
-| eq_term_beta_app {Γ} {A B} {a b} :
-   [ Γ # A ⊢ b @ B[p] ] -> [ Γ ⊢ a @ A ]
-   -> [ Γ ⊢ λx(b) < a > == b [ id # a] @ B ]
-| eq_term_eta_app {Γ} {A B} {f} :
-   [ Γ ⊢ f @ (A -> B) ]
-   -> [ Γ ⊢ f == λx(f [p] < q >) @ (A -> B) ]
 (** βη-equivalence for substitution extension p.34 **)
 | eq_term_beta_qar {Δ} {Γ} {y} {A} {a} :
    [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type  ] -> [ Δ ⊢ a @ A [y] ]
@@ -372,6 +343,7 @@ and   "[ Γ ⊢ A == B 'type' ]" := (eq_type Γ A B)
 and   "[ Γ ⊢ a == b @ A ]"    := (eq_term Γ A a b)
 and   "[ Δ ⊢ y == y' ~ Γ ]"   := (eq_subs Δ Γ y y')
 .
+
 (** End Jugements *)
 
 (** Context Equality p.31, not sure what to do there **)
@@ -383,9 +355,11 @@ Inductive eq_ctx : preContext -> preContext -> Prop :=
 
 Example Ex1 : ([1 ⊢ b * b -> b type ]).
 Proof.
-   apply type_func.
-   - apply type_prod; apply type_base; apply ctx_one.
-   - apply type_base. apply ctx_one.
+   set ctx_one as Hc.
+   apply type_base in Hc as Hb.
+   apply (type_prod Hb) in Hb as Hp.
+   apply (type_pi Hp).
+   apply (type_subs (subs_weak Hp) Hb).
 Qed.
 
 (** Setoid declarations **)
@@ -512,20 +486,6 @@ Proof.
    intros Heq H.
    apply (eq_type_prod Heq (eq_type_refl H)).
 Qed.
-Lemma eq_type_func_l {Γ} {A B D} :
-   [ Γ ⊢ A type ] -> [ Γ ⊢ B == D type ]
-   -> [ Γ ⊢ (A -> B) == (A -> D) type ].
-Proof.
-   intros H Heq.
-   apply (eq_type_func (eq_type_refl H) Heq).
-Qed.
-Lemma eq_type_func_r {Γ} {A B C} :
-   [ Γ ⊢ A == C type ] -> [ Γ ⊢ B type ]
-   -> [ Γ ⊢ (A -> B) == (C -> B) type ].
-Proof.
-   intros Heq H.
-   apply (eq_type_func Heq (eq_type_refl H)).
-Qed.
 Lemma eq_type_subs_S {Δ Γ} {y d} {A}
    : [ Δ ⊢ y == d ~ Γ ] -> [ Γ ⊢ A type ] -> [ Δ ⊢ A[y] == A[d] type ].
 Proof.
@@ -588,13 +548,13 @@ Proof.
    intros A B Heq C D Heq'.
    apply (eq_type_prod Heq Heq').
 Qed.
-Add Parametric Morphism Γ : ptyp_func with
+(* Add Parametric Morphism Γ : ptyp_pi with
    signature (eq_type Γ ==> eq_type Γ ==> eq_type Γ)
-as eq_type_func_mor.
+as eq_type_pi_mor.
 Proof.
    intros A B Heq C D Heq'.
-   apply (eq_type_func Heq Heq').
-Qed.
+   apply (eq_type_pi Heq Heq').
+Qed. *)
 Add Parametric Morphism Δ Γ : (ptyp_subs) with
    signature  (eq_type Γ ==> eq_subs Δ Γ ==> eq_type Δ)
 as eq_type_subs_mor.
@@ -631,20 +591,20 @@ Proof.
    intros p q Heq.
    apply (eq_term_snd Heq).
 Qed.
-Add Parametric Morphism Γ A B : ptrm_abs with
-   signature (eq_term (Γ # A) (B[p]) ==> eq_term Γ (A -> B))
-as eq_term_abs_mor.
+Add Parametric Morphism Γ A B : ptrm_dabs with
+   signature (eq_term (Γ # A) B ==> eq_term Γ ( Π(A, B) ) )
+as eq_term_dabs_mor.
 Proof.
    intros a b Heq.
-   apply (eq_term_abs Heq).
+   apply (eq_term_dabs Heq).
 Qed.
-Add Parametric Morphism Γ A B : ptrm_app with
-   signature (eq_term Γ (A -> B) ==> eq_term Γ A ==> eq_term Γ B)
-as eq_term_app_mor.
+Add Parametric Morphism Γ A B : ptrm_dapp with
+   signature (eq_term Γ (Π(A, B)) ==> eq_term Γ A ==> eq_term Γ B)
+as eq_term_dapp_mor.
 Proof.
    intros f g Heq a b Heq'.
-   apply (eq_term_app Heq Heq').
-Qed.
+   (* apply (eq_term_dapp Heq Heq'). *)
+Abort.
 Add Parametric Morphism Δ Γ A y (H : [Δ ⊢ y ~ Γ]) : (fun a => ptrm_subs a y) with
    signature (eq_term Γ A ==> eq_term Δ A[y])
 as eq_term_subs_mor.
@@ -749,7 +709,8 @@ Proof.
    - destruct IHeq_type1, IHeq_type2.
       split; eapply (type_prod); assumption.
    - destruct IHeq_type1, IHeq_type2.
-      split; eapply (type_func); assumption.
+      split; eapply (type_pi); try assumption.
+      admit.
    -  destruct IHeq_type.
       apply (eq_subs_press) in H as [H_y H_d].
       split; eapply (type_subs); eassumption.
@@ -761,13 +722,10 @@ Proof.
       apply (type_subs H (type_prod H0 H1)).
       apply (type_prod (type_subs H H0) (type_subs H H1)).
    - split.
-      apply (type_subs H (type_func H0 H1)).
-      apply (type_func (type_subs H H0) (type_subs H H1)).
-   - split.
       apply (type_subs H (type_pi H0 H1)).
       apply (type_pi (type_subs H H0)).
       apply (type_subs (subs_ext_type H H0) H1).
-Qed.
+Admitted.
 
 Add Parametric Morphism Γ : (TypeJG Γ)
    with signature (eq_type Γ ==> iff)
@@ -788,8 +746,6 @@ Proof.
    apply type_prod; [apply IHTermJG1 | apply IHTermJG2].
    inversion IHTermJG; assumption.
    inversion IHTermJG; assumption.
-   inversion IHTermJG; inversion H3; apply (type_func H8 H4).
-   inversion IHTermJG1; assumption.
    apply (type_pi H IHTermJG).
    apply (type_subs
       (subs_ext (subs_id (type_press IHTermJG1))
@@ -920,40 +876,20 @@ Proof.
    apply (type_weak HA).
 Qed.
 
-Lemma eq_subs_beta_type {Γ A} :
-   [ Γ ⊢ A type ] ->
-   [ Γ # A ⊢ p #! A ∘ id # q == id ~ Γ # A ].
+Lemma eq_subs_ext_type_beta {Δ Γ y A} :
+   [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ]
+   -> [Δ # A [y] ⊢ p ∘ y #! A == y ∘ p ~ Γ].
 Proof.
-   intros HA.
+   intros Hsub Htype.
    unfold psub_ext_type.
+   apply (type_subs Hsub) in Htype as HA.
    apply (subs_weak) in HA as Hw.
-   apply (term_qar) in HA as Hq.
-   apply (type_subs Hw) in HA as HAp.
-   apply (subs_weak) in HAp as Hw2.
-   apply (term_qar) in HAp as Hq2.
-   rewrite <- (eq_type_subs_comp Hw2 Hw HA) in Hq2.
-   apply (subs_comp Hw2) in Hw as Hpp.
-   rewrite (Exercise_2_3 Hpp (self_extension Hq) HA Hq2).
-   rewrite (eq_subs_eta_id HA) at 3.
-   remember (eq_term_beta_qar (subs_id (type_press HAp) ) HAp (term_id_type Hq)) as Hqq.
-   clear HeqHqq.
-   rewrite <- (eq_type_subs_S (eq_subs_beta_id Hq) HAp) in Hqq.
-   rewrite <- (eq_type_subs_comp  (subs_comp (self_extension Hq) Hw2) Hw HA) in Hqq.
-   rewrite (eq_type_subs_S
-      (* TODO: automate rewriting (subs rel ?) *)
-      (eq_subs_comp_assoc (self_extension Hq) Hw2 Hw) HA) in Hqq.
-   assert ([Γ # A ⊢ (p ∘ p) ∘ id#q == p ~ Γ ]).
-   {
-      rewrite <- (eq_subs_comp_assoc (self_extension Hq) Hw2 Hw).
-      rewrite <- (eq_subs_right_id Hw) at 3.
-      apply (eq_subs_comp_r Hw).
-      apply (eq_subs_beta_id Hq).
-   }
-   eapply (eq_subs_ext H Hqq HA ).
-   rewrite (eq_type_subs_comp (self_extension Hq) Hpp HA).
-   apply (term_subs (self_extension Hq) Hq2).
-   apply Hq.
+   apply (subs_comp Hw) in Hsub as Hy.
+   apply (eq_subs_beta Hy Htype).
+   rewrite (eq_type_subs_comp Hw Hsub Htype).
+   apply (term_qar HA).
 Qed.
+
 
 
 Theorem eq_term_press {Γ A a b}:
@@ -967,11 +903,21 @@ Proof.
          split; eapply (term_fst); eassumption.
    - destruct IHHeq.
          split; eapply (term_snd); eassumption.
-   - destruct IHHeq.
-         split; eapply (term_abs); eassumption.
+   - destruct IHHeq. apply term_press_ctx in H as H1.
+          inversion H1; subst.
+         split; eapply (term_dabs); eassumption.
    - destruct IHHeq1, IHHeq2.
-         split; eapply (term_app); eassumption.
-   - destruct IHHeq. apply (eq_subs_press) in H as H2.
+         apply term_press in H as Hpi.
+         inversion Hpi; subst.
+         split. eapply (term_dapp H1); eassumption.
+         rewrite (eq_type_subs_S
+            (eq_subs_ext
+               (eq_subs_refl (subs_id (type_press H6)))
+               (eq_term_conv Heq2 (eq_type_sym (eq_type_subs_id H6)))
+               H6 (term_id_type H1) (term_id_type H2)) H7).
+         apply (term_dapp H2); eassumption.
+   - destruct IHHeq.
+         apply eq_subs_press in H as H2.
          destruct H2 as [Hy Hd].
          split. apply (term_subs Hy H0).
          rewrite (eq_type_subs_S H (term_press H0)).
@@ -1001,48 +947,9 @@ Proof.
       apply (term_subs H) in H0 .
       rewrite (eq_type_subs_prod H H5 H6) in H0.
       apply (term_snd H0).
-   - apply term_press in H0 as H1.
-         inversion H1; subst.
-         inversion H5; subst.
-      split.
-      rewrite <- (eq_type_subs_func H H7 H6).
-      apply (term_subs H (term_abs H0)).
-      apply (term_abs).
-      rewrite <- (eq_type_subs_comp (subs_weak (type_subs H H7)) H H6).
-      apply (type_subs H) in H7 as H8.
-      apply (subs_weak) in H8 as H9.
-      apply term_qar in H8 as H10.
-      rewrite <- (eq_type_subs_comp H9 H H7) in H10.
-      apply (subs_ext (subs_comp H9 H) H7) in H10 as H11.
-      rewrite <- (eq_type_subs_S (eq_subs_beta (subs_comp H9 H) H7 H10) H6).
-      rewrite (eq_type_subs_comp H11 (subs_weak H7) H6).
-      apply (term_subs H11 H0).
-   - split.
-      apply (term_subs H (term_app H0 H1)).
-      apply term_press in H0 as H2.
-      apply (term_subs H) in H0.
-      inversion H2; subst.
-      rewrite (eq_type_subs_func H H6 H7) in H0.
-      apply (term_app (H0) (term_subs H H1)).
    - split; [apply (term_fst (term_pair H H0)) | apply H].
    - split; [apply (term_snd (term_pair H H0)) | apply H0].
    - split; [apply H | apply ( term_pair (term_fst H) (term_snd H))].
-   - split.
-      apply (term_app (term_abs H) H0).
-      apply term_press in H as H1.
-      inversion H1; subst.
-      inversion H5; subst.
-      rewrite <- (eq_type_subs_id H6).
-      rewrite <- (eq_type_subs_S (eq_subs_beta_id H0) H6).
-      apply self_extension in H0 as H2.
-      rewrite (eq_type_subs_comp H2 (subs_weak H7) H6).
-      apply (term_subs H2 H).
-   - split. apply H.
-         apply term_press in H as H1.
-         inversion H1; subst.
-         apply (term_subs (subs_weak H4)) in H.
-         rewrite (eq_type_subs_func (subs_weak H4) H4 H5) in H.
-      apply (term_abs (term_app H (term_qar H4))).
    - split.
       apply (subs_ext H H0) in H1 as H2.
       apply (eq_subs_beta H H0) in H1 as H3.
@@ -1104,12 +1011,29 @@ Proof.
    (* Exercise 2.7 *)
    - split. assumption.
       apply (term_dabs H).
+      apply (term_subs (subs_weak H)) in H1 as H2.
+      rewrite (eq_type_pi_subs (subs_weak H) H H0) in H2.
+      apply (term_dapp (term_qar H) (type_subs (subs_ext_type (subs_weak H) H) H0)) in H2.
       rewrite <- (eq_type_subs_id H0).
-      rewrite <- (eq_type_subs_S (eq_subs_beta_type H) H0).
-      rewrite (eq_type_subs_comp (self_extension (term_qar H)) (subs_ext_type (subs_weak H) H) H0).
-      apply (term_dapp (term_qar H) (type_subs (subs_ext_type (subs_weak H) H) H0)).
-      rewrite <- (eq_type_pi_subs (subs_weak H) H H0).
-      apply (term_subs (subs_weak H) H1).
+      rewrite <- (eq_type_subs_comp (self_extension (term_qar H)) (subs_ext_type (subs_weak H) H) H0) in H2.
+      apply(term_conv H2).
+      remember (term_qar (type_weak H)) as Hq.
+      clear HeqHq.
+      rewrite <- (eq_type_subs_comp (subs_weak (type_weak H)) (subs_weak H) H) in Hq.
+      remember (Exercise_2_3 (subs_comp (subs_weak (type_weak H)) (subs_weak H)) (self_extension (term_qar H)) H Hq) as H3.
+      clear HeqH3.
+      remember (eq_term_beta_qar (subs_id (type_press H0)) (type_weak H) (term_id_type (term_qar H))) as H4.
+      clear HeqH4.
+      remember (eq_subs_comp_assoc (self_extension (term_qar H)) (subs_weak (type_weak H)) (subs_weak H)) as H5.
+      clear HeqH5.
+      rewrite (eq_subs_comp_r (subs_weak H) (eq_subs_beta_id (term_qar H))) in H5.
+      rewrite (eq_subs_right_id (subs_weak H)) in H5.
+      symmetry in H4.
+      rewrite (eq_type_subs_id (type_weak H)) in H4.
+      rewrite <- (eq_subs_ext H5 H4 H (term_qar H)) in H3.
+      rewrite <- (eq_subs_eta_id H) in H3.
+      apply (eq_type_subs_S H3 H0).
+      apply (term_subs_compose (self_extension (term_qar H)) Hq).
 Qed.
 
 Add Parametric Morphism Γ A : (TermJG Γ A)
@@ -1134,46 +1058,157 @@ Qed.
 (** End "Presupositions" Theorems **)
 
 (** Exercises **)
-(*** Exercise 2.2. Show that substitutions Γ ⊢𝛾 : Γ.𝐴
-satisfying p ◦𝛾= id are in bijection with terms Γ ⊢𝑎: 𝐴. ***)
-
-(***Exercise 2.3. Show that (𝛾.𝑎)◦𝛿= (𝛾◦𝛿).𝑎[𝛿]. ***)
-Lemma Exercise_2_3 {Γ2 Γ1 Γ0 A a y δ} :
-   [ Γ1 ⊢ y ~ Γ0 ] -> [ Γ2 ⊢ δ ~ Γ1 ]
-   -> [ Γ2 ⊢ (y # a) ∘ δ == (y ∘ δ) # (a [δ]) ~ Γ2 # A ].
+(** Proove formation and elimination of non-axiomatic contructors **)
+Lemma type_func {Γ} {A B} :
+      [ Γ ⊢ A type ] -> [ Γ ⊢ B type ]
+      -> [ Γ ⊢ A -> B type ].
 Proof.
-Abort.
-
-(*** Exercise 2.4. Given Δ ⊢𝛾 : Γ and Γ ⊢ A type, construct a substitution that we will
-name y.A, satisfying Δ.A[y]⊢𝛾.A: Γ.A. ***)
-Lemma Exercise_2_4 {Δ Γ A y} :
-   [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ]
-   -> exists yA, [ Δ # (A[y]%ty) ⊢ yA ~ (Γ # A) ].
+   intros HtypeA HtypeB.
+   apply (type_pi HtypeA).
+   apply (type_subs (subs_weak HtypeA) HtypeB).
+Qed.
+Lemma term_abs {Γ A B b} :
+      [ Γ # A ⊢ b @ B [p] ]
+      -> [ Γ ⊢ λ(b) @ (A -> B) ].
 Proof.
-   intros H_subs H_type.
-   remember (type_subs H_subs H_type) as A_subs.
-   remember (subs_weak A_subs) as weak_subs.
-   eexists (_ # _).
-   eapply (subs_ext).
-   eapply (subs_comp weak_subs H_subs).
-   apply (H_type).
-   rewrite (eq_type_subs_comp (subs_weak A_subs) H_subs H_type).
-   apply (term_qar (type_subs H_subs H_type)).
+   intros H.
+   apply term_press_ctx in H as H_ctx.
+   inversion H_ctx; subst.
+   apply (term_dabs H3 H).
 Qed.
 
-Corollary subs_yA {Δ Γ A y} :
-   [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ]
-   -> [ Δ # (A[y]%ty) ⊢ (y ∘ p) # q ~ (Γ # A) ].
+Lemma term_app {Γ A B f a} :
+      [ Γ ⊢ f @ (A -> B) ] -> [ Γ ⊢ a @ A ]
+      -> [ Γ ⊢ app (f, a) @ B ].
 Proof.
-   intros H_subs H_type.
-   apply (subs_ext
-      (subs_comp (subs_weak (type_subs H_subs H_type)) H_subs)
-      H_type
-      ).
-   rewrite (eq_type_subs_comp (subs_weak (type_subs H_subs H_type)) H_subs H_type).
-   apply (term_qar (type_subs H_subs H_type)).
+   intros Hf Ha.
+   apply term_press in Hf as Hf_type.
+   inversion Hf_type; subst.
+   apply (term_dapp Ha H3) in Hf as H4.
+   inversion H3; subst.
+   inversion H5; subst.
+   rewrite <- (eq_type_subs_comp (self_extension Ha) (subs_weak H2) H6) in H4.
+   rewrite (eq_type_subs_S (eq_subs_beta_id Ha) H6) in H4.
+   rewrite (eq_type_subs_id H6) in H4.
+   apply H4.
 Qed.
 
-(*** Exercise 2.5. Suppose that Γ ⊢A type and ⊢Δ cx. Show that substitutions Δ ⊢𝛾 : Γ.A
 
-are in bijection with pairs of a substitution Δ ⊢y0 : Γ and a term Δ ⊢𝑎: A[y0]. ***)
+Lemma eq_term_abs {Γ} {A B} {a b} :
+   [ Γ # A ⊢ a == b @ B [p] ] -> [ Γ ⊢ λ(a) == λ(b) @ A -> B ].
+Proof.
+   intros Heq.
+   apply (eq_term_dabs Heq).
+Qed.
+Lemma eq_term_app  {Γ} {A B} {f g a b} :
+   [ Γ ⊢ f == g @ A -> B ] -> [ Γ ⊢ a == b @ A ]
+   -> [ Γ ⊢ app (f, a) == app (g, b) @ B ].
+Proof.
+   intros Heq_f Heq_a.
+   apply eq_term_press in Heq_f as Hfg.
+   destruct Hfg as [Hf Hg].
+   apply term_press in Hf as Hf_type.
+   inversion Hf_type; subst.
+   inversion H3; subst.
+   inversion H4; subst.
+   apply (eq_term_dapp Heq_f) in Heq_a as H1.
+   apply eq_term_press in Heq_a as Hab.
+   destruct Hab as [Ha Hb].
+   rewrite <- (eq_type_subs_comp (self_extension Ha) (subs_weak H2) H5) in H1.
+   rewrite (eq_type_subs_S (eq_subs_beta_id Ha) H5) in H1.
+   rewrite (eq_type_subs_id H5) in H1.
+   apply H1.
+Qed.
+
+Lemma eq_term_subs_app {Δ Γ} {y} {A B} {f a} :
+   [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ f @ A -> B ] -> [ Γ ⊢ a @ A ]
+   -> [ Δ ⊢ app (f, a) [y] == app (f [y], a [y]) @ B[y] ].
+Proof.
+   intros Hsub Hf Ha.
+   apply term_press in Hf as Hf_type.
+   inversion Hf_type; subst.
+   apply (eq_term_subs_dapp Hsub Ha H3 ) in Hf as H1.
+   inversion H3; subst.
+   inversion H5; subst.
+   rewrite <- (eq_type_subs_comp (subs_ext Hsub H2 (term_subs Hsub Ha)) (subs_weak H2) H6) in H1.
+   rewrite (eq_type_subs_S (eq_subs_beta Hsub H2 (term_subs Hsub Ha)) H6) in H1.
+   exact H1.
+Qed.
+
+
+Lemma eq_type_func {Γ} {A B C D} :
+   [ Γ ⊢ A == C type ] -> [ Γ ⊢ B == D type ]
+   -> [ Γ ⊢ (A -> B) == (C -> D) type ].
+Proof.
+   intros HAC HBD.
+   apply (eq_type_pi HAC).
+   apply eq_type_press in HAC as [HA HC].
+   apply (eq_type_subs_T (subs_weak HA) HBD).
+Qed.
+
+Lemma eq_type_subs_func {Δ Γ} {y} {A B} :
+   [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ] -> [ Γ ⊢ B type ]
+   -> [ Δ ⊢ (A -> B)[y] == (A[y] -> B[y]) type ].
+Proof.
+   intros Hsub HA HB.
+   apply (type_subs (subs_weak HA)) in HB as HS.
+   rewrite (eq_type_pi_subs Hsub HA HS).
+   apply (eq_type_pi (eq_type_refl (type_subs Hsub HA))).
+   rewrite <- (eq_type_subs_comp (subs_ext_type Hsub HA) (subs_weak HA) HB).
+   rewrite <- (eq_type_subs_comp (subs_weak (type_subs Hsub HA)) Hsub HB).
+   eapply (eq_type_subs_S (eq_subs_ext_type_beta Hsub HA) HB).
+Qed.
+
+Lemma eq_type_func_l {Γ} {A B D} :
+   [ Γ ⊢ A type ] -> [ Γ ⊢ B == D type ]
+   -> [ Γ ⊢ (A -> B) == (A -> D) type ].
+Proof.
+   intros H Heq.
+   apply (eq_type_func (eq_type_refl H) Heq).
+Qed.
+Lemma eq_type_func_r {Γ} {A B C} :
+   [ Γ ⊢ A == C type ] -> [ Γ ⊢ B type ]
+   -> [ Γ ⊢ (A -> B) == (C -> B) type ].
+Proof.
+   intros Heq H.
+   apply (eq_type_func Heq (eq_type_refl H)).
+Qed.
+(** βη-equivalence for abstractions p.22 **)
+Lemma eq_term_beta_app {Γ} {A B} {a b} :
+   [ Γ # A ⊢ b @ B[p] ] -> [ Γ ⊢ a @ A ]
+   -> [ Γ ⊢ app (λ(b), a) == b [ id # a] @ B ].
+Proof.
+   intros H_b H_a.
+   apply (term_press) in H_b as H_type.
+   inversion H_type; subst.
+   inversion H2; subst.
+   apply (eq_term_beta_dapp H_a) in H_b as HS.
+   rewrite <- (eq_type_subs_comp (self_extension H_a) (subs_weak H4) H3) in HS.
+   rewrite (eq_type_subs_S (eq_subs_beta_id H_a) H3) in HS.
+   rewrite (eq_type_subs_id H3) in HS.
+   apply HS.
+Qed.
+
+Lemma eq_term_eta_app {Γ} {A B} {f} :
+   [ Γ ⊢ f @ (A -> B) ]
+   -> [ Γ ⊢ f == λ(app (f [p], q)) @ (A -> B) ].
+Proof.
+   intros Hf.
+   apply (term_press) in Hf as Hf_type.
+   inversion Hf_type; subst.
+   apply (eq_term_eta_dapp H2 H3 Hf).
+Qed.
+
+Lemma eq_term_subs_abs {Δ Γ} {y} {A B} {b} :
+   [ Δ ⊢ y ~ Γ ] -> [ Γ # A ⊢ b @ B [p] ]
+   -> [ Δ ⊢ λ(b) [y] == λ(b [(y ∘ p)#q]) @ A[y] -> B[y] ].
+Proof.
+   intros Hsub Hb.
+   apply (term_press) in Hb as HB.
+   inversion HB; subst.
+   inversion H2; subst.
+   rewrite <- (eq_type_subs_func Hsub H4 H3).
+   apply (eq_term_subs_dabs Hsub H4 HB ) in Hb as HS.
+   apply HS.
+Qed.
+
