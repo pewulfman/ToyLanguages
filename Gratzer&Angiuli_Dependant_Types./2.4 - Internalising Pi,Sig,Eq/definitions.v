@@ -36,6 +36,7 @@ with preType : Set :=
 | ptyp_subs (A : preType) (y : preSubs) : preType
 | ptyp_pi   (A : preType) (B : preType) : preType
 | ptyp_sig  (A : preType) (B : preType) : preType
+| ptyp_eq   (A : preType) (a b : preTerm) : preType
 
 with preTerm : Set :=
 | ptrm_qar : preTerm
@@ -45,6 +46,7 @@ with preTerm : Set :=
 | ptrm_subs (a : preTerm) (y : preSubs) : preTerm
 | ptrm_abs (b : preTerm) : preTerm
 | ptrm_app (f a : preTerm) : preTerm
+| ptrm_refl : preTerm
 .
 (** End Syntax definitions **)
 
@@ -80,6 +82,7 @@ Notation b            := ptyp_base.
 Notation "A [ y ]"    := (ptyp_subs A y) (at level 1): ty_scope.
 Notation "Π( A , B )" := (ptyp_pi A B) : ty_scope.
 Notation "Σ( A , B )" := (ptyp_sig A B) : ty_scope.
+Notation "Eqx( A , a , b )" := (ptyp_eq A a b) : ty_scope.
 
 
 Notation q                 := ptrm_qar.
@@ -89,6 +92,7 @@ Notation "'snd' p"         := (ptrm_snd p) (at level 60, right associativity): t
 Notation "a [ y ]"         := (ptrm_subs a y)(at level 1): term_scope.
 Notation "'λ' ( b )"       := (ptrm_abs b) (at level 20): term_scope.
 Notation "'app' ( f , a )" := (ptrm_app f a) (at level 20): term_scope.
+Notation "'refl'"          := (ptrm_refl) (at level 0): term_scope.
 
 (** Unaxiomatic construction **)
 Definition psub_ext_type (y : preSubs) (A : preType) : preSubs := (y ∘ p) # q .
@@ -175,6 +179,11 @@ with TypeJG : preContext -> preType -> Prop :=
    | type_sig {Γ} {A B} :
       [ Γ ⊢ A type ] -> [ Γ # A ⊢ B type ]
       -> [ Γ ⊢ Σ(A, B) type ]
+   (** Equality type p.46 **)
+   | type_eq {Γ} {A} {a b} :
+      [ ⊢ Γ Cx ] -> (* not in the book, loop breaker *)
+      [ Γ ⊢ a @ A ] -> [ Γ ⊢ b @ A ]
+      -> [ Γ ⊢ Eqx(A, a, b) type ]%ty
 
 with TermJG : preContext -> preType -> preTerm -> Prop :=
    | term_qar {Γ A} :
@@ -201,6 +210,10 @@ with TermJG : preContext -> preType -> preTerm -> Prop :=
    | term_snd {Γ A B p} :
       [ Γ ⊢ A type ] -> [ Γ # A ⊢ B type ] -> [ Γ ⊢ p @ Σ(A, B) ]
        -> [ Γ ⊢ snd p @ B [id # fst p] ]
+   (** Equality type p.46 **)
+   | term_refl {Γ A a} :
+      [ Γ ⊢ a @ A ]
+      -> [ Γ ⊢ refl @ Eqx(A, a, a) ]
 
 (*** Equivalence Relations ***)
 (**** Substitution Equivalence ****)
@@ -262,11 +275,15 @@ with eq_type : preContext -> preType -> preType -> Prop :=
 (** Pi type p.36 **)
 | eq_type_pi_subs {Δ Γ y A B} :
    [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ] -> [ Γ # A ⊢ B type ]
-   -> [ Δ ⊢ Π(A, B) [y] == Π(A[y], B[y #! A]) type ]%ty
+   -> [ Δ ⊢ Π(A, B) [y] == Π(A[y], B[y #! A]) type ]
 (** Sigma type p.43 **)
 | eq_type_sig_subs {Δ Γ y A B} :
    [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ A type ] -> [ Γ # A ⊢ B type ]
-   -> [ Δ ⊢ Σ(A, B) [y] == Σ(A[y], B[y #! A]) type ]%ty
+   -> [ Δ ⊢ Σ(A, B) [y] == Σ(A[y], B[y #! A]) type ]
+   (** Equality type p.46 **)
+   | eq_type_refl_subs {Δ Γ y A a b} :
+   [ Δ ⊢ y ~ Γ ] -> [ Γ ⊢ a @ A ] -> [ Γ ⊢ b @ A ]
+   -> [ Δ ⊢ Eqx(A, a, b) [y] == Eqx(A[y], a[y], b[y]) type ]
 
 (**** Term Equivalence ****)
 with eq_term : preContext -> preType -> preTerm -> preTerm -> Prop :=
@@ -337,6 +354,10 @@ with eq_term : preContext -> preType -> preTerm -> preTerm -> Prop :=
 | eq_term_eta_pair {Γ} {A B} {p} :
   [Γ ⊢ A type ] -> [ Γ # A ⊢ B type ] -> [ Γ ⊢ p @ Σ(A, B) ]
    -> [ Γ ⊢ p == (fst p, snd p) @ Σ(A, B) ]
+   (** Equality type p.46 **)
+| equality_reflextion {Γ} {A a b p} :
+   [ Γ ⊢ a @ A ] -> [ Γ ⊢ b @ A ] -> [ Γ ⊢ p @ Eqx(A, a, b) ]
+   -> [ Γ ⊢ a == b @ A ]
 
 
 where "[ ⊢ Γ 'Cx' ]"          := (ContextJG Γ)
@@ -516,6 +537,7 @@ Proof.
    apply type_sig; [apply IHTermJG1 | apply H0].
    apply H.
    apply (type_subs (subs_ext (subs_id (type_press H)) H (term_conv (term_fst H H0 H1) (eq_type_sym (eq_type_subs_id H)))) H0).
+   apply (type_eq (type_press IHTermJG) H H).
 Qed.
 
 (** End Fundamental property **)
@@ -811,6 +833,7 @@ Proof.
    - apply (type_subs (subs_comp H H0) H1).
    - apply (type_subs H (type_pi H0 H1)).
    - apply (type_subs H (type_sig H0 H1)).
+   - apply (type_subs H (type_eq (subs_press_r H) H0 H1)).
 Qed.
 
 Theorem eq_type_press_r :
