@@ -1,0 +1,375 @@
+\documentclass{beamer}
+\usepackage{nagoyatheme}
+
+\usepackage[T1]{fontenc}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{amsmath, amssymb, amsthm}
+
+
+\usepackage{tikz}
+\usetikzlibrary{calc, arrows.meta, intersections, patterns, positioning, shapes.misc, fadings, through,decorations.pathreplacing}
+
+
+\definecolor{ColorOne}{named}{nagoyaGreen}
+\definecolor{ColorTwo}{named}{Gray}
+\definecolor{ColorThree}{named}{Plum}
+
+
+\title{G30 1st year report}
+\author[WULFMAN]{Pierre-Emmanuel WULFMAN}
+\institute[GSM, Nagoya U]{Graduate School of Mathematics}
+
+\date{October 2024 - September 2025}
+
+
+% For code snippets
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,columns=flexible,breaklines=true}
+
+% Bibliography
+\usepackage{csquotes}
+\usepackage[style=authoryear]{biblatex}
+
+\addbibresource{midmaster_presentation.bib}
+
+\begin{document}
+
+\begin{frame}[plain, noframenumbering]
+   \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+   \tableofcontents
+\end{frame}
+
+\section{Introduction}
+\begin{frame}{Introduction}
+   \begin{block}{}
+      \begin{itemize}
+         \item Brief self-introduction
+         \item Goal of this presentation: highlight key learnings and experiences
+      \end{itemize}
+   \end{block}
+   \begin{block}{}
+      \tikzstyle{descript} = [text = black,align=center, minimum height=1.8cm, align=center, outer sep=0pt,font = \footnotesize]
+      \tikzstyle{activity} =[align=center,outer sep=1pt]
+
+      \begin{tikzpicture}[very thick, black]
+         \small
+
+         %% Coordinates
+         \coordinate (O) at (0,0); % Origin
+         \coordinate (P1) at (2.5,0);
+         \coordinate (P2) at (5,0);
+         \coordinate (P3) at (7.5,0);
+         \coordinate (F) at (10,0); %End
+
+         %% Filled regions
+         \fill[color=ColorOne!20] rectangle (O) -- (P1) -- ($(P1)+(0,1)$) -- ($(O)+(0,1)$); % Studies
+         % \path [pattern color=ColorOne, pattern=north east lines, line width = 1pt, very thick] rectangle ($(O)+(0.5,0)$) -- ($(O)+(10,0)$) -- ($(O)+(10,1)$) -- ($(O)+(0.5,1)$); % Something else
+         \fill[color=ColorTwo!20] rectangle (P1) -- (P2) -- ($(P2)+(0,1)$) -- ($(P1)+(0,1)$); % Work
+         \fill[color=ColorOne!20] rectangle (P2) -- (P3) -- ($(P3)+(0,1)$) -- ($(P2)+(0,1)$); % Current activity
+         \fill[color=ColorTwo!20] rectangle (P3) -- (F) -- ($(F)+(0,1)$) -- ($(P3)+(0,1)$); % Future
+
+         %% Text inside filled regions
+         \draw ($(O)+(1.2,0.5)$) node[activity,ColorOne] {1 semester};
+         \draw ($(P1)+(1.2,0.5)$) node[activity,ColorTwo] {2 semester};
+         \draw ($(P2)+(1.2,0.5)$)  node[activity, ColorOne] {3rd semester};
+         \draw ($(P3)+(1.2,0.5)$)  node[activity, ColorTwo] {4th semester};
+
+         %% Description
+         % \node[descript,fill=ColorTwo!15,text=ColorTwo](D2) at ($(P2)+(-2,-2.5)$) {%
+         %    \textbf{Where}\\
+         %    Project\\
+         %    description};
+
+         % \node[descript,fill=ColorThree!15,text=ColorThree](D3) at ($(P3)+(-2,-2.5)$) {%
+         %    \textbf{Where}\\
+         %    Project\\
+         %    description};
+
+         %% Events
+         % \draw[<-,thick,color=black] ($(E1)+(0,0.1)$) -- ($(E1)+(0,1.5)$) node [above=0pt,align=center,black] {Unexpected\\event};
+         % \draw [decorate,decoration={brace,amplitude=6pt}]($(E2)+(-1,1.2)$) -- ($(E2)+(0.5,1.2)$) node [black,midway,above=6pt] {Something};
+
+         %% Arrows
+         % \path[->,color=ColorTwo] ($(P2)+(-1,-0.1)$) edge [out=-90, in=130]  ($(D2)+(0,1)$);
+         % \path[->,color=ColorThree]($(P3)+(-1,-0.1)$)  edge [out=-70, in=90]  ($(D3)+(0,1)$);
+
+         %% Arrow
+         \draw[->] (O) -- (F);
+         %% Ticks
+         \foreach \x in {0,2.5,5,7.5}
+         \draw(\x cm,3pt) -- (\x cm,-3pt);
+         %% Labels
+         \foreach \i \j in {0.5/{2024/10},2.5/{2025/04},5/{2025/10},7.5/{2026/04},9.5/Graduation}{
+         \draw (\i,0) node[below=3pt] {\j} ;
+         }
+
+      \end{tikzpicture}
+   \end{block}
+\end{frame}
+
+
+\section{Seminars}
+\begin{frame}{Quantum Computing Seminar (Le Gall's group)}
+   \begin{itemize}
+      \item Focused on theoretical models of quantum computing
+      \item Presented a survey on the different models (quantum Turing machines, quantum circuits, etc.)
+      \item Presented the adiabatic model and an implementation of TSP based on the work of ~\parencite{Kieu_2019}\footfullcite{Kieu_2019}
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Type Theory and Formal Proving (Garrigue's group)}
+   \begin{itemize}
+      \item 1st semester: \citetitle{Girard_1989}\footfullcite{Girard_1989} cover to cover
+      \item 2nd semester:\\
+            \citetitle{Reynolds_1998}\footfullcite{Reynolds_1998} Chap. 1-3, present. 2.4-2.8, 3.7-3.8.
+            \\
+            \citetitle{Appel_Dockins_Hobor_Beringer_Dodds_Stewart_Blazy_Leroy_2014}\footfullcite{Appel_Dockins_Hobor_Beringer_Dodds_Stewart_Blazy_Leroy_2014}
+            Chap 1-21, present. 4-5,9-10,14-15,20-21.
+   \end{itemize}
+\end{frame}
+
+\section{Separation Logic}
+
+%------------------------------------------------
+\begin{frame}{Motivation}
+   \begin{itemize}
+      \item  \textbf{Program verification}: Ensure programs respect specification.
+      \item \textbf{specification}:
+            \begin{block}{Hoare Triple}
+               \centering
+               \begin{tikzpicture}[every node/.style={align=center}]
+                  \tikzstyle{descript} = [text = black,align=center, align=center, outer sep=0pt,font = \footnotesize]
+                  % Nodes
+                  \node (pre) at (4,0) {$\{P\}$};
+                  \node (cmd) at (5,0) {$C$};
+                  \node (post) at (6,0) {$\{Q\}$};
+                  %% Description
+                  \node[descript,fill=ColorTwo!15,text=ColorOne](D1) at ($(pre) + (-1,+1)$) {{Precondition}};
+                  \node[descript,fill=ColorTwo!15,text=ColorOne](D2) at ($(post) + (1,1)$) {{Postcondition}};
+                  \node[descript,fill=ColorTwo!15,text=ColorOne](D3) at ($(cmd) + (0,-1)$) {{Program}};
+
+                  %% Arrows
+                  \path[->,color=ColorTwo] ($(pre) + (0,0.3)$) edge [out=90, in=-90]  ($(D1) + (0,-0.2)$);
+                  \path[->,color=ColorTwo] ($(post) + (0,0.3)$) edge [out=90, in=-90]  ($(D2) + (0,-0.2)$);
+                  \path[->,color=ColorTwo] ($(cmd) + (0,-0.2)$) edge [out=-130, in=60]  ($(D3)+(0,0.2)$);
+               \end{tikzpicture}
+            \end{block}
+      \item \textbf{Hoare Logic}: Axiom system and inference rules.
+   \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Example and Limitations}
+   \begin{itemize}
+      \begin{block}{Variable Assignment}
+         \[
+            \{a = 0\} \ a := 42 \ \{a = 42\}
+         \]
+      \end{block}
+      \item trivial
+
+            \pause
+            \vspace{0.5em}
+            \begin{block}{Array Assignment}
+               \[
+                  \{a[i] = 0 \land a[j] = 0\} \ a[i] := 42 \ \{a[i] = 42 \land a[j] = 0\}
+               \]
+            \end{block}
+      \item undecidable with aliasing (i.e., $i = j$?)
+   \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Solution - Separation Logic}
+   \begin{itemize}
+      \item Extends Hoare logic with the \textbf{separating conjunction}:
+            \[
+               P * Q
+            \]
+      \item Meaning: $P$ and $Q$ are predicates on \textbf{disjoint} parts of memory.
+      \item Enables \textbf{local reasoning}: reason only about relevant memory.
+   \end{itemize}
+
+   % \pause
+   \begin{center}
+      \begin{tikzpicture}[scale=0.8]
+         \tikzstyle{descript} = [text = black,align=center, align=center, outer sep=0pt,font = \footnotesize]
+         % Nodes
+         \node (pre) at (1,0) {$\{a[i] = 0 * a[j] = 0\}$};
+         \node (cmd) at (5,0) {$a[i] := 42$};
+         \node (post) at (9,0) {$\{a[i] = 42 * a[j] = 0\}$};
+         %% Description
+         % \node[descript,fill=ColorTwo!15,text=ColorOne](D1) at ($(pre) + (-1,+1)$) {{Precondition}};
+         \node[descript,fill=ColorTwo!15,text=ColorOne](D2) at ($(post) + (-2,-1.2)$) {Proof of right heaplet is trivial};
+         \node[descript,fill=ColorTwo!15,text=ColorOne](D3) at ($(pre) + (-1,-1.2)$) {Only touch left heaplet};
+
+         %% Arrows
+         % \path[->,color=ColorTwo] ($(pre) + (0,0.3)$) edge [out=90, in=-90]  ($(D1) + (0,-0.2)$);
+         \path[->,color=ColorTwo] ($(post) + (1.2,-0.2)$) edge [out=-130, in=60] ($(D2) + (0,0.3)$);
+         \path[->,color=ColorTwo] ($(cmd) + (0,-0.2)$) edge [out=-130, in=60] ($(D3)+(0,0.3)$);
+      \end{tikzpicture}
+   \end{center}
+\end{frame}
+
+\begin{frame} {Generalization - Separation Algebra}
+   \begin{block}{Definition}
+      \begin{itemize}
+         \item $A$ is a type $\simeq$ set (e.g., memory cells),
+         \item $\oplus$\footnote{we write $\oplus(a,b,c)$ as $a \oplus b = c$} partial tertiary operation on $\mathcal{P}(A)$ (the powerset of $A$)
+         \item commutative, associative, positive $\to$ permission algebra
+         \item with unit $\to$ separation algebra
+      \end{itemize}
+   \end{block}
+   \begin{block}{Examples}
+      \begin{table}
+         \begin{tabular}{c c c }
+            name     & type $A$     & join operation                         \\
+            % Heaplets & $\mathbb{N}\to \mathbb{N}$   &                       \\\hline
+            Booleans & bool         & $(c = a \lor b) \land \neg(a \land b)$ \\
+            Counters & $\mathbb{N}$ & $c =\max(a,b)$                         \\
+            Discrete & any set      & $a = b = c$                            \\
+            % Rational shares & $\mathbb{Q} $ & $a + c = b$                            \\
+         \end{tabular}
+      \end{table}
+   \end{block}
+\end{frame}
+
+
+\begin{frame}{Make your own logic!}
+   \begin{block}{operation}
+      \begin{itemize}
+         \item Prod $<A, J_A>$ and $<B, J_B>$ $\to$ $<A\times B, J>$
+         \item Func $<B, J_B>$ and $A$ $\to$ $<A\to B, J>$
+         \item Indexed Prod/Sum, etc.
+      \end{itemize}
+   \end{block}
+   \begin{block}{Simple imperative program}
+      \begin{itemize}
+         \item State : <stack : var $\to$ option adr, heap : adr $\to$ option adr>
+         \item Predicate : share \emph{stack}, disjoint \emph{heap}.
+         \item Algebra :  Equiv(var $\to$ option adr )$\times $ adr $\to $ Lower ( Discret (option adr))
+      \end{itemize}
+   \end{block}
+\end{frame}
+%------------------------------------------------
+% \begin{frame}{Example}
+%    %    \begin{lstlisting}[language=C]
+%    % int *p = malloc(sizeof(int));
+%    %%%p = 42;
+%    % free(p);
+%    %   \end{lstlisting}
+
+%    \vspace{0.5em}
+%    \begin{block}{Hoare Triple}
+%       \[
+%          \{ emp \} \quad p = malloc(...); *p = 42; free(p); \quad \{ emp \}
+%       \]
+%    \end{block}
+
+%    \pause
+%    \begin{itemize}
+%       \item \texttt{emp} means empty heap.
+%       \item Allocation, update, and deallocation are localized.
+%       \item No interference with unrelated memory.
+%    \end{itemize}
+% \end{frame}
+
+%------------------------------------------------
+\begin{frame}{Applications}
+   \begin{itemize}
+      \item Static analysis tools (Rust Type System)
+      \item Modeling concurrent algorithms (\emph{Concurrent Separation Logic})
+      \item Proof assistants
+   \end{itemize}
+   \vspace{0.5em}
+   \pause
+   \begin{block}{Outlook}
+      Research continues with automated tools (e.g. \emph{Infer}, \emph{Iris})
+   \end{block}
+\end{frame}
+
+
+% \section{Coursework}
+% \begin{frame}{Representation Theory}
+%    \begin{itemize}
+%       \item Core mathematics course
+%       \item Focus on algebraic structures and their applications
+%       \item Reinforced mathematical maturity and abstract thinking
+%    \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Quantum Information Theory}
+%    \begin{itemize}
+%       \item Learned quantum states, channels, entropy
+%       \item Applications in communication and computation
+%       \item Connection with research interests
+%    \end{itemize}
+% \end{frame}
+
+\section{Other Activities}
+\begin{frame}{}
+   \begin{block}{Teaching}
+      \begin{itemize}
+         \item QTA for [G30] Data Science
+      \end{itemize}
+   \end{block}
+
+   \begin{block}{Conferences}
+      \begin{itemize}
+         \item Speaker at the Rocq Workshop 2025 (Rejkavik)
+      \end{itemize}
+      Attended :
+      \begin{itemize}
+         \item TPP 2024 (Kyushu)
+         \item PPL 2025 (Gamagori)
+         \item QI2025 Satellite Workshop (Osaka)
+      \end{itemize}
+   \end{block}
+\end{frame}
+
+
+\section{Conclusion}
+\begin{frame}{Master's Program Progress}
+   % \begin{itemize}
+   %    \item Completed 1st year of Master's program
+   %    \item Courses in quantum computing and mathematics
+   %    \item Preparing for research project in 2nd year
+   % \end{itemize}
+   \begin{block}{credits}
+      \begin{table}[!h]
+         \begin{tabularx}{\textwidth}{|X|c|c|}
+            \hline
+            \rowcolor[HTML]{006E4F}
+            {\color[HTML]{FFFFFF} type}  & {\color[HTML]{FFFFFF} obtained} & {\color[HTML]{FFFFFF} required} \\\hline
+            MC Basic Specialized Courses & 2                               & 2                               \\\hline
+            MC Specialized Courses       & 8                               & 8                               \\\hline
+            Seminar                      & 10                              & 20                              \\\hline
+            Optional Courses ?           & 5                               & ?                               \\\hline
+         \end{tabularx}
+      \end{table}
+   \end{block}
+   \begin{block}{Master Thesis}
+      \begin{itemize}
+         \item Status : Looking for a problematic
+         \item Supervisor: Prof. Garrigue
+      \end{itemize}
+   \end{block}
+\end{frame}
+
+\begin{frame}
+   \centering \Huge Questions?
+\end{frame}
+
+\appendix
+
+
+\begin{frame}{References}
+   \printbibliography
+\end{frame}
+
+\end{document}

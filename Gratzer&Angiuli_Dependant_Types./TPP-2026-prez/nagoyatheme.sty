@@ -1,0 +1,132 @@
+\ProvidesPackage{nagoyatheme}
+
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{helvet}
+% \usepackage{zxjatype}
+\usepackage[english]{babel}
+\renewcommand{\familydefault}{\sfdefault}
+% \setCJKsansfont{Noto Sans CJK JP}
+
+
+% Define Nagoya University green
+\definecolor{nagoyaGreen}{HTML}{006E4F}
+\definecolor{darkText}{RGB}{34,34,34}
+
+
+% Theme and color settings
+\usetheme{Frankfurt}
+\usecolortheme{default}
+
+% Color application
+\setbeamercolor{normal text}{fg=darkText, bg=white}
+\setbeamercolor{structure}{fg=nagoyaGreen}
+\setbeamercolor{frametitle}{fg=white,bg=nagoyaGreen}
+\setbeamercolor{block title}{bg=nagoyaGreen, fg=white}
+\setbeamercolor{block body}{bg=gray!10, fg=black}
+\setbeamercolor{item}{fg=nagoyaGreen}
+\setbeamercolor{section in toc}{fg=nagoyaGreen}
+
+
+% Fonts
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{title}{size=\huge,series=\bfseries}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{institute}{size=\normalsize}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{block title}{series=\bfseries}
+
+% Title alignment
+\setbeamertemplate{frametitle}[default][center]
+
+% No navigation bar
+\setbeamertemplate{navigation symbols}{}
+
+% Optional logo
+\pgfdeclareimage[height=1cm]{nagoya-logo}{nagoya-logo.png}
+\logo{\pgfuseimage{nagoya-logo}}
+
+\pgfdeclareimage[height=1cm]{nagoya-large}{nagoya-logo-16x9.png}
+% Title page layout
+\setbeamertemplate{title page}{
+   \begin{minipage}[t][\paperheight][c]{\textwidth}
+      \centering
+      \vfill
+      {\usebeamercolor[bg]{title}\usebeamerfont{title}\inserttitle\par}
+      \vspace{0.5cm}
+      {\usebeamerfont{author}\insertauthor\par}
+      \vfill
+      {\pgfuseimage{nagoya-large}\par}
+      \vspace{0.3cm}
+      {\usebeamerfont{institute}\insertinstitute\par}
+      \vspace{1cm}
+      {\usebeamerfont{date}\insertdate\par}
+
+      \vspace{1cm}
+   \end{minipage}
+}
+
+
+% footer
+\makeatletter
+\setbeamertemplate{footline}
+{
+   \leavevmode%
+   \hbox{%
+      \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+         \usebeamerfont{author in head/foot}%
+         \insertshortauthor
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+         \usebeamerfont{title in head/foot}%
+         \insertshorttitle
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
+         \usebeamerfont{institute in head/foot}%
+         \insertshortinstitute
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{page number in head/foot}%
+         \usebeamerfont{page number in head/foot}%
+         \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+      \end{beamercolorbox}}%
+}
+\makeatother
+
+% \usepackage{totcount}
+% \newtotcounter{mysec}
+% % \label{mysec:0}
+% \AtBeginSection{\addtocounter{mysec}{1}\label{mysec:\themysec}}
+% \newcounter{foo}
+% \usepackage{refcount}
+% \usepackage{tikz}
+% \usetikzlibrary{patterns.meta}
+% \usetikzlibrary{fadings,patterns,shadows}
+
+% \setbeamertemplate{headline}{%
+%    \vskip6pt
+%    \centering
+%    \begin{tikzpicture}
+%       \ifnum\thesection>0
+%          \path[draw=gray,rounded corners,preaction={fill, lightgray},pattern={Lines[angle=45,line width=3pt,distance=6pt]},pattern color=lightgray!50] (0,0) rectangle (.9\paperwidth,0.3);
+%          \path[rounded corners,preaction={fill, green!50!teal},pattern={Lines[angle=45,line width=3pt,distance=6pt]},pattern color=green!50!teal!50] (0,0) rectangle ({(\insertframenumber -1)/(\inserttotalframenumber-1)*.9\paperwidth},0.3);
+%          \path[rounded corners,preaction={fill, cyan!50!blue},pattern={Lines[angle=45,line width=3pt,distance=6pt]},pattern color=cyan!50!blue!50] (0,0) rectangle ({(\insertsectionstartpage-1-2)/(\inserttotalframenumber-1)*.9\paperwidth},0.3);
+%          \foreach \x in {1,...,\totvalue{mysec}}{%
+%                \setcounterpageref {foo}{mysec:\x}
+%                \addtocounter{foo}{-2}%
+%                \colorlet{seccol}{green!50!teal}
+%                \ifnum\thesection=\x
+%                   \colorlet{seccol}{green!50!teal}
+%                \else
+%                   \ifnum\thesection<\x
+%                      \colorlet{seccol}{lightgray}
+%                   \else
+%                      \colorlet{seccol}{cyan!50!blue}
+%                   \fi
+%                \fi
+%                \node[circle,fill=seccol,draw=white,line width=1.5pt,minimum size=15pt] at ({(\thefoo-1)/(\inserttotalframenumber-1)*.9\paperwidth},0.15) {\x};
+%                \node[seccol] at ({(\thefoo-1)/(\inserttotalframenumber-1)*.9\paperwidth},-0.35) {\nameref{mysec:\x}};
+%             }
+%       \fi
+%    \end{tikzpicture}%
+%    \par%
+% }
