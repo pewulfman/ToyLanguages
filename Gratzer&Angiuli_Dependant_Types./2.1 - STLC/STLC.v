@@ -125,7 +125,7 @@ About preTerm_Context_Sub_Type_rec.
 Fixpoint ContextJG (ctx : preContext) {struct ctx} : Prop :=
   match ctx with
   | One => True
-  | CExt Γ A => J{ ⊢ ctx } /\
+  | CExt Γ A => J{ ⊢ Γ } /\
       TypeJG Γ A
   end
   where "⊢ Γ" := (ContextJG Γ) (in custom judgements)
@@ -207,7 +207,7 @@ with TermJG (ctx : preContext) (t : preType) (e : preTerm) {struct e} : Prop :=
 
 
 (* Example Judgements *)
-Example ex0 :
+(* Example ex0 :
    J{ One ⊢ Base One }.
 Proof.
    repeat split.
@@ -224,9 +224,9 @@ Proof.
    repeat split.
    constructor. reflexivity.
    repeat split.
-Qed.
+Qed. *)
 
-(** Well-formed syntax types **)
+(* Well-formed syntax types *)
 Inductive wfCtx : Type := {
   ctx :> preContext;
   ctx_judg : ContextJG ctx
