@@ -1,0 +1,903 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{nagoyatheme}
+
+\usepackage[T1]{fontenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath, amssymb}
+\usepackage{mathpartir}  % \inferrule
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+
+% Rocq code rendered by Alectryon (see Makefile)
+\usepackage{alectryon}
+\usepackage{pygments}
+\usepackage{appendixnumberbeamer}
+\DeclareUnicodeCharacter{0393}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{0394}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{22A2}{\ensuremath{\vdash}}
+% smaller Alectryon goal boxes on dense slides (default is \small)
+\makeatletter
+\newcommand\alectryonscriptoutput{\renewcommand*{\alectryon@output@setsize}{\scriptsize}}
+\makeatother
+% VS Code-like proof state for step-by-step proofs: numbered goals,
+% no extra space above the output (top aligned with the code).
+\makeatletter
+\newcounter{alecgoal}
+\newcommand\alectryonvscode{%
+  \renewcommand*{\alectryon@output@setsize}{\scriptsize}%
+  \renewenvironment{alectryon@env}{\par\nointerlineskip}{\par}%
+  \renewenvironment{alectryon@goals}
+    {\setcounter{alecgoal}{0}\begin{alectryon@inner}%
+     \def\alectryon@sep{\alectryon@unskip\ignorespaces}\ignorespaces}
+    {\alectryon@unskip\end{alectryon@inner}}%
+  \renewenvironment{alectryon@goal}
+    {\stepcounter{alecgoal}%
+     \ifnum\value{alecgoal}>1 \renewcommand\alectryon@infrule[1]{}%
+       \def\alectryon@outer@vsep{}\par\vspace{0.6ex}\fi
+     \def\alectryon@sep{\alectryon@unskip\alectryon@goal@sep\ignorespaces}\ignorespaces}
+    {\alectryon@unskip\par}%
+  \renewenvironment{alectryon@conclusion}
+    {\par\leavevmode\strut\arabic{alecgoal}\ :\ \ignorespaces}{\strut\par}}
+% a Rocq message that Alectryon does not capture, in the same style
+\newcommand\rocqmsg[1]{\begin{tcolorbox}[colback=alectryon@tango@light@aluminium,
+    colframe=alectryon@tango@medium@aluminium, boxrule=2.5pt, arc=0pt,
+    left=2pt, right=2pt, top=2pt, bottom=2pt, boxsep=0pt]\ttfamily\scriptsize #1\end{tcolorbox}}
+\makeatother
+% step-by-step proofs: \mk{k} = cursor shown on overlay k (0 = never)
+\newcommand\mk[1]{\makebox[1.1em][l]{\ifnum#1>0 \alt<#1>{\textcolor{nagoyaGreen}{\textbf{>}}}{}\fi}}
+% \popup<k>{...}: takeaway box over the slide on overlay k
+\usetikzlibrary{shadows}
+\newcommand<>\popup[1]{\only#2{\begin{tikzpicture}[remember picture,overlay]
+  \node[fill=white, draw=nagoyaGreen, very thick, rounded corners, drop shadow,
+        inner sep=10pt] at (current page.center)
+        {\begin{minipage}{.7\paperwidth}\small #1\end{minipage}};
+\end{tikzpicture}}}
+
+\definecolor{ColorOne}{named}{nagoyaGreen}
+\definecolor{ColorTwo}{named}{Gray}
+\definecolor{ColorThree}{named}{Plum}
+
+\setbeamerfont{title}{size=\Large,series=\bfseries}  % fit the title on two lines
+\title[MLTT in Rocq with mutual inductive types]{Implementing MLTT in Rocq with mutual inductive types:\\ challenges and techniques}
+\author[WULFMAN]{Pierre-Emmanuel WULFMAN}
+\institute[Nagoya University]{Graduate School of Mathematics, Nagoya University}
+\date{TPP 2026 --- RIKEN AIP, Tokyo --- 16 November 2026}
+
+\begin{document}
+
+% =====================================================================
+% Part 1 -- The problem
+% =====================================================================
+
+% --- Slide 1 ---------------------------------------------------------
+\begin{frame}[plain, noframenumbering]
+  \titlepage
+\end{frame}
+
+% --- Slide 2 ---------------------------------------------------------
+\section{The problem}
+\begin{frame}{Context}
+  \begin{itemize}
+    \item Implementing in Rocq the extensional MLTT of Angiuli \& Gratzer,
+          \emph{Principles of Dependent Type Theory}
+    \item A dependent type theory is a set of \textbf{cyclic definitions}:
+          contexts, types, terms and substitutions all refer to each other
+    \item This talk: what I learned \emph{as a Rocq user} about
+          \begin{itemize}
+            \item defining cyclic definitions
+            \item stating and proving lemmas about them
+          \end{itemize}
+    \item The lessons apply whenever your definitions are cyclic
+    \item Extensional MLTT is particularly relevant: 4 judgements and their 4 equality judgements,
+          \textbf{8 mutually inductive} judgements, far more interwoven than most definitions
+  \end{itemize}
+\end{frame}
+
+% --- Slide 3 ---------------------------------------------------------
+\begin{frame}{Simple types: no cycle}
+  Simply typed $\lambda$-calculus: a definition order exists.
+  \medskip
+
+  \begin{columns}[c]
+    \column{.5\textwidth}
+    \small
+    \[
+      \begin{array}{rcl}
+        A & ::= & \mathsf{Bool} \mid A \to A\\
+        t & ::= & x \mid \lambda x{:}A.\,t \mid t\ t \mid \dots\\
+        \Gamma & ::= & \cdot \mid \Gamma, x{:}A
+      \end{array}
+    \]
+    \[
+      \inferrule{\Gamma(x) = A}{\Gamma \vdash x : A}
+    \qquad
+      \inferrule{\Gamma, x{:}A \vdash t : B}{\Gamma \vdash \lambda x{:}A.\,t : A \to B}
+    \]
+    \[
+      \inferrule{\Gamma \vdash t_1 : A \to B \\ \Gamma \vdash t_2 : A}{\Gamma \vdash t_1\ t_2 : B}
+    \]
+
+    \column{.45\textwidth}
+    \centering
+    \begin{tikzpicture}[>=Stealth, every node/.style={font=\small, draw=ColorOne, rounded corners, inner sep=4pt},
+                        dep/.style={->, thick, ColorOne}]
+      \node (jd) at (1.3,2.4) {$\Gamma \vdash t : A$};
+      \node (cx) at (0,1.2)   {contexts $\Gamma$};
+      \node (tm) at (2.6,1.2) {terms $t$};
+      \node (ty) at (1.3,0)   {types $A$};
+      \draw[dep] (jd) -- (cx);
+      \draw[dep] (jd) -- (tm);
+      \draw[dep] (jd) -- (ty);
+      \draw[dep] (cx) -- (ty);
+      \draw[dep] (tm) -- (ty);
+    \end{tikzpicture}
+
+    \smallskip
+    {\footnotesize $X \to Y$: $X$ refers to $Y$}
+  \end{columns}
+
+  \medskip
+  \centering
+  \textbf{No cycle: define types, then terms and contexts, then typing.}
+
+  \vfill
+  {\scriptsize Rules as in Software Foundations, Vol.~2 \emph{Programming Language Foundations}, chapter \texttt{Stlc}.}
+\end{frame}
+
+% --- Slide 4 ---------------------------------------------------------
+\begin{frame}{Dependent types: a cycle}
+  Dependent type theory: the judgements need each other (a few of the rules).
+  \medskip
+
+  \begin{columns}[c]
+    \column{.57\textwidth}
+    \centering\small
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{cc}
+      $\inferrule{\vdash \Gamma \ \mathsf{cx} \\ \Gamma \vdash A \ \mathsf{type}}
+                 {\vdash \Gamma . A \ \mathsf{cx}}$
+      &
+      $\inferrule{\Delta \vdash \gamma : \Gamma \\ \Gamma \vdash A \ \mathsf{type}}
+                 {\Delta \vdash A[\gamma] \ \mathsf{type}}$
+      \\[4ex]
+      $\inferrule{\Delta \vdash \gamma : \Gamma \\\\ \Gamma \vdash A \ \mathsf{type}
+                  \\ \Delta \vdash a : A[\gamma]}
+                 {\Delta \vdash \gamma . a : \Gamma . A}$
+      &
+      $\inferrule{\Delta \vdash \gamma : \Gamma \\ \Gamma \vdash a : A}
+                 {\Delta \vdash a[\gamma] : A[\gamma]}$
+    \end{tabular}
+
+    \smallskip
+    {\footnotesize \dots\ and many more rules}
+
+    \column{.41\textwidth}
+    \centering
+    \begin{tikzpicture}[>=Stealth, every node/.style={font=\small, draw=ColorOne, rounded corners, inner sep=4pt},
+                        dep/.style={->, thick, ColorOne}]
+      \node (cx) at (0,2)   {$\vdash \Gamma\ \mathsf{cx}$};
+      \node (ty) at (2.4,2) {$\Gamma \vdash A\ \mathsf{type}$};
+      \node (sb) at (0,0)   {$\Delta \vdash \gamma : \Gamma$};
+      \node (tm) at (2.4,0) {$\Gamma \vdash a : A$};
+      \draw[dep] (cx) to[bend left=15] (ty);
+      \draw[dep] (ty) to[bend left=15] (cx);
+      \draw[dep] (ty) to[bend left=15] (sb);
+      \draw[dep] (sb) to[bend left=15] (ty);
+      \draw[dep] (sb) to[bend left=15] (tm);
+      \draw[dep] (tm) to[bend left=15] (sb);
+      \draw[dep] (sb) -- (cx);
+      \draw[dep] (tm) -- (ty);
+    \end{tikzpicture}
+
+    \smallskip
+    {\footnotesize $X \to Y$: $X$ refers to $Y$\\
+     + 4 equality judgements, same cycle}
+  \end{columns}
+
+  \medskip
+  \centering
+  \textbf{No definition order: everything at once.}
+
+  \vfill
+  {\scriptsize Rules from Angiuli \& Gratzer, \emph{Principles of Dependent Type Theory}, Sec.~2.3.\\
+   In the code: $\Gamma.A$ is written \texttt{Γ \# A} (a ``\texttt{.}'' would end the Rocq sentence), and $\gamma$ is written \texttt{y}.}
+\end{frame}
+
+% =====================================================================
+% Part 2 -- Two designs
+% =====================================================================
+
+% --- [M1-def] ------------------------------------------------------
+\section{Two designs}
+\begin{frame}{Method 1: one family indexed by a sort}
+  The usual advice: one inductive, indexed by which judgement it is.
+\begin{alectryon}{coq}{none}
+Inductive preSubs : Type :=
+| psub_id
+| psub_weak
+| psub_ext (y : preSubs) (a : preTerm)
+with preTerm : Type :=
+| ptrm_qar
+| ptrm_subs (a : preTerm) (y : preSubs).
+Inductive preType : Type :=
+| ptyp_subs (A : preType) (y : preSubs)
+| ptyp_unit.
+Inductive preCtx : Type :=
+| pctx_one
+| pctx_ext (Γ : preCtx) (A : preType).
+Declare Scope ctx_scope. Delimit Scope ctx_scope with ctx.
+#[add_top] Bind Scope ctx_scope with preCtx.
+Declare Scope subs_scope. Delimit Scope subs_scope with subs.
+#[add_top] Bind Scope subs_scope with preSubs.
+Declare Scope ty_scope. Delimit Scope ty_scope with ty.
+#[add_top] Bind Scope ty_scope with preType.
+Declare Scope term_scope. Delimit Scope term_scope with term.
+#[add_top] Bind Scope term_scope with preTerm.
+Notation "Γ # A" := (pctx_ext Γ A) (at level 2, left associativity) : ctx_scope.
+Notation "y # a" := (psub_ext y a) (at level 2, left associativity) : subs_scope.
+Notation "A [ y ]" := (ptyp_subs A y) (at level 1) : ty_scope.
+Notation "a [ y ]" := (ptrm_subs a y) (at level 1) : term_scope.
+Abbreviation Unit := ptyp_unit.
+Abbreviation p := psub_weak.
+
+\end{alectryon}
+  \vspace{-1ex}
+  \medskip
+  \small
+\begin{alectryon}{coq}{none}
+Module Method1.
+\end{alectryon}
+\begin{alectryon}{coq}{in}
+Inductive Sort :=
+| CX (Γ : preCtx)
+| TY (Γ : preCtx) (A : preType)
+| TM (Γ : preCtx) (A : preType) (a : preTerm)
+| SB (Δ Γ : preCtx) (y : preSubs).
+Inductive J : Sort -> Prop :=
+| ctx_ext Γ A : J (CX Γ) -> J (TY Γ A) -> J (CX (Γ # A))
+| type_subs Δ Γ y A : J (SB Δ Γ y) -> J (TY Γ A) -> J (TY Δ A[y])
+| term_subs Δ Γ y A a : J (SB Δ Γ y) -> J (TM Γ A a) -> J (TM Δ A[y] a[y])
+| subs_weak Γ A : J (TY Γ A) -> J (SB (Γ # A) Γ p)
+| subs_ext Δ Γ y A a :
+    J (SB Δ Γ y) -> J (TY Γ A) -> J (TM Δ A[y] a)
+    -> J (SB Δ (Γ # A) (y # a))
+(* ... and many more rules *).
+\end{alectryon}
+\begin{alectryon}{coq}{none}
+End Method1.
+\end{alectryon}
+\end{frame}
+
+% --- [M2-def] ------------------------------------------------------
+\begin{frame}{Method 2: one family per judgement, tied with \texttt{with}}
+  What I did instead: the natural step from STLC.
+  \small
+\begin{alectryon}{coq}{none}
+Module Method2.
+\end{alectryon}
+\begin{alectryon}{coq}{in}
+Inductive CtxJG : preCtx -> Prop :=
+| ctx_ext Γ A : CtxJG Γ -> TypeJG Γ A -> CtxJG (Γ # A)
+with TypeJG : preCtx -> preType -> Prop :=
+| type_subs Δ Γ y A : SubsJG Δ Γ y -> TypeJG Γ A -> TypeJG Δ A[y]
+with TermJG : preCtx -> preType -> preTerm -> Prop :=
+| term_subs Δ Γ y A a : SubsJG Δ Γ y -> TermJG Γ A a -> TermJG Δ A[y] a[y]
+with SubsJG : preCtx -> preCtx -> preSubs -> Prop :=
+| subs_weak Γ A : TypeJG Γ A -> SubsJG (Γ # A) Γ p
+| subs_ext Δ Γ y A a :
+    SubsJG Δ Γ y -> TypeJG Γ A -> TermJG Δ A[y] a
+    -> SubsJG Δ (Γ # A) (y # a)
+(* ... and many more rules, for each judgement *).
+\end{alectryon}
+\begin{alectryon}{coq}{none}
+End Method2.
+\end{alectryon}
+\end{frame}
+
+% =====================================================================
+% Part 3 -- Proving lemmas
+% =====================================================================
+
+% --- [M2-ind] ------------------------------------------------------
+\section{Proving lemmas}
+\begin{frame}{Method 2: induction on a judgement}
+  A well-formed type lives in a well-formed context.
+\begin{alectryon}{coq}{none}
+From Stdlib Require Import Program.Equality.
+Module Ind2.
+Import Method2.
+Set Printing Width 75.
+\end{alectryon}
+  \small
+\begin{alectryon}{coq}{}
+Lemma wf Γ A : TypeJG Γ A -> CtxJG Γ. (* .in *)
+Proof. (* .none *)
+intros H; dependent induction H.
+\end{alectryon}
+\begin{alectryon}{coq}{none}
+Abort.
+End Ind2.
+\end{alectryon}
+
+  \vfill
+  \begin{itemize}
+    \item \texttt{IHTypeJG : CtxJG Γ} does not help: the goal is about \texttt{Δ}
+    \item What is missing is visible: \texttt{H -> goal}, i.e.\ \texttt{SubsJG Δ Γ y -> CtxJG Δ}
+    \item But proving \texttt{SubsJG Δ Γ y -> CtxJG Δ} will require \texttt{TypeJG Γ A -> CtxJG Γ}
+  \end{itemize}
+  \medskip
+  \centering\textbf{We need to prove both lemmas together.}
+\end{frame}
+
+% --- [Scheme] ------------------------------------------------------
+\begin{frame}{The manual's answer: \texttt{Scheme} / \texttt{Combined Scheme}}
+  \small
+  The manual's section on mutual inductive types points to \texttt{Scheme}.
+  \medskip
+
+\begin{alectryon}{coq}{none}
+Module Sch.
+Import Method2.
+\end{alectryon}
+  \begin{columns}[t,totalwidth=1.06\textwidth]
+    \column{.56\textwidth}
+    \scriptsize\alectryonvscode
+\begin{alectryon}{coq}{in}
+Scheme cx' := Minimality for CtxJG Sort Prop
+with   ty' := Minimality for TypeJG Sort Prop
+with   tm' := Minimality for TermJG Sort Prop
+with   sb' := Minimality for SubsJG Sort Prop.
+Combined Scheme JG_ind from cx', ty', tm', sb'.
+Check JG_ind.
+\end{alectryon}
+\begin{alectryon}{coq}{none}
+End Sch.
+\end{alectryon}
+
+    \column{.5\textwidth}
+    \colorbox{gray!10}{\parbox[t]{.95\linewidth}{\ttfamily\scriptsize
+      forall (P : preCtx -> Prop) \dots{} P2,\\
+      \ \dots{} -> (forall Δ Γ y A,\\
+      \ \ \ SubsJG Δ Γ y -> P2 Δ Γ y ->\\
+      \ \ \ TypeJG Γ A -> P0 Γ A -> P0 Δ A[y]) -> \dots\\
+      \ (forall p, CtxJG p -> P p) /\textbackslash{} \dots}}
+    {\tiny (output of \texttt{Check} abridged; full type checked by Rocq 9.3)}
+  \end{columns}
+
+  \vfill
+  \begin{itemize}
+    \item one predicate per judgement (\texttt{P}, \texttt{P0}, \texttt{P1}, \texttt{P2}), one case per rule
+    \item conclusion: one conjunct per judgement,
+          \texttt{(forall p, CtxJG p -> P p) /\textbackslash{} (forall p p0, TypeJG p p0 -> P0 p p0) /\textbackslash{} \dots}
+    \item my lemmas are separate statements: making them fit means a lot of boilerplate,
+          so I looked for a more natural solution
+  \end{itemize}
+\end{frame}
+
+% --- [Tried] -------------------------------------------------------
+\begin{frame}{What I tried next}
+  \begin{enumerate}
+    \item[(a)] \textbf{Follow the cycle}: a second induction on the \texttt{SubsJG} premise, until it loops back
+          \begin{itemize}
+            \item the proof for \texttt{SubsJG} is written again inside the proof for \texttt{TypeJG}
+            \item no single source of truth; with more lemmas, one copy per dependency
+          \end{itemize}
+    \item[(b)] \textbf{Break the cycle}: assume the other lemma
+          \begin{itemize}
+            \item prove the \texttt{TypeJG} lemma \emph{assuming} the \texttt{SubsJG} lemma
+            \item prove the \texttt{SubsJG} lemma, using the first one to break the cycle
+            \item restate the \texttt{TypeJG} lemma without the assumption
+            \item correct, but boilerplate for every dependency
+          \end{itemize}
+    \item[(c)] \textbf{Combine the statements} with \texttt{/\textbackslash}:
+          \texttt{(forall Γ A, TypeJG Γ A -> CtxJG Γ) /\textbackslash{} (forall Δ Γ y, \dots)}
+          \begin{itemize}
+            \item one common induction (e.g.\ on the context) needs a lot of extra structure
+            \item a mutual principle avoids all that
+          \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+% --- [Mutual] ------------------------------------------------------
+\section{Mutual lemmas}
+\begin{frame}[t]{(d) Mutual lemmas: \texttt{Lemma \dots\ with \dots}}
+\begin{alectryon}{coq}{none}
+Module Mut.
+Import Method2.
+Set Printing Width 48.
+Lemma type_wf Γ A (H : TypeJG Γ A) : CtxJG Γ
+with  subs_wf Δ Γ y (H : SubsJG Δ Γ y) :
+        CtxJG Δ /\ CtxJG Γ.
+\end{alectryon}
+  \vspace{1.5ex}
+  \begin{columns}[t,totalwidth=1.06\textwidth]
+    \column{0.55\textwidth}
+    {\ttfamily\scriptsize\setlength{\parindent}{0pt}
+    \mbox{}\\[-1pt]
+    \mk{0}\PY{k+kn}{Lemma}~\PY{n+nf}{type\PYZus{}wf}~\PY{n+nv}{Γ}~\PY{n+nv}{A}~\PY{o}{(}\PY{n+nv}{H}~\PY{o}{:}~\PY{n}{TypeJG}~\PY{n}{Γ}~\PY{n}{A}\PY{o}{)}~\PY{o}{:}~\PY{n}{CtxJG}~\PY{n}{Γ}\\
+    \mk{0}\PY{k}{with}~~\PY{n}{subs\PYZus{}wf}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{y}~\PY{o}{(}\PY{n}{H}~\PY{o}{:}~\PY{n}{SubsJG}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{y}\PY{o}{)}~\PY{o}{:}\\
+    \mk{0}~~~~~~~~\PY{n}{CtxJG}~\PY{n}{Δ}~\PY{o}{/}\PY{o}{\PYZbs{}}~\PY{n}{CtxJG}~\PY{n}{Γ}\PY{o}{.}\\
+    \mk{1}\PY{k+kn}{Proof}\PY{o}{.}\\
+    \mk{2}\PY{o}{\PYZhy{}}~\PY{n+nb}{dependent~induction}~\PY{n}{H}\PY{o}{.}\\
+    \mk{3}~~\PY{o}{+}~\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{proj1}~\PY{o}{(}\PY{n}{subs\PYZus{}wf}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{H}\PY{o}{)}\PY{o}{)}\PY{o}{.}\\
+    \mk{0}~~\PY{o}{+}~\PY{c}{(*}\PY{c}{~abridged~}\PY{c}{*)}\\
+    \mk{4}\PY{o}{\PYZhy{}}~\PY{n+nb}{dependent~induction}~\PY{n}{H}\PY{o}{.}\\
+    \mk{5}~~\PY{o}{+}~\PY{n+nb}{pose~proof}~\PY{o}{(}\PY{n}{type\PYZus{}wf}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{H}\PY{o}{)}~\PY{k}{as}~\PY{n}{HG}\PY{o}{.}\\
+    \mk{6}~~~~\PY{n+nb}{split}\PY{o}{;}~\PY{o}{[}\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{ctx\PYZus{}ext}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{HG}~\PY{n}{H}\PY{o}{)}~\PY{o}{|}~\PY{n+nb+bp}{exact}~\PY{n}{HG}\PY{o}{]}\PY{o}{.}\\
+    \mk{0}~~\PY{o}{+}~\PY{c}{(*}\PY{c}{~abridged~}\PY{c}{*)}\\
+    \mk{7}\PY{k+kn}{Qed}\PY{o}{.}\\
+    }
+    \column{0.51\textwidth}
+    \alectryonvscode\vspace*{-5pt}
+    \begin{onlyenv}<1>
+\begin{alectryon}{coq}{}
+Proof. (* .unfold .no-in -.g#2.h{*} *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<2>
+\begin{alectryon}{coq}{}
+- (* .none *) dependent induction H. (* .unfold .no-in *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<3>
+\begin{alectryon}{coq}{}
++ (* .none *) exact (proj1 (subs_wf _ _ _ H)). (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet +.}
+    \end{onlyenv}
+    \begin{onlyenv}<4>
+\begin{alectryon}{coq}{}
+- (* .none *) dependent induction H. (* .unfold .no-in -.g#2.h{*} *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<5>
+\begin{alectryon}{coq}{}
++ (* .none *) pose proof (type_wf _ _ H) as HG. (* .unfold .no-in *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<6>
+\begin{alectryon}{coq}{}
+split; [exact (ctx_ext _ _ HG H) | exact HG]. (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet +.}
+    \end{onlyenv}
+\begin{alectryon}{coq}{none}
++ destruct IHSubsJG as [HD HG].
+  split; [exact HD | exact (ctx_ext _ _ HG H0)].
+\end{alectryon}
+    \begin{onlyenv}<7>
+\begin{alectryon}{coq}{}
+Qed. (* .none *)
+\end{alectryon}
+    {\color{nagoyaGreen}\small$\checkmark$ accepted}
+    \end{onlyenv}
+  \end{columns}
+\begin{alectryon}{coq}{none}
+
+End Mut.
+\end{alectryon}
+  \popup<8>{\begin{itemize}
+      \item combine only the lemmas that depend on each other
+      \item they are all \textbf{in the context}, ready to be used
+      \item scales well: no duplication, no boilerplate
+    \end{itemize}}
+\end{frame}
+
+% --- [Level] -------------------------------------------------------
+\begin{frame}[fragile]{Another level}
+  \small
+  The lemmas follow the shape of the judgements: one lemma per judgement of the cycle.
+  In my development ({\footnotesize\texttt{2.3 - Calculus of Substitution/definitions.v}}):
+\begin{semiverbatim}\scriptsize
+Lemma subs_press \{Δ Γ : preCtx\} \{y : preSubs\} (H: [ Δ ⊢ y ~ Γ ]) :
+        [ ⊢ Δ cx ] /\textbackslash [ ⊢ Γ cx ]
+with type_press \{Γ : preCtx\} \{A : preType\} (H: [ Γ ⊢ A type ]) :
+        [ ⊢ Γ cx ]
+with eq_ctx_press \{Γ Δ : preCtx\} (H: eq_ctx Γ Δ) :
+        [ ⊢ Γ cx ] /\textbackslash [ ⊢ Δ cx ]
+with eq_type_press \{Γ : preCtx\} \{A B : preType\} (H: [ Γ ⊢ A == B type ]) :
+        [ Γ ⊢ A type ] /\textbackslash [ Γ ⊢ B type ].
+\end{semiverbatim}
+
+  \begin{itemize}
+    \item in each proof, the induction hypothesis is the \textbf{whole group}, not just the current lemma
+    \item compared with (a)--(c) and \texttt{Scheme}: each lemma keeps its own statement;
+          no motive to write, no conjunction to set up
+    \item mentioned once in the manual; its section on mutual types points to \texttt{Scheme}
+  \end{itemize}
+\end{frame}
+
+% --- [Power] -------------------------------------------------------
+\begin{frame}[t]{With great power comes great responsibility}
+  A circular ``proof'' is accepted, step by step\dots
+\begin{alectryon}{coq}{none}
+Module Bad.
+Import Method2.
+Set Printing Width 48.
+Lemma type_wf Γ A (H : TypeJG Γ A) : CtxJG Γ
+with  subs_wf Δ Γ y (H : SubsJG Δ Γ y) :
+        CtxJG Δ /\ CtxJG Γ.
+\end{alectryon}
+  \vspace{1.5ex}
+  \begin{columns}[t,totalwidth=1.06\textwidth]
+    \column{0.55\textwidth}
+    {\ttfamily\scriptsize\setlength{\parindent}{0pt}
+    \mbox{}\\[-1pt]
+    \mk{0}\PY{k+kn}{Lemma}~\PY{n+nf}{type\PYZus{}wf}~\PY{n+nv}{Γ}~\PY{n+nv}{A}~\PY{o}{(}\PY{n+nv}{H}~\PY{o}{:}~\PY{n}{TypeJG}~\PY{n}{Γ}~\PY{n}{A}\PY{o}{)}~\PY{o}{:}~\PY{n}{CtxJG}~\PY{n}{Γ}\\
+    \mk{0}\PY{k}{with}~~\PY{n}{subs\PYZus{}wf}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{y}~\PY{o}{(}\PY{n}{H}~\PY{o}{:}~\PY{n}{SubsJG}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{y}\PY{o}{)}~\PY{o}{:}\\
+    \mk{0}~~~~~~~~\PY{n}{CtxJG}~\PY{n}{Δ}~\PY{o}{/}\PY{o}{\PYZbs{}}~\PY{n}{CtxJG}~\PY{n}{Γ}\PY{o}{.}\\
+    \mk{1}\PY{k+kn}{Proof}\PY{o}{.}\\
+    \mk{2}\PY{o}{\PYZhy{}}~\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{type\PYZus{}wf}~\PY{n}{Γ}~\PY{n}{A}~\PY{n}{H}\PY{o}{)}\PY{o}{.}~~\PY{c}{(*}\PY{c}{~accepted~}\PY{c}{*)}\\
+    \mk{3}\PY{o}{\PYZhy{}}~\PY{n+nb}{dependent~induction}~\PY{n}{H}\PY{o}{.}\\
+    \mk{4}~~\PY{o}{+}~\PY{n+nb}{pose~proof}~\PY{o}{(}\PY{n}{type\PYZus{}wf}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{H}\PY{o}{)}~\PY{k}{as}~\PY{n}{HG}\PY{o}{.}\\
+    \mk{5}~~~~\PY{n+nb}{split}\PY{o}{;}~\PY{o}{[}\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{ctx\PYZus{}ext}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{HG}~\PY{n}{H}\PY{o}{)}~\PY{o}{|}~\PY{n+nb+bp}{exact}~\PY{n}{HG}\PY{o}{]}\PY{o}{.}\\
+    \mk{0}~~\PY{o}{+}~\PY{c}{(*}\PY{c}{~abridged~}\PY{c}{*)}\\
+    \mk{6}\PY{k+kn}{Qed}\PY{o}{.}\\
+    }
+    \column{0.51\textwidth}
+    \alectryonvscode\vspace*{-5pt}
+    \begin{onlyenv}<1>
+\begin{alectryon}{coq}{}
+Proof. (* .unfold .no-in -.g#2.h{*} *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<2>
+\begin{alectryon}{coq}{}
+- (* .none *) exact (type_wf Γ A H).  (* accepted *) (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet -.}
+    \end{onlyenv}
+    \begin{onlyenv}<3>
+\begin{alectryon}{coq}{}
+- (* .none *) dependent induction H. (* .unfold .no-in -.g#2.h{*} *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<4>
+\begin{alectryon}{coq}{}
++ (* .none *) pose proof (type_wf _ _ H) as HG. (* .unfold .no-in *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<5>
+\begin{alectryon}{coq}{}
+split; [exact (ctx_ext _ _ HG H) | exact HG]. (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet +.}
+    \end{onlyenv}
+\begin{alectryon}{coq}{none}
++ destruct IHSubsJG as [HD HG].
+  split; [exact HD | exact (ctx_ext _ _ HG H0)].
+\end{alectryon}
+    \begin{onlyenv}<6>
+\begin{alectryon}{coq}{}
+Fail Qed. (* .none *)
+\end{alectryon}
+    \colorbox{red!8}{\parbox{.95\linewidth}{\ttfamily\scriptsize Error: Cannot guess decreasing argument of fix.}}
+    \end{onlyenv}
+  \end{columns}
+\begin{alectryon}{coq}{none}
+Abort.
+End Bad.
+\end{alectryon}
+  \popup<7>{\begin{itemize}
+      \item more freedom, less guidance: termination is checked only at \texttt{Qed}.
+      \item the error says neither which lemma nor which line
+    \end{itemize}}
+\end{frame}
+
+% --- [Guarded] -----------------------------------------------------
+\begin{frame}[t]{Checking early: \texttt{Guarded.}}
+  Same proof, with a checkpoint after the suspicious line.
+\begin{alectryon}{coq}{none}
+Module Grd.
+Import Method2.
+Set Printing Width 48.
+Lemma type_wf Γ A (H : TypeJG Γ A) : CtxJG Γ
+with  subs_wf Δ Γ y (H : SubsJG Δ Γ y) :
+        CtxJG Δ /\ CtxJG Γ.
+\end{alectryon}
+  \vspace{1.5ex}
+  \begin{columns}[t,totalwidth=1.06\textwidth]
+    \column{0.55\textwidth}
+    {\ttfamily\scriptsize\setlength{\parindent}{0pt}
+    \mbox{}\\[-1pt]
+    \mk{0}\PY{k+kn}{Lemma}~\PY{n+nf}{type\PYZus{}wf}~\PY{n+nv}{Γ}~\PY{n+nv}{A}~\PY{o}{(}\PY{n+nv}{H}~\PY{o}{:}~\PY{n}{TypeJG}~\PY{n}{Γ}~\PY{n}{A}\PY{o}{)}~\PY{o}{:}~\PY{n}{CtxJG}~\PY{n}{Γ}\\
+    \mk{0}\PY{k}{with}~~\PY{n}{subs\PYZus{}wf}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{y}~\PY{o}{(}\PY{n}{H}~\PY{o}{:}~\PY{n}{SubsJG}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{y}\PY{o}{)}~\PY{o}{:}\\
+    \mk{0}~~~~~~~~\PY{n}{CtxJG}~\PY{n}{Δ}~\PY{o}{/}\PY{o}{\PYZbs{}}~\PY{n}{CtxJG}~\PY{n}{Γ}\PY{o}{.}\\
+    \mk{1}\PY{k+kn}{Proof}\PY{o}{.}\\
+    \mk{2}\PY{o}{\PYZhy{}}~\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{type\PYZus{}wf}~\PY{n}{Γ}~\PY{n}{A}~\PY{n}{H}\PY{o}{)}\PY{o}{.}~~\PY{c}{(*}\PY{c}{~accepted~}\PY{c}{*)}\\
+    \mk{3}~~\PY{k+kn}{Guarded}\PY{o}{.}\\
+    \mk{0}\PY{o}{\PYZhy{}}~\PY{n+nb}{dependent~induction}~\PY{n}{H}\PY{o}{.}\\
+    \mk{0}~~\PY{o}{+}~\PY{n+nb}{pose~proof}~\PY{o}{(}\PY{n}{type\PYZus{}wf}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{H}\PY{o}{)}~\PY{k}{as}~\PY{n}{HG}\PY{o}{.}\\
+    \mk{0}~~~~\PY{n+nb}{split}\PY{o}{;}~\PY{o}{[}\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{ctx\PYZus{}ext}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{HG}~\PY{n}{H}\PY{o}{)}~\PY{o}{|}~\PY{n+nb+bp}{exact}~\PY{n}{HG}\PY{o}{]}\PY{o}{.}\\
+    \mk{0}~~\PY{o}{+}~\PY{c}{(*}\PY{c}{~abridged~}\PY{c}{*)}\\
+    \mk{0}\PY{k+kn}{Qed}\PY{o}{.}\\
+    }
+    \column{0.51\textwidth}
+    \alectryonvscode\vspace*{-5pt}
+    \begin{onlyenv}<1>
+\begin{alectryon}{coq}{}
+Proof. (* .unfold .no-in -.g#2.h{*} *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<2>
+\begin{alectryon}{coq}{}
+- (* .none *) exact (type_wf Γ A H).  (* accepted *) (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet -.}
+    \end{onlyenv}
+    \begin{onlyenv}<3>
+\begin{alectryon}{coq}{}
+Fail Guarded. (* .none *)
+\end{alectryon}
+    \colorbox{red!8}{\parbox{.95\linewidth}{\ttfamily\scriptsize Error: Recursive definition of type\_wf and subs\_wf is ill-formed.\\ As a mutual fixpoint decreasing on the 1st argument of type\_wf and 1st argument of subs\_wf: Recursive call to type\_wf has principal argument equal to "Γ" instead of a subterm of "Γ".\\ As a mutual fixpoint decreasing on the 1st argument of type\_wf and 2nd argument of subs\_wf: \dots\\ \dots}}\\{\tiny (error abridged: 12 combinations, 64 lines)}
+    \end{onlyenv}
+  \end{columns}
+\begin{alectryon}{coq}{none}
+Abort.
+End Grd.
+\end{alectryon}
+  \popup<4>{\begin{itemize}
+      \item \texttt{Guarded.}: check \emph{now}, as a checkpoint
+      \item but it tries \textbf{every} combination of decreasing arguments:
+            here $3 \times 4 = 12$ combinations, 64 lines of error
+      \item exponential in the number of lemmas
+    \end{itemize}}
+\end{frame}
+
+% --- [M1-whole] ----------------------------------------------------
+\section{Looking back}
+\begin{frame}[t]{Looking back: an induction principle, no termination check}
+\begin{alectryon}{coq}{none}
+Module Whole.
+Import Method1.
+Set Printing Width 48.
+Definition wf_motive (f : Sort) : Prop :=
+  match f with
+  | TY Γ _   => J (CX Γ)
+  | SB Δ Γ _ => J (CX Δ) /\ J (CX Γ)
+  | TM Γ _ _ => J (CX Γ)
+  | _        => True
+  end.
+Lemma wf_all f (H : J f) : wf_motive f.
+\end{alectryon}
+  \begin{columns}[t,totalwidth=1.06\textwidth]
+    \column{0.55\textwidth}
+    {\ttfamily\scriptsize\setlength{\parindent}{0pt}
+    \mbox{}\\[-1pt]
+    \mk{0}\PY{k+kn}{Definition}~\PY{n+nf}{wf\PYZus{}motive}~\PY{o}{(}\PY{n+nv}{f}~\PY{o}{:}~\PY{n}{Sort}\PY{o}{)}~\PY{o}{:}~\PY{k+kt}{Prop}~\PY{o}{:}\PY{o}{=}\\
+    \mk{0}~~\PY{k}{match}~\PY{n}{f}~\PY{k}{with}\\
+    \mk{0}~~\PY{o}{|}~\PY{n}{TY}~\PY{n}{Γ}~\PY{n}{\PYZus{}}~~~\PY{o}{=}\PY{o}{\PYZgt{}}~\PY{n}{J}~\PY{o}{(}\PY{n}{CX}~\PY{n}{Γ}\PY{o}{)}\\
+    \mk{0}~~\PY{o}{|}~\PY{n}{SB}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{\PYZus{}}~\PY{o}{=}\PY{o}{\PYZgt{}}~\PY{n}{J}~\PY{o}{(}\PY{n}{CX}~\PY{n}{Δ}\PY{o}{)}~\PY{o}{/}\PY{o}{\PYZbs{}}~\PY{n}{J}~\PY{o}{(}\PY{n}{CX}~\PY{n}{Γ}\PY{o}{)}\\
+    \mk{0}~~\PY{o}{|}~\PY{n}{TM}~\PY{n}{Γ}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{o}{=}\PY{o}{\PYZgt{}}~\PY{n}{J}~\PY{o}{(}\PY{n}{CX}~\PY{n}{Γ}\PY{o}{)}\\
+    \mk{0}~~\PY{o}{|}~\PY{n}{\PYZus{}}~~~~~~~~\PY{o}{=}\PY{o}{\PYZgt{}}~\PY{k+kt}{True}\\
+    \mk{0}~~\PY{k}{end}\PY{o}{.}\\
+    \mk{0}\PY{k+kn}{Lemma}~\PY{n+nf}{wf\PYZus{}all}~\PY{n+nv}{f}~\PY{o}{(}\PY{n+nv}{H}~\PY{o}{:}~\PY{n}{J}~\PY{n}{f}\PY{o}{)}~\PY{o}{:}~\PY{n}{wf\PYZus{}motive}~\PY{n}{f}\PY{o}{.}\\
+    \mk{1}\PY{k+kn}{Proof}\PY{o}{.}\\
+    \mk{2}~~\PY{n+nb}{induction}~\PY{n}{H}\PY{o}{;}~\PY{n+nb}{simpl}~\PY{k}{in}~\PY{o}{*}\PY{o}{.}\\
+    \mk{3}~~\PY{o}{\PYZhy{}}~\PY{n+nb}{trivial}\PY{o}{.}\\
+    \mk{4}~~\PY{o}{\PYZhy{}}\\
+    \mk{5}~~~~\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{proj1}~\PY{n}{IHJ1}\PY{o}{)}\PY{o}{.}\\
+    \mk{6}~~\PY{o}{\PYZhy{}}~\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{proj1}~\PY{n}{IHJ1}\PY{o}{)}\PY{o}{.}\\
+    \mk{7}~~\PY{o}{\PYZhy{}}~\PY{n+nb}{split}\PY{o}{;}~\PY{o}{[}\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{ctx\PYZus{}ext}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{IHJ}~\PY{n}{H}\PY{o}{)}~\PY{o}{|}~\PY{n+nb+bp}{exact}~\PY{n}{IHJ}\PY{o}{]}\PY{o}{.}\\
+    \mk{8}~~\PY{o}{\PYZhy{}}\\
+    \mk{9}~~~~\PY{n+nb}{split}\PY{o}{;}~\PY{o}{[}\PY{n+nb+bp}{exact}~\PY{n}{IHJ3}~\PY{o}{|}~\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{ctx\PYZus{}ext}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{IHJ2}~\PY{n}{H0}\PY{o}{)}\PY{o}{]}\PY{o}{.}\\
+    \mk{10}\PY{k+kn}{Qed}\PY{o}{.}\\
+    }
+    \column{0.51\textwidth}
+    \alectryonvscode\vspace*{-5pt}
+    \begin{onlyenv}<1>
+\begin{alectryon}{coq}{}
+Proof. (* .unfold .no-in *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<2>
+\begin{alectryon}{coq}{}
+induction H; simpl in *. (* .unfold .no-in -.g#2.h{*} -.g#3.h{*} -.g#4.h{*} -.g#5.h{*} *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<3>
+\begin{alectryon}{coq}{}
+- (* .none *) trivial. (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet -.}
+    \end{onlyenv}
+    \begin{onlyenv}<4>
+\begin{alectryon}{coq}{}
+- (* .unfold .no-in *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<5>
+\begin{alectryon}{coq}{}
+exact (proj1 IHJ1). (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet -.}
+    \end{onlyenv}
+    \begin{onlyenv}<6>
+\begin{alectryon}{coq}{}
+- (* .none *) exact (proj1 IHJ1). (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet -.}
+    \end{onlyenv}
+    \begin{onlyenv}<7>
+\begin{alectryon}{coq}{}
+- (* .none *) split; [exact (ctx_ext _ _ IHJ H) | exact IHJ]. (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet -.}
+    \end{onlyenv}
+    \begin{onlyenv}<8>
+\begin{alectryon}{coq}{}
+- (* .unfold .no-in *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<9>
+\begin{alectryon}{coq}{}
+split; [exact IHJ3 | exact (ctx_ext _ _ IHJ2 H0)]. (* .none *)
+\end{alectryon}
+    \rocqmsg{No more goals.}
+    \end{onlyenv}
+    \begin{onlyenv}<10>
+\begin{alectryon}{coq}{}
+Qed. (* .none *)
+\end{alectryon}
+    {\color{nagoyaGreen}\small$\checkmark$ accepted}
+    \end{onlyenv}
+  \end{columns}
+\begin{alectryon}{coq}{none}
+Lemma wf Γ A (H : J (TY Γ A)) : J (CX Γ).
+Proof. exact (wf_all _ H). Qed.
+End Whole.
+\end{alectryon}
+  \popup<11>{\begin{itemize}
+      \item no \texttt{fix} in the proof: no termination check at \texttt{Qed}
+      \item method 2 gets the same with \texttt{Combined Scheme}
+      \item (c) done right: the induction comes \emph{before} the cases
+    \end{itemize}}
+\end{frame}
+
+% --- [Takeaways] ---------------------------------------------------
+\section{Conclusion}
+\begin{frame}{Takeaways}
+  \begin{itemize}
+    \item A cycle of judgements: one inductive per judgement, tied with \texttt{with}
+    \item A lemma on one judgement needs the others, in both methods
+    \item Two ways to prove them together, available in both methods:
+          \begin{itemize}
+            \item (c) one induction principle on the \emph{whole} syntax, no termination check
+            \item (d) \textbf{mutual lemmas} \texttt{Lemma \dots\ with \dots}: little known, mentioned once in the manual;
+                  termination checked only at \texttt{Qed}, use \texttt{Guarded.} to check early;
+                  \texttt{Fixpoint \dots\ \{struct H\}} seems to fix that (supplement)
+          \end{itemize}
+    \item Method 1 leans toward (c), method 2 toward (d)
+    \item I recommend method 2: no sort, cycles are easy to add or remove,
+          with \texttt{Scheme} both (c) and (d) are available, \dots
+  \end{itemize}
+  \vfill
+  \centering
+  {\Large Questions?}
+\end{frame}
+
+% =====================================================================
+% Supplements (after the talk; not counted in the slide numbers)
+% =====================================================================
+\appendix
+\section{Supplements}
+% --- [Supp-Fix] ----------------------------------------------------
+\begin{frame}[t]{Supplement: \texttt{Fixpoint \dots\ \{struct H\}} with no body}
+  Also enters proof mode, but the decreasing argument is \textbf{given}.
+\begin{alectryon}{coq}{none}
+Module Fix.
+Import Method2.
+Set Printing Width 48.
+Fixpoint type_wf Γ A (H : TypeJG Γ A)
+        {struct H} : CtxJG Γ
+with subs_wf Δ Γ y (H : SubsJG Δ Γ y)
+        {struct H} :
+        CtxJG Δ /\ CtxJG Γ.
+\end{alectryon}
+  \vspace{1.5ex}
+  \begin{columns}[t,totalwidth=1.06\textwidth]
+    \column{0.55\textwidth}
+    {\ttfamily\scriptsize\setlength{\parindent}{0pt}
+    \mbox{}\\[-1pt]
+    \mk{0}\PY{k+kn}{Fixpoint}~\PY{n+nf}{type\PYZus{}wf}~\PY{n+nv}{Γ}~\PY{n+nv}{A}~\PY{o}{(}\PY{n+nv}{H}~\PY{o}{:}~\PY{n}{TypeJG}~\PY{n}{Γ}~\PY{n}{A}\PY{o}{)}\\
+    \mk{0}~~~~~~~~\PY{o}{\PYZob{}}\PY{k}{struct}~\PY{n}{H}\PY{o}{\PYZcb{}}~\PY{o}{:}~\PY{n}{CtxJG}~\PY{n}{Γ}\\
+    \mk{0}\PY{k}{with}~\PY{n}{subs\PYZus{}wf}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{y}~\PY{o}{(}\PY{n}{H}~\PY{o}{:}~\PY{n}{SubsJG}~\PY{n}{Δ}~\PY{n}{Γ}~\PY{n}{y}\PY{o}{)}\\
+    \mk{0}~~~~~~~~\PY{o}{\PYZob{}}\PY{k}{struct}~\PY{n}{H}\PY{o}{\PYZcb{}}~\PY{o}{:}\\
+    \mk{0}~~~~~~~~\PY{n}{CtxJG}~\PY{n}{Δ}~\PY{o}{/}\PY{o}{\PYZbs{}}~\PY{n}{CtxJG}~\PY{n}{Γ}\PY{o}{.}\\
+    \mk{1}\PY{k+kn}{Proof}\PY{o}{.}\\
+    \mk{2}\PY{o}{\PYZhy{}}~\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{type\PYZus{}wf}~\PY{n}{Γ}~\PY{n}{A}~\PY{n}{H}\PY{o}{)}\PY{o}{.}~~\PY{c}{(*}\PY{c}{~accepted~}\PY{c}{*)}\\
+    \mk{3}~~\PY{k+kn}{Guarded}\PY{o}{.}\\
+    \mk{4}\PY{o}{\PYZhy{}}~\PY{n+nb}{dependent~induction}~\PY{n}{H}\PY{o}{.}\\
+    \mk{5}~~\PY{o}{+}~\PY{n+nb}{pose~proof}~\PY{o}{(}\PY{n}{type\PYZus{}wf}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{H}\PY{o}{)}~\PY{k}{as}~\PY{n}{HG}\PY{o}{.}\\
+    \mk{6}~~~~\PY{n+nb}{split}\PY{o}{;}~\PY{o}{[}\PY{n+nb+bp}{exact}~\PY{o}{(}\PY{n}{ctx\PYZus{}ext}~\PY{n}{\PYZus{}}~\PY{n}{\PYZus{}}~\PY{n}{HG}~\PY{n}{H}\PY{o}{)}~\PY{o}{|}~\PY{n+nb+bp}{exact}~\PY{n}{HG}\PY{o}{]}\PY{o}{.}\\
+    \mk{0}~~\PY{o}{+}~\PY{c}{(*}\PY{c}{~abridged~}\PY{c}{*)}\\
+    \mk{7}\PY{k+kn}{Qed}\PY{o}{.}\\
+    }
+    \column{0.51\textwidth}
+    \alectryonvscode\vspace*{-5pt}
+    \begin{onlyenv}<1>
+\begin{alectryon}{coq}{}
+Proof. (* .unfold .no-in -.g#2.h{*} *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<2>
+\begin{alectryon}{coq}{}
+- (* .none *) exact (type_wf Γ A H).  (* accepted *) (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet -.}
+    \end{onlyenv}
+    \begin{onlyenv}<3>
+\begin{alectryon}{coq}{}
+Fail Guarded. (* .none *)
+\end{alectryon}
+    \colorbox{red!8}{\parbox{.95\linewidth}{\ttfamily\scriptsize Error: Recursive definition of type\_wf and subs\_wf is ill-formed.\\ As a mutual fixpoint decreasing on the 3rd argument of type\_wf and 4th argument of subs\_wf: Recursive call to type\_wf has principal argument equal to "H" instead of a subterm of "H".\\ \dots}}\\{\tiny (error abridged: 1 combination, 9 lines)}
+    \end{onlyenv}
+    \begin{onlyenv}<4>
+\begin{alectryon}{coq}{}
+- (* .none *) dependent induction H. (* .unfold .no-in -.g#2.h{*} *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<5>
+\begin{alectryon}{coq}{}
++ (* .none *) pose proof (type_wf _ _ H) as HG. (* .unfold .no-in *)
+\end{alectryon}
+    \end{onlyenv}
+    \begin{onlyenv}<6>
+\begin{alectryon}{coq}{}
+split; [exact (ctx_ext _ _ HG H) | exact HG]. (* .none *)
+\end{alectryon}
+    \rocqmsg{This subproof is complete, but there are some unfocused goals.\\ Focus next goal with bullet +.}
+    \end{onlyenv}
+\begin{alectryon}{coq}{none}
++ destruct IHSubsJG as [HD HG].
+  split; [exact HD | exact (ctx_ext _ _ HG H0)].
+\end{alectryon}
+    \begin{onlyenv}<7>
+\begin{alectryon}{coq}{}
+Fail Qed. (* .none *)
+\end{alectryon}
+    \colorbox{red!8}{\parbox{.95\linewidth}{\ttfamily\scriptsize Error: Recursive definition of type\_wf is ill-formed.\\ \dots\\ Recursive call to type\_wf has principal argument equal to "H" instead of a subterm of "H".}}\\{\tiny (error abridged)}
+    \end{onlyenv}
+  \end{columns}
+\begin{alectryon}{coq}{none}
+Abort.
+End Fix.
+\end{alectryon}
+  \popup<8>{\begin{itemize}
+      \item one combination checked; the error names the lemma and the bad call
+      \item \texttt{Guarded.} too: 1 combination, 9 lines (12 combinations, 64 lines without \texttt{struct})
+      \item trade-off: you must know the decreasing argument \emph{before} the proof
+    \end{itemize}}
+\end{frame}
+
+% --- [Supp-M1-ind] -------------------------------------------------
+\begin{frame}{Supplement: method 1, induction on a judgement}
+  A well-formed type lives in a well-formed context.
+  \vspace{-1ex}
+\begin{alectryon}{coq}{none}
+Module Ind1.
+Import Method1.
+Set Printing Width 90.
+\end{alectryon}
+  \small
+\begin{alectryon}{coq}{}
+Lemma wf Γ A : J (TY Γ A) -> J (CX Γ). (* .in *)
+Proof. (* .none *)
+intros H; dependent induction H.
+\end{alectryon}
+\begin{alectryon}{coq}{none}
+Abort.
+End Ind1.
+\end{alectryon}
+
+  \vfill
+  \begin{itemize}
+    \item The IHs look like progress, but neither helps:\\
+          \texttt{IHJ1} needs \texttt{SB \dots{} = TY \dots} (never true);
+          \texttt{IHJ2} gives \texttt{J (CX Γ0)}, not \texttt{J (CX Γ)}
+    \item What is missing: from \texttt{H : J (SB Γ Γ0 y)} to the goal \texttt{J (CX Γ)}
+  \end{itemize}
+\end{frame}
+
+\end{document}

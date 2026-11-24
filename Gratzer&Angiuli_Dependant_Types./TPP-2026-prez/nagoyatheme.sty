@@ -17,6 +17,8 @@
 % Theme and color settings
 \usetheme{Frankfurt}
 \usecolortheme{default}
+% flat header: miniframes (no gradient), no subsection row
+\useoutertheme[subsection=false]{miniframes}
 
 % Color application
 \setbeamercolor{normal text}{fg=darkText, bg=white}
@@ -29,7 +31,7 @@
 
 
 % Fonts
-\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
 \setbeamerfont{title}{size=\huge,series=\bfseries}
 \setbeamerfont{author}{size=\normalsize}
 \setbeamerfont{institute}{size=\normalsize}
@@ -67,30 +69,65 @@
 }
 
 
-% footer
+% header: dark Nagoya green bar, section names + progress dots
+\definecolor{nagoyaDark}{HTML}{0B3B2C}
+\definecolor{nagoyaTintDot}{HTML}{9CC9B6}
+\setbeamercolor{section in head/foot}{fg=white,bg=nagoyaDark}
+\setbeamercolor{mini frame}{fg=white,bg=nagoyaDark}
+\setbeamercolor{frametitle}{fg=white,bg=nagoyaGreen}
+\setbeamertemplate{frametitle}{%
+   \nointerlineskip
+   \begin{beamercolorbox}[wd=\paperwidth,ht=2.7ex,dp=1ex,center]{frametitle}%
+      \usebeamerfont{frametitle}\insertframetitle
+   \end{beamercolorbox}}
+% progress dots: filled = shown, ring = current, hollow = to come.
+% beamer does not tell the dot template which slide it stands for, so we
+% record the first page of each entry and compare it with the current page.
 \makeatletter
+\let\nagoya@slideentry\slideentry
+\def\nagoya@firstpage#1/#2\relax{\def\nagoya@dotpage{#1}}
+\def\slideentry#1#2#3#4#5#6{%
+   \nagoya@firstpage#4\relax\nagoya@slideentry{#1}{#2}{#3}{#4}{#5}{#6}}
+\newcommand\nagoya@dot[1]{% #1 = pgf drawing commands
+   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}#1\end{pgfpicture}}
+\newcommand\nagoya@pastorfuture{%
+   \ifnum\nagoya@dotpage<\c@page
+      \nagoya@dot{\pgfsetfillcolor{nagoyaTintDot}%
+         \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}\pgfusepath{fill}}%
+   \else
+      \nagoya@dot{\pgfsetstrokecolor{nagoyaTintDot}\pgfsetlinewidth{0.5pt}%
+         \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.042cm}\pgfusepath{stroke}}%
+   \fi}
+\setbeamertemplate{mini frame}{%
+   \nagoya@dot{\pgfsetstrokecolor{white}\pgfsetfillcolor{white}\pgfsetlinewidth{0.6pt}%
+      \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.06cm}\pgfusepath{stroke}%
+      \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.025cm}\pgfusepath{fill}}}
+\setbeamertemplate{mini frame in current subsection}{\nagoya@pastorfuture}
+\setbeamertemplate{mini frame in other subsection}{\nagoya@pastorfuture}
+\setbeamertemplate{mini frame in other section}{\nagoya@pastorfuture}
+\makeatother
+
+% footer: three boxes in Nagoya green, high contrast
+%   [ author | short title | short institute    page ]
+\definecolor{nagoyaTint}{HTML}{E3F0EB}
+\setbeamercolor{foot strong}{fg=white,bg=nagoyaGreen}
+\setbeamercolor{foot light}{fg=nagoyaGreen,bg=nagoyaTint}
+\setbeamerfont{footline}{size=\scriptsize}
 \setbeamertemplate{footline}
-{
-   \leavevmode%
+{%
+   \leavevmode\usebeamerfont{footline}%
    \hbox{%
-      \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-         \usebeamerfont{author in head/foot}%
+      \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.4ex,dp=1ex,center]{foot strong}%
          \insertshortauthor
       \end{beamercolorbox}%
-      \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-         \usebeamerfont{title in head/foot}%
+      \begin{beamercolorbox}[wd=.52\paperwidth,ht=2.4ex,dp=1ex,center]{foot light}%
          \insertshorttitle
       \end{beamercolorbox}%
-      \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
-         \usebeamerfont{institute in head/foot}%
-         \insertshortinstitute
-      \end{beamercolorbox}%
-      \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{page number in head/foot}%
-         \usebeamerfont{page number in head/foot}%
-         \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+      \begin{beamercolorbox}[wd=.28\paperwidth,ht=2.4ex,dp=1ex]{foot strong}%
+         \hspace*{2ex}\insertshortinstitute\hfill
+         \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}%
       \end{beamercolorbox}}%
 }
-\makeatother
 
 % \usepackage{totcount}
 % \newtotcounter{mysec}
