@@ -1,0 +1,2485 @@
+DIGEST c2e08805e619b683ce23d89ff6370823
+FCOS.definitions
+R141:160 Corelib.Relations.Relation_Definitions <> <> lib
+R168:182 Corelib.Classes.RelationClasses <> <> lib
+R190:195 Corelib.Setoids.Setoid <> <> lib
+R203:211 Corelib.Classes.Morphisms <> <> lib
+R244:248 Stdlib.Arith.Arith <> <> lib
+R256:273 Stdlib.Relations.Relation_Operators <> <> lib
+R281:296 Stdlib.Program.Equality <> <> lib
+R300:313 Stdlib.Vectors.Vector <> <> lib
+R317:326 Stdlib.Lists.List <> <> lib
+R347:352 COS.Monoid <> <> lib
+ind 721:727 <> preSubs
+constr 741:749 <> psub_weak
+constr 763:769 <> psub_id
+constr 785:793 <> psub_comp
+constr 825:832 <> psub_ext
+constr 875:883 <> psub_bang
+ind 901:907 <> preType
+constr 921:929 <> ptyp_base
+constr 1007:1015 <> ptyp_subs
+ind 1061:1067 <> preTerm
+constr 1081:1088 <> ptrm_qar
+constr 1102:1110 <> ptrm_subs
+R753:759 COS.definitions <> preSubs:1 ind
+R775:781 COS.definitions <> preSubs:1 ind
+R804:810 COS.definitions <> preSubs:1 ind
+binder 796:797 <> y1:7
+binder 799:800 <> y2:8
+R815:821 COS.definitions <> preSubs:1 ind
+R840:846 COS.definitions <> preSubs:1 ind
+binder 836:836 <> y:9
+R854:860 COS.definitions <> preTerm:3 ind
+binder 850:850 <> a:10
+R865:871 COS.definitions <> preSubs:1 ind
+R887:893 COS.definitions <> preSubs:1 ind
+R933:939 COS.definitions <> preType:2 ind
+R1022:1028 COS.definitions <> preType:2 ind
+binder 1018:1018 <> A:11
+R1036:1042 COS.definitions <> preSubs:1 ind
+binder 1032:1032 <> y:12
+R1047:1053 COS.definitions <> preType:2 ind
+R1092:1098 COS.definitions <> preTerm:3 ind
+R1117:1123 COS.definitions <> preTerm:3 ind
+binder 1113:1113 <> a:13
+R1131:1137 COS.definitions <> preSubs:1 ind
+binder 1127:1127 <> y:14
+R1142:1148 COS.definitions <> preTerm:3 ind
+scheme 721:727 <> preSubs_rect
+scheme 721:727 <> preSubs_ind
+scheme 721:727 <> preSubs_rec
+scheme 721:727 <> preSubs_sind
+scheme 901:907 <> preType_rect
+scheme 901:907 <> preType_ind
+scheme 901:907 <> preType_rec
+scheme 901:907 <> preType_sind
+scheme 1061:1067 <> preTerm_rect
+scheme 1061:1067 <> preTerm_ind
+scheme 1061:1067 <> preTerm_rec
+scheme 1061:1067 <> preTerm_sind
+ind 1164:1169 <> preCtx
+constr 1184:1191 <> pctx_one
+constr 1204:1211 <> pctx_ext
+R1195:1200 COS.definitions <> preCtx:15 ind
+R1219:1224 COS.definitions <> preCtx:15 ind
+binder 1214:1215 <> Γ:17
+R1232:1238 COS.definitions <> preType ind
+binder 1228:1228 <> A:18
+R1243:1248 COS.definitions <> preCtx:15 ind
+scheme 1164:1169 <> preCtx_rect
+scheme 1164:1169 <> preCtx_ind
+scheme 1164:1169 <> preCtx_rec
+scheme 1164:1169 <> preCtx_sind
+R1858:1865 COS.definitions <> pctx_one constr
+not 1850:1850 <> :::'1'
+R1892:1899 COS.definitions <> pctx_ext constr
+not 1879:1879 <> ::ctx_scope:x_'#'_x
+abbrev 1963:1964 <> id
+R1976:1982 COS.definitions <> psub_id constr
+abbrev 1994:1994 <> p
+R2007:2015 COS.definitions <> psub_weak constr
+R2043:2051 COS.definitions <> psub_comp constr
+not 2027:2027 <> ::subs_scope:x_'∘'_x
+R2131:2138 COS.definitions <> psub_ext constr
+not 2117:2117 <> ::subs_scope:x_'#'_x
+R2213:2221 COS.definitions <> psub_bang constr
+not 2200:2200 <> :::'!'
+abbrev 2234:2234 <> b
+R2247:2255 COS.definitions <> ptyp_base constr
+R2281:2289 COS.definitions <> ptyp_subs constr
+not 2267:2267 <> ::ty_scope:x_'['_x_']'
+abbrev 2330:2330 <> q
+R2346:2353 COS.definitions <> ptrm_qar constr
+R2382:2390 COS.definitions <> ptrm_subs constr
+not 2365:2365 <> ::term_scope:x_'['_x_']'
+R2431:2433 COS.definitions <> ::ctx_scope:x_'#'_x not
+R2434:2434 COS.definitions <> b abbrev
+ind 3120:3124 <> CtxJG
+constr 3151:3157 <> ctx_one
+constr 3185:3191 <> ctx_ext
+ind 3297:3302 <> SubsJG
+constr 3350:3358 <> subs_weak
+constr 3450:3456 <> subs_id
+constr 3527:3535 <> subs_comp
+constr 3674:3681 <> subs_ext
+constr 3855:3863 <> subs_bang
+constr 3957:3976 <> subs_over_ctx_quot_l
+constr 4088:4107 <> subs_over_ctx_quot_r
+ind 4222:4227 <> TypeJG
+constr 4265:4273 <> type_base
+constr 4343:4351 <> type_subs
+constr 4516:4533 <> type_over_ctx_quot
+ind 4631:4636 <> TermJG
+constr 4785:4792 <> term_qar
+constr 4874:4882 <> term_subs
+constr 5056:5073 <> term_over_ctx_quot
+constr 5178:5196 <> term_over_type_quot
+ind 5427:5432 <> eq_ctx
+constr 5621:5630 <> eq_ctx_one
+constr 5661:5670 <> eq_ctx_ext
+ind 5866:5872 <> eq_subs
+constr 5963:5973 <> eq_subs_sym
+constr 6068:6080 <> eq_subs_trans
+constr 6273:6287 <> eq_subs_id_left
+constr 6377:6392 <> eq_subs_id_right
+constr 6482:6499 <> eq_subs_comp_assoc
+constr 6720:6731 <> eq_subs_bang
+constr 6861:6872 <> eq_subs_beta
+constr 7041:7051 <> eq_subs_eta
+constr 7234:7256 <> eq_subs_over_ctx_quot_l
+constr 7381:7403 <> eq_subs_over_ctx_quot_r
+constr 7620:7631 <> subs_ext_mor
+ind 7847:7853 <> eq_type
+constr 7934:7944 <> eq_type_sym
+constr 8030:8042 <> eq_type_trans
+constr 8203:8217 <> eq_type_subs_id
+constr 8306:8322 <> eq_type_subs_comp
+constr 8694:8714 <> eq_type_over_ctx_quot
+constr 8919:8930 <> eq_type_base
+ind 9051:9057 <> eq_term
+constr 9149:9159 <> eq_term_sym
+constr 9258:9270 <> eq_term_trans
+constr 9440:9454 <> eq_term_subs_id
+constr 9557:9573 <> eq_term_subs_comp
+constr 9855:9870 <> eq_term_beta_qar
+constr 10079:10099 <> eq_term_over_ctx_quot
+constr 10217:10238 <> eq_term_over_type_quot
+R3134:3137 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3128:3133 COS.definitions <> preCtx ind
+R3312:3315 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3306:3311 COS.definitions <> preCtx ind
+R3322:3325 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3316:3321 COS.definitions <> preCtx ind
+R3333:3336 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3326:3332 COS.definitions <> preSubs ind
+R4237:4240 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4231:4236 COS.definitions <> preCtx ind
+R4248:4251 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4241:4247 COS.definitions <> preType ind
+R4646:4649 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4640:4645 COS.definitions <> preCtx ind
+R4657:4660 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4650:4656 COS.definitions <> preType ind
+R4668:4671 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4661:4667 COS.definitions <> preTerm ind
+R5442:5445 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5436:5441 COS.definitions <> preCtx ind
+R5452:5455 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5446:5451 COS.definitions <> preCtx ind
+R5882:5885 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5876:5881 COS.definitions <> preCtx ind
+R5892:5895 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5886:5891 COS.definitions <> preCtx ind
+R5903:5906 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5896:5902 COS.definitions <> preSubs ind
+R5914:5917 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5907:5913 COS.definitions <> preSubs ind
+R7863:7866 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7857:7862 COS.definitions <> preCtx ind
+R7874:7877 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7867:7873 COS.definitions <> preType ind
+R7885:7888 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7878:7884 COS.definitions <> preType ind
+R9067:9070 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9061:9066 COS.definitions <> preCtx ind
+R9078:9081 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9071:9077 COS.definitions <> preType ind
+R9089:9092 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9082:9088 COS.definitions <> preTerm ind
+R9100:9103 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9093:9099 COS.definitions <> preTerm ind
+R10402:10406 COS.definitions <> CtxJG:27 ind
+R10449:10454 COS.definitions <> TypeJG:29 ind
+R10499:10504 COS.definitions <> TermJG:30 ind
+R10552:10557 COS.definitions <> SubsJG:28 ind
+R10605:10611 COS.definitions <> eq_type:33 ind
+R10658:10664 COS.definitions <> eq_term:34 ind
+R10714:10720 COS.definitions <> eq_subs:32 ind
+R3167:3172 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3174:3178 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3199:3204 COS.definitions <> preCtx ind
+binder 3194:3195 <> Γ:35
+R3212:3218 COS.definitions <> preType ind
+binder 3208:3208 <> A:36
+R3242:3245 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3229:3234 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3237:3241 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3235:3236 COS.definitions <> Γ:35 var
+R3263:3272 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3246:3247 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3250:3254 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3256:3262 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3248:3249 COS.definitions <> Γ:35 var
+R3255:3255 COS.definitions <> A:36 var
+R3273:3279 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3286:3289 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3282:3284 COS.definitions <> ::ctx_scope:x_'#'_x not
+R3280:3281 COS.definitions <> Γ:35 var
+R3285:3285 COS.definitions <> A:36 var
+R3366:3371 COS.definitions <> preCtx ind
+binder 3361:3362 <> Γ:37
+R3379:3385 COS.definitions <> preType ind
+binder 3375:3375 <> A:38
+R3413:3422 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3396:3397 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3400:3404 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3406:3412 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3398:3399 COS.definitions <> Γ:37 var
+R3405:3405 COS.definitions <> A:38 var
+R3423:3424 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3431:3435 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3437:3439 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3442:3443 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3427:3429 COS.definitions <> ::ctx_scope:x_'#'_x not
+R3425:3426 COS.definitions <> Γ:37 var
+R3430:3430 COS.definitions <> A:38 var
+R3440:3441 COS.definitions <> Γ:37 var
+R3436:3436 COS.definitions <> p abbrev
+R3464:3469 COS.definitions <> preCtx ind
+binder 3459:3460 <> Γ:39
+R3493:3502 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3480:3485 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3488:3492 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3486:3487 COS.definitions <> Γ:39 var
+R3503:3504 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3507:3511 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3514:3516 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3519:3520 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3505:3506 COS.definitions <> Γ:39 var
+R3517:3518 COS.definitions <> Γ:39 var
+R3512:3513 COS.definitions <> id abbrev
+R3552:3557 COS.definitions <> preCtx ind
+binder 3538:3540 <> Γ2:40
+binder 3542:3544 <> Γ1:41
+binder 3546:3548 <> Γ0:42
+R3569:3575 COS.definitions <> preSubs ind
+binder 3561:3562 <> y1:43
+binder 3564:3565 <> y0:44
+R3606:3609 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3586:3587 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3591:3595 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3598:3600 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3604:3605 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3588:3590 COS.definitions <> Γ2:40 var
+R3601:3603 COS.definitions <> Γ1:41 var
+R3596:3597 COS.definitions <> y1:43 var
+R3630:3638 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3610:3611 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3615:3619 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3622:3624 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3628:3629 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3612:3614 COS.definitions <> Γ1:41 var
+R3625:3627 COS.definitions <> Γ0:42 var
+R3620:3621 COS.definitions <> y0:44 var
+R3639:3640 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3644:3649 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3659:3662 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3666:3667 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3641:3643 COS.definitions <> Γ2:40 var
+R3663:3665 COS.definitions <> Γ0:42 var
+R3652:3656 COS.definitions <> ::subs_scope:x_'∘'_x not
+R3650:3651 COS.definitions <> y0:44 var
+R3657:3658 COS.definitions <> y1:43 var
+R3692:3697 COS.definitions <> preCtx ind
+binder 3684:3685 <> Δ:45
+binder 3687:3688 <> Γ:46
+R3705:3711 COS.definitions <> preSubs ind
+binder 3701:3701 <> y:47
+R3719:3725 COS.definitions <> preTerm ind
+binder 3715:3715 <> a:48
+R3733:3739 COS.definitions <> preType ind
+binder 3729:3729 <> A:49
+R3767:3770 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3750:3751 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3754:3758 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3760:3762 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3765:3766 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3752:3753 COS.definitions <> Δ:45 var
+R3763:3764 COS.definitions <> Γ:46 var
+R3759:3759 COS.definitions <> y:47 var
+R3788:3791 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3771:3772 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3775:3779 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3781:3787 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R3773:3774 COS.definitions <> Γ:46 var
+R3780:3780 COS.definitions <> A:49 var
+R3811:3821 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3792:3793 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R3796:3800 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R3802:3804 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R3809:3810 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R3794:3795 COS.definitions <> Δ:45 var
+R3806:3806 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R3808:3808 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R3805:3805 COS.definitions <> A:49 var
+R3807:3807 COS.definitions <> y:47 var
+R3801:3801 COS.definitions <> a:48 var
+R3822:3823 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3826:3831 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3837:3841 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3848:3850 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3824:3825 COS.definitions <> Δ:45 var
+R3844:3846 COS.definitions <> ::ctx_scope:x_'#'_x not
+R3842:3843 COS.definitions <> Γ:46 var
+R3847:3847 COS.definitions <> A:49 var
+R3833:3835 COS.definitions <> ::subs_scope:x_'#'_x not
+R3832:3832 COS.definitions <> y:47 var
+R3836:3836 COS.definitions <> a:48 var
+R3871:3876 COS.definitions <> preCtx ind
+binder 3866:3867 <> Γ:50
+R3896:3899 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3883:3888 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3891:3895 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R3889:3890 COS.definitions <> Γ:50 var
+R3900:3901 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3904:3908 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3910:3912 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3914:3915 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R3902:3903 COS.definitions <> Γ:50 var
+R3909:3909 COS.definitions <> :::'!' not
+R3987:3992 COS.definitions <> preCtx ind
+binder 3979:3980 <> Δ:51
+binder 3982:3983 <> Γ:52
+R4002:4007 COS.definitions <> preCtx ind
+binder 3996:3998 <> Δ':53
+R4015:4021 COS.definitions <> preSubs ind
+binder 4011:4011 <> y:54
+R4041:4044 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4028:4033 COS.definitions <> eq_ctx:23 ind
+R4038:4040 COS.definitions <> Δ':53 var
+R4035:4036 COS.definitions <> Δ:51 var
+R4062:4065 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4045:4046 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4049:4053 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4055:4057 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4060:4061 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4047:4048 COS.definitions <> Δ:51 var
+R4058:4059 COS.definitions <> Γ:52 var
+R4054:4054 COS.definitions <> y:54 var
+R4066:4067 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4071:4075 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4077:4079 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4082:4083 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4068:4070 COS.definitions <> Δ':53 var
+R4080:4081 COS.definitions <> Γ:52 var
+R4076:4076 COS.definitions <> y:54 var
+R4118:4123 COS.definitions <> preCtx ind
+binder 4110:4111 <> Δ:55
+binder 4113:4114 <> Γ:56
+R4133:4138 COS.definitions <> preCtx ind
+binder 4127:4129 <> Γ':57
+R4146:4152 COS.definitions <> preSubs ind
+binder 4142:4142 <> y:58
+R4172:4175 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4159:4164 COS.definitions <> eq_ctx:23 ind
+R4169:4171 COS.definitions <> Γ':57 var
+R4166:4167 COS.definitions <> Γ:56 var
+R4193:4196 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4176:4177 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4180:4184 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4186:4188 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4191:4192 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4178:4179 COS.definitions <> Δ:55 var
+R4189:4190 COS.definitions <> Γ:56 var
+R4185:4185 COS.definitions <> y:58 var
+R4197:4198 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4201:4205 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4207:4209 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4213:4214 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4199:4200 COS.definitions <> Δ:55 var
+R4210:4212 COS.definitions <> Γ':57 var
+R4206:4206 COS.definitions <> y:58 var
+R4281:4286 COS.definitions <> preCtx ind
+binder 4276:4277 <> Γ:59
+R4310:4319 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4297:4302 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R4305:4309 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R4303:4304 COS.definitions <> Γ:59 var
+R4320:4321 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4324:4328 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4330:4336 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4322:4323 COS.definitions <> Γ:59 var
+R4329:4329 COS.definitions <> b abbrev
+R4362:4367 COS.definitions <> preCtx ind
+binder 4354:4355 <> Δ:60
+binder 4357:4358 <> Γ:61
+R4375:4381 COS.definitions <> preSubs ind
+binder 4371:4371 <> y:62
+R4389:4395 COS.definitions <> preType ind
+binder 4385:4385 <> A:63
+R4423:4426 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4406:4407 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4410:4414 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4416:4418 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4421:4422 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4408:4409 COS.definitions <> Δ:60 var
+R4419:4420 COS.definitions <> Γ:61 var
+R4415:4415 COS.definitions <> y:62 var
+R4444:4453 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4427:4428 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4431:4435 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4437:4443 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4429:4430 COS.definitions <> Γ:61 var
+R4436:4436 COS.definitions <> A:63 var
+R4454:4455 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4458:4462 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4468:4474 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4456:4457 COS.definitions <> Δ:60 var
+R4464:4465 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R4467:4467 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R4463:4463 COS.definitions <> A:63 var
+R4466:4466 COS.definitions <> y:62 var
+R4544:4549 COS.definitions <> preCtx ind
+binder 4536:4537 <> Δ:64
+binder 4539:4540 <> Γ:65
+R4557:4563 COS.definitions <> preType ind
+binder 4553:4553 <> A:66
+R4582:4585 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4570:4575 COS.definitions <> eq_ctx:23 ind
+R4580:4581 COS.definitions <> Γ:65 var
+R4577:4578 COS.definitions <> Δ:64 var
+R4603:4606 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4586:4587 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4590:4594 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4596:4602 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4588:4589 COS.definitions <> Δ:64 var
+R4595:4595 COS.definitions <> A:66 var
+R4607:4608 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4611:4615 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4617:4623 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4609:4610 COS.definitions <> Γ:65 var
+R4616:4616 COS.definitions <> A:66 var
+R4800:4805 COS.definitions <> preCtx ind
+binder 4795:4796 <> Γ:67
+R4813:4819 COS.definitions <> preType ind
+binder 4809:4809 <> A:68
+R4842:4846 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4825:4826 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4829:4833 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4835:4841 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R4827:4828 COS.definitions <> Γ:67 var
+R4834:4834 COS.definitions <> A:68 var
+R4847:4848 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4855:4859 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4861:4863 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4869:4870 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4851:4853 COS.definitions <> ::ctx_scope:x_'#'_x not
+R4849:4850 COS.definitions <> Γ:67 var
+R4854:4854 COS.definitions <> A:68 var
+R4865:4866 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R4868:4868 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R4864:4864 COS.definitions <> A:68 var
+R4867:4867 COS.definitions <> p abbrev
+R4860:4860 COS.definitions <> q abbrev
+R4893:4898 COS.definitions <> preCtx ind
+binder 4885:4886 <> Δ:69
+binder 4888:4889 <> Γ:70
+R4906:4912 COS.definitions <> preSubs ind
+binder 4902:4902 <> y:71
+R4920:4926 COS.definitions <> preType ind
+binder 4916:4916 <> A:72
+R4934:4940 COS.definitions <> preTerm ind
+binder 4930:4930 <> a:73
+R4964:4968 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4947:4948 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4951:4955 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4957:4959 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4962:4963 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R4949:4950 COS.definitions <> Δ:69 var
+R4960:4961 COS.definitions <> Γ:70 var
+R4956:4956 COS.definitions <> y:71 var
+R4985:4990 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4969:4970 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4973:4977 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4979:4981 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4983:4984 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4971:4972 COS.definitions <> Γ:70 var
+R4982:4982 COS.definitions <> A:72 var
+R4978:4978 COS.definitions <> a:73 var
+R4991:4992 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4995:5000 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5006:5009 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5015:5016 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R4993:4994 COS.definitions <> Δ:69 var
+R5011:5012 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R5014:5014 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R5010:5010 COS.definitions <> A:72 var
+R5013:5013 COS.definitions <> y:71 var
+R5002:5003 COS.definitions <> ::term_scope:x_'['_x_']' not
+R5005:5005 COS.definitions <> ::term_scope:x_'['_x_']' not
+R5001:5001 COS.definitions <> a:73 var
+R5004:5004 COS.definitions <> y:71 var
+R5084:5089 COS.definitions <> preCtx ind
+binder 5076:5077 <> Δ:74
+binder 5079:5080 <> Γ:75
+R5097:5103 COS.definitions <> preType ind
+binder 5093:5093 <> A:76
+R5111:5117 COS.definitions <> preTerm ind
+binder 5107:5107 <> a:77
+R5135:5138 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5123:5128 COS.definitions <> eq_ctx:23 ind
+R5133:5134 COS.definitions <> Γ:75 var
+R5130:5131 COS.definitions <> Δ:74 var
+R5155:5158 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5139:5140 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5143:5147 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5149:5151 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5153:5154 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5141:5142 COS.definitions <> Δ:74 var
+R5152:5152 COS.definitions <> A:76 var
+R5148:5148 COS.definitions <> a:77 var
+R5159:5160 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5163:5167 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5169:5171 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5173:5174 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5161:5162 COS.definitions <> Γ:75 var
+R5172:5172 COS.definitions <> A:76 var
+R5168:5168 COS.definitions <> a:77 var
+R5204:5209 COS.definitions <> preCtx ind
+binder 5199:5200 <> Γ:78
+R5219:5225 COS.definitions <> preType ind
+binder 5213:5213 <> A:79
+binder 5215:5215 <> B:80
+R5233:5239 COS.definitions <> preTerm ind
+binder 5229:5229 <> a:81
+R5267:5270 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5245:5246 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R5249:5253 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R5255:5258 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R5260:5266 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R5247:5248 COS.definitions <> Γ:78 var
+R5254:5254 COS.definitions <> A:79 var
+R5259:5259 COS.definitions <> B:80 var
+R5287:5290 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5271:5272 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5275:5279 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5281:5283 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5285:5286 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5273:5274 COS.definitions <> Γ:78 var
+R5284:5284 COS.definitions <> A:79 var
+R5280:5280 COS.definitions <> a:81 var
+R5291:5292 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5295:5299 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5301:5303 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5305:5306 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R5293:5294 COS.definitions <> Γ:78 var
+R5304:5304 COS.definitions <> B:80 var
+R5300:5300 COS.definitions <> a:81 var
+R5634:5639 COS.definitions <> eq_ctx:23 ind
+R5650:5657 COS.definitions <> pctx_one constr
+R5641:5648 COS.definitions <> pctx_one constr
+R5681:5686 COS.definitions <> preCtx ind
+binder 5673:5674 <> Γ:82
+binder 5676:5677 <> Δ:83
+R5696:5702 COS.definitions <> preType ind
+binder 5690:5690 <> A:84
+binder 5692:5692 <> B:85
+R5720:5723 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5708:5713 COS.definitions <> eq_ctx:23 ind
+R5718:5719 COS.definitions <> Δ:83 var
+R5715:5716 COS.definitions <> Γ:82 var
+R5746:5783 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5724:5725 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R5728:5732 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R5734:5737 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R5739:5745 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R5726:5727 COS.definitions <> Γ:82 var
+R5733:5733 COS.definitions <> A:84 var
+R5738:5738 COS.definitions <> B:85 var
+R5784:5789 COS.definitions <> eq_ctx:23 ind
+R5808:5815 COS.definitions <> pctx_ext constr
+R5817:5818 COS.definitions <> Δ:83 var
+R5820:5820 COS.definitions <> B:85 var
+R5792:5799 COS.definitions <> pctx_ext constr
+R5801:5802 COS.definitions <> Γ:82 var
+R5804:5804 COS.definitions <> A:84 var
+R5984:5989 COS.definitions <> preCtx ind
+binder 5976:5977 <> Δ:86
+binder 5979:5980 <> Γ:87
+R6001:6007 COS.definitions <> preSubs ind
+binder 5993:5994 <> y1:88
+binder 5996:5997 <> y2:89
+R6037:6040 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6013:6014 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6017:6021 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6024:6027 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6030:6032 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6035:6036 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6015:6016 COS.definitions <> Δ:86 var
+R6033:6034 COS.definitions <> Γ:87 var
+R6022:6023 COS.definitions <> y1:88 var
+R6028:6029 COS.definitions <> y2:89 var
+R6041:6042 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6045:6049 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6052:6055 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6058:6060 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6063:6064 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6043:6044 COS.definitions <> Δ:86 var
+R6061:6062 COS.definitions <> Γ:87 var
+R6050:6051 COS.definitions <> y2:89 var
+R6056:6057 COS.definitions <> y1:88 var
+R6091:6096 COS.definitions <> preCtx ind
+binder 6083:6084 <> Δ:90
+binder 6086:6087 <> Γ:91
+R6111:6117 COS.definitions <> preSubs ind
+binder 6100:6101 <> y1:92
+binder 6103:6104 <> y2:93
+binder 6106:6107 <> y3:94
+R6147:6150 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6123:6124 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6127:6131 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6134:6137 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6140:6142 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6145:6146 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6125:6126 COS.definitions <> Δ:90 var
+R6143:6144 COS.definitions <> Γ:91 var
+R6132:6133 COS.definitions <> y1:92 var
+R6138:6139 COS.definitions <> y2:93 var
+R6175:6178 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6151:6152 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6155:6159 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6162:6165 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6168:6170 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6173:6174 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6153:6154 COS.definitions <> Δ:90 var
+R6171:6172 COS.definitions <> Γ:91 var
+R6160:6161 COS.definitions <> y2:93 var
+R6166:6167 COS.definitions <> y3:94 var
+R6179:6180 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6183:6187 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6190:6193 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6196:6198 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6201:6202 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6181:6182 COS.definitions <> Δ:90 var
+R6199:6200 COS.definitions <> Γ:91 var
+R6188:6189 COS.definitions <> y1:92 var
+R6194:6195 COS.definitions <> y3:94 var
+R6298:6303 COS.definitions <> preCtx ind
+binder 6290:6291 <> Δ:95
+binder 6293:6294 <> Γ:96
+R6311:6317 COS.definitions <> preSubs ind
+binder 6307:6307 <> y:97
+R6341:6344 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6324:6325 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6328:6332 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6334:6336 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6339:6340 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6326:6327 COS.definitions <> Δ:95 var
+R6337:6338 COS.definitions <> Γ:96 var
+R6333:6333 COS.definitions <> y:97 var
+R6345:6346 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6349:6353 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6362:6365 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6367:6369 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6372:6373 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6347:6348 COS.definitions <> Δ:95 var
+R6370:6371 COS.definitions <> Γ:96 var
+R6356:6360 COS.definitions <> ::subs_scope:x_'∘'_x not
+R6354:6355 COS.definitions <> id abbrev
+R6361:6361 COS.definitions <> y:97 var
+R6366:6366 COS.definitions <> y:97 var
+R6403:6408 COS.definitions <> preCtx ind
+binder 6395:6396 <> Δ:98
+binder 6398:6399 <> Γ:99
+R6416:6422 COS.definitions <> preSubs ind
+binder 6412:6412 <> y:100
+R6446:6449 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6429:6430 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6433:6437 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6439:6441 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6444:6445 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6431:6432 COS.definitions <> Δ:98 var
+R6442:6443 COS.definitions <> Γ:99 var
+R6438:6438 COS.definitions <> y:100 var
+R6450:6451 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6454:6458 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6460:6463 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6472:6474 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6477:6478 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6452:6453 COS.definitions <> Δ:98 var
+R6475:6476 COS.definitions <> Γ:99 var
+R6459:6459 COS.definitions <> y:100 var
+R6465:6469 COS.definitions <> ::subs_scope:x_'∘'_x not
+R6464:6464 COS.definitions <> y:100 var
+R6470:6471 COS.definitions <> id abbrev
+R6520:6525 COS.definitions <> preCtx ind
+binder 6502:6504 <> Γ3:101
+binder 6506:6508 <> Γ2:102
+binder 6510:6512 <> Γ1:103
+binder 6514:6516 <> Γ0:104
+R6540:6546 COS.definitions <> preSubs ind
+binder 6529:6530 <> y2:105
+binder 6532:6533 <> y1:106
+binder 6535:6536 <> y0:107
+R6572:6575 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6552:6553 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6557:6561 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6564:6566 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6570:6571 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6554:6556 COS.definitions <> Γ3:101 var
+R6567:6569 COS.definitions <> Γ2:102 var
+R6562:6563 COS.definitions <> y2:105 var
+R6596:6599 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6576:6577 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6581:6585 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6588:6590 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6594:6595 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6578:6580 COS.definitions <> Γ2:102 var
+R6591:6593 COS.definitions <> Γ1:103 var
+R6586:6587 COS.definitions <> y1:106 var
+R6620:6625 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6600:6601 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6605:6609 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6612:6614 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6618:6619 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6602:6604 COS.definitions <> Γ1:103 var
+R6615:6617 COS.definitions <> Γ0:104 var
+R6610:6611 COS.definitions <> y0:107 var
+R6626:6627 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6631:6636 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6655:6660 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6679:6682 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6686:6687 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6628:6630 COS.definitions <> Γ3:101 var
+R6683:6685 COS.definitions <> Γ0:104 var
+R6639:6644 COS.definitions <> ::subs_scope:x_'∘'_x not
+R6654:6654 COS.definitions <> ::subs_scope:x_'∘'_x not
+R6637:6638 COS.definitions <> y0:107 var
+R6647:6651 COS.definitions <> ::subs_scope:x_'∘'_x not
+R6645:6646 COS.definitions <> y1:106 var
+R6652:6653 COS.definitions <> y2:105 var
+R6661:6661 COS.definitions <> ::subs_scope:x_'∘'_x not
+R6671:6676 COS.definitions <> ::subs_scope:x_'∘'_x not
+R6664:6668 COS.definitions <> ::subs_scope:x_'∘'_x not
+R6662:6663 COS.definitions <> y0:107 var
+R6669:6670 COS.definitions <> y1:106 var
+R6677:6678 COS.definitions <> y2:105 var
+R6739:6744 COS.definitions <> preCtx ind
+binder 6734:6735 <> Γ:108
+R6753:6759 COS.definitions <> preSubs ind
+binder 6748:6749 <> δ:109
+R6785:6788 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6767:6768 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6771:6775 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6778:6781 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6783:6784 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6769:6770 COS.definitions <> Γ:108 var
+R6776:6777 COS.definitions <> δ:109 var
+R6789:6790 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6793:6797 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6799:6802 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6805:6807 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6809:6810 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R6791:6792 COS.definitions <> Γ:108 var
+R6798:6798 COS.definitions <> :::'!' not
+R6803:6804 COS.definitions <> δ:109 var
+R6883:6888 COS.definitions <> preCtx ind
+binder 6875:6876 <> Δ:110
+binder 6878:6879 <> Γ:111
+R6896:6902 COS.definitions <> preType ind
+binder 6892:6892 <> A:112
+R6910:6916 COS.definitions <> preTerm ind
+binder 6906:6906 <> a:113
+R6924:6930 COS.definitions <> preSubs ind
+binder 6920:6920 <> y:114
+R6955:6958 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6938:6939 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6942:6946 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6948:6950 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6953:6954 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R6940:6941 COS.definitions <> Δ:110 var
+R6951:6952 COS.definitions <> Γ:111 var
+R6947:6947 COS.definitions <> y:114 var
+R6975:6978 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6959:6960 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R6963:6967 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R6969:6974 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R6961:6962 COS.definitions <> Γ:111 var
+R6968:6968 COS.definitions <> A:112 var
+R6999:7005 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6979:6980 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R6983:6987 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R6989:6991 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R6997:6998 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R6981:6982 COS.definitions <> Δ:110 var
+R6993:6994 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R6996:6996 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R6992:6992 COS.definitions <> A:112 var
+R6995:6995 COS.definitions <> y:114 var
+R6988:6988 COS.definitions <> a:113 var
+R7006:7007 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7010:7014 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7026:7029 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7031:7033 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7036:7037 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7008:7009 COS.definitions <> Δ:110 var
+R7034:7035 COS.definitions <> Γ:111 var
+R7016:7020 COS.definitions <> ::subs_scope:x_'∘'_x not
+R7015:7015 COS.definitions <> p abbrev
+R7022:7024 COS.definitions <> ::subs_scope:x_'#'_x not
+R7021:7021 COS.definitions <> y:114 var
+R7025:7025 COS.definitions <> a:113 var
+R7030:7030 COS.definitions <> y:114 var
+R7062:7067 COS.definitions <> preCtx ind
+binder 7054:7055 <> Δ:115
+binder 7057:7058 <> Γ:116
+R7075:7081 COS.definitions <> preType ind
+binder 7071:7071 <> A:117
+R7089:7095 COS.definitions <> preSubs ind
+binder 7085:7085 <> y:118
+R7120:7123 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7103:7104 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R7107:7111 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R7113:7119 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R7105:7106 COS.definitions <> Γ:116 var
+R7112:7112 COS.definitions <> A:117 var
+R7145:7151 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7124:7125 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R7128:7132 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R7134:7136 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R7143:7144 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R7126:7127 COS.definitions <> Δ:115 var
+R7139:7141 COS.definitions <> ::ctx_scope:x_'#'_x not
+R7137:7138 COS.definitions <> Γ:116 var
+R7142:7142 COS.definitions <> A:117 var
+R7133:7133 COS.definitions <> y:118 var
+R7152:7153 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7156:7160 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7162:7165 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7182:7185 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7192:7194 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7154:7155 COS.definitions <> Δ:115 var
+R7188:7190 COS.definitions <> ::ctx_scope:x_'#'_x not
+R7186:7187 COS.definitions <> Γ:116 var
+R7191:7191 COS.definitions <> A:117 var
+R7161:7161 COS.definitions <> y:118 var
+R7166:7166 COS.definitions <> ::subs_scope:x_'#'_x not
+R7174:7177 COS.definitions <> ::subs_scope:x_'#'_x not
+R7168:7172 COS.definitions <> ::subs_scope:x_'∘'_x not
+R7167:7167 COS.definitions <> p abbrev
+R7173:7173 COS.definitions <> y:118 var
+R7179:7179 COS.definitions <> ::term_scope:x_'['_x_']' not
+R7181:7181 COS.definitions <> ::term_scope:x_'['_x_']' not
+R7178:7178 COS.definitions <> q abbrev
+R7180:7180 COS.definitions <> y:118 var
+R7267:7272 COS.definitions <> preCtx ind
+binder 7259:7260 <> Δ:119
+binder 7262:7263 <> Γ:120
+R7282:7287 COS.definitions <> preCtx ind
+binder 7276:7278 <> Δ':121
+R7298:7304 COS.definitions <> preSubs ind
+binder 7291:7291 <> y:122
+binder 7293:7294 <> y':123
+R7323:7326 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7310:7315 COS.definitions <> eq_ctx:23 ind
+R7320:7322 COS.definitions <> Δ':121 var
+R7317:7318 COS.definitions <> Δ:119 var
+R7350:7353 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7327:7328 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7331:7335 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7337:7340 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7343:7345 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7348:7349 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7329:7330 COS.definitions <> Δ:119 var
+R7346:7347 COS.definitions <> Γ:120 var
+R7336:7336 COS.definitions <> y:122 var
+R7341:7342 COS.definitions <> y':123 var
+R7354:7355 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7359:7363 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7365:7368 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7371:7373 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7376:7377 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7356:7358 COS.definitions <> Δ':121 var
+R7374:7375 COS.definitions <> Γ:120 var
+R7364:7364 COS.definitions <> y:122 var
+R7369:7370 COS.definitions <> y':123 var
+R7414:7419 COS.definitions <> preCtx ind
+binder 7406:7407 <> Δ:124
+binder 7409:7410 <> Γ:125
+R7429:7434 COS.definitions <> preCtx ind
+binder 7423:7425 <> Γ':126
+R7445:7451 COS.definitions <> preSubs ind
+binder 7438:7438 <> y:127
+binder 7440:7441 <> y':128
+R7470:7473 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7457:7462 COS.definitions <> eq_ctx:23 ind
+R7467:7469 COS.definitions <> Γ':126 var
+R7464:7465 COS.definitions <> Γ:125 var
+R7497:7500 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7474:7475 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7478:7482 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7484:7487 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7490:7492 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7495:7496 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7476:7477 COS.definitions <> Δ:124 var
+R7493:7494 COS.definitions <> Γ:125 var
+R7483:7483 COS.definitions <> y:127 var
+R7488:7489 COS.definitions <> y':128 var
+R7501:7502 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7505:7509 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7511:7514 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7517:7519 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7523:7524 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7503:7504 COS.definitions <> Δ:124 var
+R7520:7522 COS.definitions <> Γ':126 var
+R7510:7510 COS.definitions <> y:127 var
+R7515:7516 COS.definitions <> y':128 var
+R7642:7647 COS.definitions <> preCtx ind
+binder 7634:7635 <> Δ:129
+binder 7637:7638 <> Γ:130
+R7658:7664 COS.definitions <> preSubs ind
+binder 7651:7651 <> y:131
+binder 7653:7654 <> y':132
+R7672:7678 COS.definitions <> preType ind
+binder 7668:7668 <> A:133
+R7688:7694 COS.definitions <> preTerm ind
+binder 7682:7682 <> a:134
+binder 7684:7684 <> b:135
+R7722:7725 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7699:7700 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7703:7707 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7709:7712 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7715:7717 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7720:7721 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7701:7702 COS.definitions <> Δ:129 var
+R7718:7719 COS.definitions <> Γ:130 var
+R7708:7708 COS.definitions <> y:131 var
+R7713:7714 COS.definitions <> y':132 var
+R7743:7746 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7726:7727 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R7730:7734 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R7736:7742 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R7728:7729 COS.definitions <> Γ:130 var
+R7735:7735 COS.definitions <> A:133 var
+R7771:7775 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7747:7748 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R7751:7755 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R7757:7760 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R7762:7764 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R7769:7770 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R7749:7750 COS.definitions <> Δ:129 var
+R7766:7766 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R7768:7768 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R7765:7765 COS.definitions <> A:133 var
+R7767:7767 COS.definitions <> y:131 var
+R7756:7756 COS.definitions <> a:134 var
+R7761:7761 COS.definitions <> b:135 var
+R7776:7777 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7780:7784 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7790:7793 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7800:7802 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7809:7810 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R7778:7779 COS.definitions <> Δ:129 var
+R7805:7807 COS.definitions <> ::ctx_scope:x_'#'_x not
+R7803:7804 COS.definitions <> Γ:130 var
+R7808:7808 COS.definitions <> A:133 var
+R7786:7788 COS.definitions <> ::subs_scope:x_'#'_x not
+R7785:7785 COS.definitions <> y:131 var
+R7789:7789 COS.definitions <> a:134 var
+R7796:7798 COS.definitions <> ::subs_scope:x_'#'_x not
+R7794:7795 COS.definitions <> y':132 var
+R7799:7799 COS.definitions <> b:135 var
+R7952:7957 COS.definitions <> preCtx ind
+binder 7947:7948 <> Γ:136
+R7967:7973 COS.definitions <> preType ind
+binder 7961:7961 <> A:137
+binder 7963:7963 <> B:138
+R8001:8004 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7979:7980 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R7983:7987 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R7989:7992 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R7994:8000 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R7981:7982 COS.definitions <> Γ:136 var
+R7988:7988 COS.definitions <> A:137 var
+R7993:7993 COS.definitions <> B:138 var
+R8005:8006 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8009:8013 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8015:8018 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8020:8026 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8007:8008 COS.definitions <> Γ:136 var
+R8014:8014 COS.definitions <> B:138 var
+R8019:8019 COS.definitions <> A:137 var
+R8050:8055 COS.definitions <> preCtx ind
+binder 8045:8046 <> Γ:139
+R8067:8073 COS.definitions <> preType ind
+binder 8059:8059 <> A:140
+binder 8061:8061 <> B:141
+binder 8063:8063 <> C:142
+R8101:8104 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8079:8080 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8083:8087 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8089:8092 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8094:8100 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8081:8082 COS.definitions <> Γ:139 var
+R8088:8088 COS.definitions <> A:140 var
+R8093:8093 COS.definitions <> B:141 var
+R8127:8132 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8105:8106 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8109:8113 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8115:8118 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8120:8126 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8107:8108 COS.definitions <> Γ:139 var
+R8114:8114 COS.definitions <> B:141 var
+R8119:8119 COS.definitions <> C:142 var
+R8133:8134 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8137:8141 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8143:8146 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8148:8154 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8135:8136 COS.definitions <> Γ:139 var
+R8142:8142 COS.definitions <> A:140 var
+R8147:8147 COS.definitions <> C:142 var
+R8225:8230 COS.definitions <> preCtx ind
+binder 8220:8221 <> Γ:143
+R8238:8244 COS.definitions <> preType ind
+binder 8234:8234 <> A:144
+R8269:8275 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8252:8253 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R8256:8260 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R8262:8268 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R8254:8255 COS.definitions <> Γ:143 var
+R8261:8261 COS.definitions <> A:144 var
+R8276:8277 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8280:8284 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8291:8294 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8296:8302 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8278:8279 COS.definitions <> Γ:143 var
+R8286:8287 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8290:8290 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8285:8285 COS.definitions <> A:144 var
+R8288:8289 COS.definitions <> id abbrev
+R8295:8295 COS.definitions <> A:144 var
+R8339:8344 COS.definitions <> preCtx ind
+binder 8325:8327 <> Γ2:145
+binder 8329:8331 <> Γ1:146
+binder 8333:8335 <> Γ0:147
+R8352:8358 COS.definitions <> preType ind
+binder 8348:8348 <> A:148
+R8370:8376 COS.definitions <> preSubs ind
+binder 8362:8363 <> y1:149
+binder 8365:8366 <> y0:150
+R8404:8407 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8384:8385 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8389:8393 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8396:8398 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8402:8403 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8386:8388 COS.definitions <> Γ2:145 var
+R8399:8401 COS.definitions <> Γ1:146 var
+R8394:8395 COS.definitions <> y1:149 var
+R8428:8431 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8408:8409 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8413:8417 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8420:8422 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8426:8427 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8410:8412 COS.definitions <> Γ1:146 var
+R8423:8425 COS.definitions <> Γ0:147 var
+R8418:8419 COS.definitions <> y0:150 var
+R8450:8456 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8432:8433 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R8437:8441 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R8443:8449 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R8434:8436 COS.definitions <> Γ0:147 var
+R8442:8442 COS.definitions <> A:148 var
+R8457:8458 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8462:8466 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8481:8484 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8496:8502 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8459:8461 COS.definitions <> Γ2:145 var
+R8468:8470 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8480:8480 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8467:8467 COS.definitions <> A:148 var
+R8473:8477 COS.definitions <> ::subs_scope:x_'∘'_x not
+R8471:8472 COS.definitions <> y0:150 var
+R8478:8479 COS.definitions <> y1:149 var
+R8491:8492 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8495:8495 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8486:8487 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8490:8490 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8485:8485 COS.definitions <> A:148 var
+R8488:8489 COS.definitions <> y0:150 var
+R8493:8494 COS.definitions <> y1:149 var
+R8725:8730 COS.definitions <> preCtx ind
+binder 8717:8718 <> Δ:151
+binder 8720:8721 <> Γ:152
+R8740:8746 COS.definitions <> preType ind
+binder 8734:8734 <> A:153
+binder 8736:8736 <> B:154
+R8764:8767 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8752:8757 COS.definitions <> eq_ctx:23 ind
+R8762:8763 COS.definitions <> Γ:152 var
+R8759:8760 COS.definitions <> Δ:151 var
+R8790:8793 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8768:8769 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8772:8776 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8778:8781 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8783:8789 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8770:8771 COS.definitions <> Δ:151 var
+R8777:8777 COS.definitions <> A:153 var
+R8782:8782 COS.definitions <> B:154 var
+R8794:8795 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8798:8802 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8804:8807 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8809:8815 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8796:8797 COS.definitions <> Γ:152 var
+R8803:8803 COS.definitions <> A:153 var
+R8808:8808 COS.definitions <> B:154 var
+R8942:8947 COS.definitions <> preCtx ind
+binder 8934:8935 <> Δ:155
+binder 8937:8938 <> Γ:156
+R8955:8961 COS.definitions <> preSubs ind
+binder 8951:8951 <> y:157
+R8984:8987 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R8967:8968 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8971:8975 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8977:8979 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8982:8983 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R8969:8970 COS.definitions <> Δ:155 var
+R8980:8981 COS.definitions <> Γ:156 var
+R8976:8976 COS.definitions <> y:157 var
+R8988:8989 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8992:8996 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R9002:9005 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R9007:9013 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R8990:8991 COS.definitions <> Δ:155 var
+R8998:8999 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R9001:9001 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R8997:8997 COS.definitions <> b abbrev
+R9000:9000 COS.definitions <> y:157 var
+R9006:9006 COS.definitions <> b abbrev
+R9167:9172 COS.definitions <> preCtx ind
+binder 9162:9163 <> Γ:158
+R9181:9187 COS.definitions <> preType ind
+binder 9177:9177 <> A:159
+R9197:9203 COS.definitions <> preTerm ind
+binder 9191:9191 <> a:160
+binder 9193:9193 <> b:161
+R9230:9233 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9209:9210 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9213:9217 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9219:9222 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9224:9226 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9228:9229 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9211:9212 COS.definitions <> Γ:158 var
+R9227:9227 COS.definitions <> A:159 var
+R9218:9218 COS.definitions <> a:160 var
+R9223:9223 COS.definitions <> b:161 var
+R9234:9235 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9238:9242 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9244:9247 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9249:9251 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9253:9254 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9236:9237 COS.definitions <> Γ:158 var
+R9252:9252 COS.definitions <> A:159 var
+R9243:9243 COS.definitions <> b:161 var
+R9248:9248 COS.definitions <> a:160 var
+R9278:9283 COS.definitions <> preCtx ind
+binder 9273:9274 <> Γ:162
+R9291:9297 COS.definitions <> preType ind
+binder 9287:9287 <> A:163
+R9309:9315 COS.definitions <> preTerm ind
+binder 9301:9301 <> a:164
+binder 9303:9303 <> b:165
+binder 9305:9305 <> c:166
+R9342:9345 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9321:9322 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9325:9329 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9331:9334 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9336:9338 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9340:9341 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9323:9324 COS.definitions <> Γ:162 var
+R9339:9339 COS.definitions <> A:163 var
+R9330:9330 COS.definitions <> a:164 var
+R9335:9335 COS.definitions <> b:165 var
+R9367:9370 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9346:9347 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9350:9354 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9356:9359 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9361:9363 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9365:9366 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9348:9349 COS.definitions <> Γ:162 var
+R9364:9364 COS.definitions <> A:163 var
+R9355:9355 COS.definitions <> b:165 var
+R9360:9360 COS.definitions <> c:166 var
+R9371:9372 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9375:9379 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9381:9384 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9386:9388 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9390:9391 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9373:9374 COS.definitions <> Γ:162 var
+R9389:9389 COS.definitions <> A:163 var
+R9380:9380 COS.definitions <> a:164 var
+R9385:9385 COS.definitions <> c:166 var
+R9462:9467 COS.definitions <> preCtx ind
+binder 9457:9458 <> Γ:167
+R9475:9481 COS.definitions <> preType ind
+binder 9471:9471 <> A:168
+R9489:9495 COS.definitions <> preTerm ind
+binder 9485:9485 <> a:169
+R9519:9525 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9503:9504 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9507:9511 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9513:9515 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9517:9518 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9505:9506 COS.definitions <> Γ:167 var
+R9516:9516 COS.definitions <> A:168 var
+R9512:9512 COS.definitions <> a:169 var
+R9526:9527 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9530:9534 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9543:9546 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9548:9550 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9552:9553 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9528:9529 COS.definitions <> Γ:167 var
+R9551:9551 COS.definitions <> A:168 var
+R9536:9538 COS.definitions <> ::term_scope:x_'['_x_']' not
+R9541:9542 COS.definitions <> ::term_scope:x_'['_x_']' not
+R9535:9535 COS.definitions <> a:169 var
+R9539:9540 COS.definitions <> id abbrev
+R9547:9547 COS.definitions <> a:169 var
+R9590:9595 COS.definitions <> preCtx ind
+binder 9576:9578 <> Γ2:170
+binder 9580:9582 <> Γ1:171
+binder 9584:9586 <> Γ0:172
+R9604:9610 COS.definitions <> preSubs ind
+binder 9599:9600 <> y1:173
+R9619:9625 COS.definitions <> preSubs ind
+binder 9614:9615 <> y0:174
+R9633:9639 COS.definitions <> preType ind
+binder 9629:9629 <> A:175
+R9647:9653 COS.definitions <> preTerm ind
+binder 9643:9643 <> a:176
+R9681:9684 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9661:9662 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9666:9670 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9673:9675 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9679:9680 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9663:9665 COS.definitions <> Γ2:170 var
+R9676:9678 COS.definitions <> Γ1:171 var
+R9671:9672 COS.definitions <> y1:173 var
+R9705:9708 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9685:9686 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9690:9694 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9697:9699 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9703:9704 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9687:9689 COS.definitions <> Γ1:171 var
+R9700:9702 COS.definitions <> Γ0:172 var
+R9695:9696 COS.definitions <> y0:174 var
+R9726:9732 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9709:9710 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9714:9718 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9720:9722 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9724:9725 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9711:9713 COS.definitions <> Γ0:172 var
+R9723:9723 COS.definitions <> A:175 var
+R9719:9719 COS.definitions <> a:176 var
+R9733:9734 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9738:9742 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9758:9761 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9777:9779 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9793:9794 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R9735:9737 COS.definitions <> Γ2:170 var
+R9781:9782 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R9792:9792 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R9780:9780 COS.definitions <> A:175 var
+R9785:9789 COS.definitions <> ::subs_scope:x_'∘'_x not
+R9783:9784 COS.definitions <> y0:174 var
+R9790:9791 COS.definitions <> y1:173 var
+R9744:9746 COS.definitions <> ::term_scope:x_'['_x_']' not
+R9756:9757 COS.definitions <> ::term_scope:x_'['_x_']' not
+R9743:9743 COS.definitions <> a:176 var
+R9749:9753 COS.definitions <> ::subs_scope:x_'∘'_x not
+R9747:9748 COS.definitions <> y0:174 var
+R9754:9755 COS.definitions <> y1:173 var
+R9770:9772 COS.definitions <> ::term_scope:x_'['_x_']' not
+R9775:9776 COS.definitions <> ::term_scope:x_'['_x_']' not
+R9763:9765 COS.definitions <> ::term_scope:x_'['_x_']' not
+R9768:9769 COS.definitions <> ::term_scope:x_'['_x_']' not
+R9762:9762 COS.definitions <> a:176 var
+R9766:9767 COS.definitions <> y0:174 var
+R9773:9774 COS.definitions <> y1:173 var
+R9881:9886 COS.definitions <> preCtx ind
+binder 9873:9874 <> Δ:177
+binder 9876:9877 <> Γ:178
+R9894:9900 COS.definitions <> preSubs ind
+binder 9890:9890 <> y:179
+R9908:9914 COS.definitions <> preType ind
+binder 9904:9904 <> A:180
+R9922:9928 COS.definitions <> preTerm ind
+binder 9918:9918 <> a:181
+R9953:9956 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9936:9937 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9940:9944 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9946:9948 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9951:9952 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R9938:9939 COS.definitions <> Δ:177 var
+R9949:9950 COS.definitions <> Γ:178 var
+R9945:9945 COS.definitions <> y:179 var
+R9975:9978 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9957:9958 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R9961:9965 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R9967:9974 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R9959:9960 COS.definitions <> Γ:178 var
+R9966:9966 COS.definitions <> A:180 var
+R9999:10005 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9979:9980 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9983:9987 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9989:9991 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9997:9998 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R9981:9982 COS.definitions <> Δ:177 var
+R9993:9994 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R9996:9996 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R9992:9992 COS.definitions <> A:180 var
+R9995:9995 COS.definitions <> y:179 var
+R9988:9988 COS.definitions <> a:181 var
+R10006:10007 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10010:10014 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10026:10029 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10031:10033 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10038:10039 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10008:10009 COS.definitions <> Δ:177 var
+R10035:10035 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R10037:10037 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R10034:10034 COS.definitions <> A:180 var
+R10036:10036 COS.definitions <> y:179 var
+R10016:10018 COS.definitions <> ::term_scope:x_'['_x_']' not
+R10024:10025 COS.definitions <> ::term_scope:x_'['_x_']' not
+R10015:10015 COS.definitions <> q abbrev
+R10020:10022 COS.definitions <> ::subs_scope:x_'#'_x not
+R10019:10019 COS.definitions <> y:179 var
+R10023:10023 COS.definitions <> a:181 var
+R10030:10030 COS.definitions <> a:181 var
+R10110:10115 COS.definitions <> preCtx ind
+binder 10102:10103 <> Δ:182
+binder 10105:10106 <> Γ:183
+R10123:10129 COS.definitions <> preType ind
+binder 10119:10119 <> A:184
+R10138:10144 COS.definitions <> preTerm ind
+binder 10133:10133 <> a:185
+binder 10135:10135 <> b:186
+R10162:10165 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10150:10155 COS.definitions <> eq_ctx:23 ind
+R10160:10161 COS.definitions <> Γ:183 var
+R10157:10158 COS.definitions <> Δ:182 var
+R10187:10192 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10166:10167 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10170:10174 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10176:10179 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10181:10183 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10185:10186 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10168:10169 COS.definitions <> Δ:182 var
+R10184:10184 COS.definitions <> A:184 var
+R10175:10175 COS.definitions <> a:185 var
+R10180:10180 COS.definitions <> b:186 var
+R10193:10194 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10197:10201 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10203:10206 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10208:10210 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10212:10213 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10195:10196 COS.definitions <> Γ:183 var
+R10211:10211 COS.definitions <> A:184 var
+R10202:10202 COS.definitions <> a:185 var
+R10207:10207 COS.definitions <> b:186 var
+R10246:10251 COS.definitions <> preCtx ind
+binder 10241:10242 <> Γ:187
+R10261:10267 COS.definitions <> preType ind
+binder 10255:10255 <> A:188
+binder 10257:10257 <> B:189
+R10277:10283 COS.definitions <> preTerm ind
+binder 10271:10271 <> a:190
+binder 10273:10273 <> b:191
+R10311:10314 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10289:10290 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R10293:10297 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R10299:10302 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R10304:10310 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R10291:10292 COS.definitions <> Γ:187 var
+R10298:10298 COS.definitions <> A:188 var
+R10303:10303 COS.definitions <> B:189 var
+R10336:10340 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10315:10316 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10319:10323 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10325:10328 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10330:10332 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10334:10335 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10317:10318 COS.definitions <> Γ:187 var
+R10333:10333 COS.definitions <> A:188 var
+R10324:10324 COS.definitions <> a:190 var
+R10329:10329 COS.definitions <> b:191 var
+R10341:10342 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10345:10349 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10351:10354 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10356:10358 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10360:10361 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R10343:10344 COS.definitions <> Γ:187 var
+R10359:10359 COS.definitions <> B:189 var
+R10350:10350 COS.definitions <> a:190 var
+R10355:10355 COS.definitions <> b:191 var
+scheme 3120:3124 <> CtxJG_ind
+scheme 3120:3124 <> CtxJG_sind
+scheme 3297:3302 <> SubsJG_ind
+scheme 3297:3302 <> SubsJG_sind
+scheme 4222:4227 <> TypeJG_ind
+scheme 4222:4227 <> TypeJG_sind
+scheme 4631:4636 <> TermJG_ind
+scheme 4631:4636 <> TermJG_sind
+scheme 5427:5432 <> eq_ctx_ind
+scheme 5427:5432 <> eq_ctx_sind
+scheme 5866:5872 <> eq_subs_ind
+scheme 5866:5872 <> eq_subs_sind
+scheme 7847:7853 <> eq_type_ind
+scheme 7847:7853 <> eq_type_sind
+scheme 9051:9057 <> eq_term_ind
+scheme 9051:9057 <> eq_term_sind
+R10402:10406 COS.definitions <> CtxJG ind
+not 10371:10371 <> :::'['_'⊢'_x_'cx'_']'
+R10449:10454 COS.definitions <> TypeJG ind
+not 10418:10418 <> :::'['_x_'⊢'_x_'type'_']'
+R10499:10504 COS.definitions <> TermJG ind
+not 10468:10468 <> :::'['_x_'⊢'_x_'@'_x_']'
+R10552:10557 COS.definitions <> SubsJG ind
+not 10520:10520 <> :::'['_x_'⊢'_x_'~'_x_']'
+R10605:10611 COS.definitions <> eq_type ind
+not 10574:10574 <> :::'['_x_'⊢'_x_'=='_x_'type'_']'
+R10658:10664 COS.definitions <> eq_term ind
+not 10627:10627 <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']'
+R10714:10720 COS.definitions <> eq_subs ind
+not 10682:10682 <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']'
+prf 10883:10892 <> eq_ctx_sym
+R10911:10916 COS.definitions <> preCtx ind
+binder 10903:10904 <> Γ:192
+binder 10906:10907 <> Δ:193
+R10931:10934 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10919:10924 COS.definitions <> eq_ctx ind
+R10926:10927 COS.definitions <> Γ:192 var
+R10929:10930 COS.definitions <> Δ:193 var
+R10935:10940 COS.definitions <> eq_ctx ind
+R10942:10943 COS.definitions <> Δ:193 var
+R10945:10946 COS.definitions <> Γ:192 var
+R11014:11023 COS.definitions <> eq_ctx_one constr
+R11014:11023 COS.definitions <> eq_ctx_one constr
+R11033:11042 COS.definitions <> eq_ctx_ext constr
+R11033:11042 COS.definitions <> eq_ctx_ext constr
+R11069:11079 COS.definitions <> eq_type_sym constr
+R11069:11079 COS.definitions <> eq_type_sym constr
+R11094:11114 COS.definitions <> eq_type_over_ctx_quot constr
+R11094:11114 COS.definitions <> eq_type_over_ctx_quot constr
+prf 11132:11143 <> eq_ctx_trans
+R11165:11170 COS.definitions <> preCtx ind
+binder 11154:11155 <> Γ:194
+binder 11157:11158 <> Δ:195
+binder 11160:11161 <> Θ:196
+R11185:11188 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R11173:11178 COS.definitions <> eq_ctx ind
+R11180:11181 COS.definitions <> Γ:194 var
+R11183:11184 COS.definitions <> Δ:195 var
+R11201:11204 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R11189:11194 COS.definitions <> eq_ctx ind
+R11196:11197 COS.definitions <> Δ:195 var
+R11199:11200 COS.definitions <> Θ:196 var
+R11205:11210 COS.definitions <> eq_ctx ind
+R11212:11213 COS.definitions <> Γ:194 var
+R11215:11216 COS.definitions <> Θ:196 var
+R11344:11353 COS.definitions <> eq_ctx_ext constr
+R11344:11353 COS.definitions <> eq_ctx_ext constr
+R11385:11397 COS.definitions <> eq_type_trans constr
+R11385:11397 COS.definitions <> eq_type_trans constr
+R11410:11419 COS.definitions <> eq_ctx_sym thm
+R11410:11419 COS.definitions <> eq_ctx_sym thm
+R11440:11460 COS.definitions <> eq_type_over_ctx_quot constr
+R11440:11460 COS.definitions <> eq_type_over_ctx_quot constr
+R11487:11492 COS.definitions <> preCtx ind
+R11496:11501 COS.definitions <> eq_ctx ind
+R11487:11492 COS.definitions <> preCtx ind
+R11496:11501 COS.definitions <> eq_ctx ind
+R11528:11537 COS.definitions <> eq_ctx_sym thm
+R11487:11492 COS.definitions <> preCtx ind
+R11496:11501 COS.definitions <> eq_ctx ind
+R11568:11579 COS.definitions <> eq_ctx_trans thm
+R11487:11492 COS.definitions <> preCtx ind
+R11496:11501 COS.definitions <> eq_ctx ind
+R11528:11537 COS.definitions <> eq_ctx_sym thm
+R11568:11579 COS.definitions <> eq_ctx_trans thm
+binder 11625:11626 <> Δ:197
+binder 11628:11629 <> Γ:198
+R11634:11640 COS.definitions <> preSubs ind
+R11644:11650 COS.definitions <> eq_subs ind
+R11652:11653 COS.definitions <> Δ:197 var
+R11655:11656 COS.definitions <> Γ:198 var
+binder 11625:11626 <> Δ:199
+binder 11628:11629 <> Γ:200
+R11634:11640 COS.definitions <> preSubs ind
+R11644:11650 COS.definitions <> eq_subs ind
+R11652:11653 COS.definitions <> Δ:199 var
+R11655:11656 COS.definitions <> Γ:200 var
+R11683:11693 COS.definitions <> eq_subs_sym constr
+binder 11625:11626 <> Δ:201
+binder 11628:11629 <> Γ:202
+R11634:11640 COS.definitions <> preSubs ind
+R11644:11650 COS.definitions <> eq_subs ind
+R11652:11653 COS.definitions <> Δ:201 var
+R11655:11656 COS.definitions <> Γ:202 var
+R11730:11742 COS.definitions <> eq_subs_trans constr
+binder 11625:11626 <> Δ:203
+binder 11628:11629 <> Γ:204
+R11634:11640 COS.definitions <> preSubs ind
+R11644:11650 COS.definitions <> eq_subs ind
+R11652:11653 COS.definitions <> Δ:203 var
+R11655:11656 COS.definitions <> Γ:204 var
+R11683:11693 COS.definitions <> eq_subs_sym constr
+R11730:11742 COS.definitions <> eq_subs_trans constr
+binder 11795:11796 <> Γ:205
+R11801:11807 COS.definitions <> preType ind
+R11811:11817 COS.definitions <> eq_type ind
+R11819:11820 COS.definitions <> Γ:205 var
+binder 11795:11796 <> Γ:206
+R11801:11807 COS.definitions <> preType ind
+R11811:11817 COS.definitions <> eq_type ind
+R11819:11820 COS.definitions <> Γ:206 var
+R11847:11857 COS.definitions <> eq_type_sym constr
+binder 11795:11796 <> Γ:207
+R11801:11807 COS.definitions <> preType ind
+R11811:11817 COS.definitions <> eq_type ind
+R11819:11820 COS.definitions <> Γ:207 var
+R11891:11903 COS.definitions <> eq_type_trans constr
+binder 11795:11796 <> Γ:208
+R11801:11807 COS.definitions <> preType ind
+R11811:11817 COS.definitions <> eq_type ind
+R11819:11820 COS.definitions <> Γ:208 var
+R11847:11857 COS.definitions <> eq_type_sym constr
+R11891:11903 COS.definitions <> eq_type_trans constr
+binder 11953:11954 <> Γ:209
+binder 11956:11956 <> A:210
+R11961:11967 COS.definitions <> preTerm ind
+R11971:11977 COS.definitions <> eq_term ind
+R11979:11980 COS.definitions <> Γ:209 var
+R11982:11982 COS.definitions <> A:210 var
+binder 11953:11954 <> Γ:211
+binder 11956:11956 <> A:212
+R11961:11967 COS.definitions <> preTerm ind
+R11971:11977 COS.definitions <> eq_term ind
+R11979:11980 COS.definitions <> Γ:211 var
+R11982:11982 COS.definitions <> A:212 var
+R12009:12019 COS.definitions <> eq_term_sym constr
+binder 11953:11954 <> Γ:213
+binder 11956:11956 <> A:214
+R11961:11967 COS.definitions <> preTerm ind
+R11971:11977 COS.definitions <> eq_term ind
+R11979:11980 COS.definitions <> Γ:213 var
+R11982:11982 COS.definitions <> A:214 var
+R12055:12067 COS.definitions <> eq_term_trans constr
+binder 11953:11954 <> Γ:215
+binder 11956:11956 <> A:216
+R11961:11967 COS.definitions <> preTerm ind
+R11971:11977 COS.definitions <> eq_term ind
+R11979:11980 COS.definitions <> Γ:215 var
+R11982:11982 COS.definitions <> A:216 var
+R12009:12019 COS.definitions <> eq_term_sym constr
+R12055:12067 COS.definitions <> eq_term_trans constr
+prf 12207:12218 <> eq_type_refl
+R12226:12231 COS.definitions <> preCtx ind
+binder 12221:12222 <> Γ:217
+R12239:12245 COS.definitions <> preType ind
+binder 12235:12235 <> A:218
+R12268:12271 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R12251:12252 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R12255:12259 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R12261:12267 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R12253:12254 COS.definitions <> Γ:217 var
+R12260:12260 COS.definitions <> A:218 var
+R12272:12273 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R12276:12280 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R12282:12285 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R12287:12293 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R12274:12275 COS.definitions <> Γ:217 var
+R12281:12281 COS.definitions <> A:218 var
+R12286:12286 COS.definitions <> A:218 var
+R12333:12334 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R12337:12337 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R12335:12336 COS.definitions <> id abbrev
+R12333:12334 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R12337:12337 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R12335:12336 COS.definitions <> id abbrev
+R12375:12389 COS.definitions <> eq_type_subs_id constr
+R12375:12389 COS.definitions <> eq_type_subs_id constr
+R12375:12389 COS.definitions <> eq_type_subs_id constr
+prf 12404:12415 <> eq_term_refl
+R12423:12428 COS.definitions <> preCtx ind
+binder 12418:12419 <> Γ:219
+R12436:12442 COS.definitions <> preType ind
+binder 12432:12432 <> A:220
+R12450:12456 COS.definitions <> preTerm ind
+binder 12446:12446 <> a:221
+R12478:12481 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R12462:12463 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R12466:12470 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R12472:12474 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R12476:12477 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R12464:12465 COS.definitions <> Γ:219 var
+R12475:12475 COS.definitions <> A:220 var
+R12471:12471 COS.definitions <> a:221 var
+R12482:12483 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R12486:12490 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R12492:12495 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R12497:12499 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R12501:12502 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R12484:12485 COS.definitions <> Γ:219 var
+R12500:12500 COS.definitions <> A:220 var
+R12491:12491 COS.definitions <> a:221 var
+R12496:12496 COS.definitions <> a:221 var
+R12542:12543 COS.definitions <> ::term_scope:x_'['_x_']' not
+R12546:12546 COS.definitions <> ::term_scope:x_'['_x_']' not
+R12544:12545 COS.definitions <> id abbrev
+R12542:12543 COS.definitions <> ::term_scope:x_'['_x_']' not
+R12546:12546 COS.definitions <> ::term_scope:x_'['_x_']' not
+R12544:12545 COS.definitions <> id abbrev
+R12586:12600 COS.definitions <> eq_term_subs_id constr
+R12586:12600 COS.definitions <> eq_term_subs_id constr
+R12586:12600 COS.definitions <> eq_term_subs_id constr
+prf 12615:12626 <> eq_subs_refl
+R12637:12642 COS.definitions <> preCtx ind
+binder 12629:12630 <> Δ:222
+binder 12632:12633 <> Γ:223
+R12650:12656 COS.definitions <> preSubs ind
+binder 12646:12646 <> y:224
+R12679:12682 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R12662:12663 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R12666:12670 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R12672:12674 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R12677:12678 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R12664:12665 COS.definitions <> Δ:222 var
+R12675:12676 COS.definitions <> Γ:223 var
+R12671:12671 COS.definitions <> y:224 var
+R12683:12684 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R12687:12691 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R12693:12696 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R12698:12700 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R12703:12704 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R12685:12686 COS.definitions <> Δ:222 var
+R12701:12702 COS.definitions <> Γ:223 var
+R12692:12692 COS.definitions <> y:224 var
+R12697:12697 COS.definitions <> y:224 var
+R12743:12747 COS.definitions <> ::subs_scope:x_'∘'_x not
+R12741:12742 COS.definitions <> id abbrev
+R12743:12747 COS.definitions <> ::subs_scope:x_'∘'_x not
+R12741:12742 COS.definitions <> id abbrev
+R12787:12801 COS.definitions <> eq_subs_id_left constr
+R12787:12801 COS.definitions <> eq_subs_id_left constr
+R12787:12801 COS.definitions <> eq_subs_id_left constr
+prf 12819:12829 <> eq_ctx_refl
+R12837:12842 COS.definitions <> preCtx ind
+binder 12832:12833 <> Γ:225
+R12861:12864 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R12848:12853 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R12856:12860 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R12854:12855 COS.definitions <> Γ:225 var
+R12865:12870 COS.definitions <> eq_ctx ind
+R12872:12873 COS.definitions <> Γ:225 var
+R12875:12876 COS.definitions <> Γ:225 var
+R12944:12953 COS.definitions <> eq_ctx_one constr
+R12944:12953 COS.definitions <> eq_ctx_one constr
+R12963:12974 COS.definitions <> eq_type_refl thm
+R12963:12974 COS.definitions <> eq_type_refl thm
+R12994:13003 COS.definitions <> eq_ctx_ext constr
+R12994:13003 COS.definitions <> eq_ctx_ext constr
+R13224:13228 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13218:13223 COS.definitions <> eq_ctx ind
+R13231:13235 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13229:13230 Corelib.Init.Logic <> eq ind
+R13238:13242 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13236:13237 Corelib.Init.Logic <> eq ind
+R13243:13245 Corelib.Init.Logic <> iff def
+R13195:13200 COS.definitions <> SubsJG ind
+R13319:13338 COS.definitions <> subs_over_ctx_quot_l constr
+R13319:13338 COS.definitions <> subs_over_ctx_quot_l constr
+R13378:13397 COS.definitions <> subs_over_ctx_quot_l constr
+R13378:13397 COS.definitions <> subs_over_ctx_quot_l constr
+binder 13436:13437 <> Δ:226
+R13475:13479 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13469:13474 COS.definitions <> eq_ctx ind
+R13482:13486 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13480:13481 Corelib.Init.Logic <> eq ind
+R13487:13489 Corelib.Init.Logic <> iff def
+R13442:13447 COS.definitions <> SubsJG ind
+R13449:13450 COS.definitions <> Δ:226 var
+R13560:13579 COS.definitions <> subs_over_ctx_quot_r constr
+R13560:13579 COS.definitions <> subs_over_ctx_quot_r constr
+R13619:13638 COS.definitions <> subs_over_ctx_quot_r constr
+R13619:13638 COS.definitions <> subs_over_ctx_quot_r constr
+R13694:13698 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13688:13693 COS.definitions <> eq_ctx ind
+R13701:13705 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13699:13700 Corelib.Init.Logic <> eq ind
+R13706:13708 Corelib.Init.Logic <> iff def
+R13666:13671 COS.definitions <> TypeJG ind
+R13776:13793 COS.definitions <> type_over_ctx_quot constr
+R13776:13793 COS.definitions <> type_over_ctx_quot constr
+R13833:13850 COS.definitions <> type_over_ctx_quot constr
+R13833:13850 COS.definitions <> type_over_ctx_quot constr
+R13906:13910 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13900:13905 COS.definitions <> eq_ctx ind
+R13913:13917 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13911:13912 Corelib.Init.Logic <> eq ind
+R13920:13924 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R13918:13919 Corelib.Init.Logic <> eq ind
+R13925:13927 Corelib.Init.Logic <> iff def
+R13878:13883 COS.definitions <> TermJG ind
+R13997:14014 COS.definitions <> term_over_ctx_quot constr
+R13997:14014 COS.definitions <> term_over_ctx_quot constr
+R14054:14071 COS.definitions <> term_over_ctx_quot constr
+R14054:14071 COS.definitions <> term_over_ctx_quot constr
+binder 14110:14111 <> Γ:227
+R14153:14157 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14143:14149 COS.definitions <> eq_type ind
+R14151:14152 COS.definitions <> Γ:227 var
+R14160:14164 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14158:14159 Corelib.Init.Logic <> eq ind
+R14165:14167 Corelib.Init.Logic <> iff def
+R14116:14121 COS.definitions <> TermJG ind
+R14123:14124 COS.definitions <> Γ:227 var
+R14233:14251 COS.definitions <> term_over_type_quot constr
+R14233:14251 COS.definitions <> term_over_type_quot constr
+R14289:14307 COS.definitions <> term_over_type_quot constr
+R14289:14307 COS.definitions <> term_over_type_quot constr
+R14364:14368 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14358:14363 COS.definitions <> eq_ctx ind
+R14371:14375 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14369:14370 Corelib.Init.Logic <> eq ind
+R14378:14382 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14376:14377 Corelib.Init.Logic <> eq ind
+R14385:14389 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14383:14384 Corelib.Init.Logic <> eq ind
+R14390:14392 Corelib.Init.Logic <> iff def
+R14334:14340 COS.definitions <> eq_subs ind
+R14472:14494 COS.definitions <> eq_subs_over_ctx_quot_l constr
+R14472:14494 COS.definitions <> eq_subs_over_ctx_quot_l constr
+R14534:14556 COS.definitions <> eq_subs_over_ctx_quot_l constr
+R14534:14556 COS.definitions <> eq_subs_over_ctx_quot_l constr
+binder 14595:14596 <> Δ:228
+R14635:14639 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14629:14634 COS.definitions <> eq_ctx ind
+R14642:14646 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14640:14641 Corelib.Init.Logic <> eq ind
+R14649:14653 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14647:14648 Corelib.Init.Logic <> eq ind
+R14654:14656 Corelib.Init.Logic <> iff def
+R14601:14607 COS.definitions <> eq_subs ind
+R14609:14610 COS.definitions <> Δ:228 var
+R14733:14755 COS.definitions <> eq_subs_over_ctx_quot_r constr
+R14733:14755 COS.definitions <> eq_subs_over_ctx_quot_r constr
+R14795:14817 COS.definitions <> eq_subs_over_ctx_quot_r constr
+R14795:14817 COS.definitions <> eq_subs_over_ctx_quot_r constr
+R14875:14879 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14869:14874 COS.definitions <> eq_ctx ind
+R14882:14886 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14880:14881 Corelib.Init.Logic <> eq ind
+R14889:14893 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R14887:14888 Corelib.Init.Logic <> eq ind
+R14894:14896 Corelib.Init.Logic <> iff def
+R14845:14851 COS.definitions <> eq_type ind
+R14969:14989 COS.definitions <> eq_type_over_ctx_quot constr
+R14969:14989 COS.definitions <> eq_type_over_ctx_quot constr
+R15029:15049 COS.definitions <> eq_type_over_ctx_quot constr
+R15029:15049 COS.definitions <> eq_type_over_ctx_quot constr
+R15107:15111 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R15101:15106 COS.definitions <> eq_ctx ind
+R15114:15118 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R15112:15113 Corelib.Init.Logic <> eq ind
+R15121:15125 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R15119:15120 Corelib.Init.Logic <> eq ind
+R15128:15132 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R15126:15127 Corelib.Init.Logic <> eq ind
+R15133:15135 Corelib.Init.Logic <> iff def
+R15077:15083 COS.definitions <> eq_term ind
+R15208:15228 COS.definitions <> eq_term_over_ctx_quot constr
+R15208:15228 COS.definitions <> eq_term_over_ctx_quot constr
+R15268:15288 COS.definitions <> eq_term_over_ctx_quot constr
+R15268:15288 COS.definitions <> eq_term_over_ctx_quot constr
+binder 15327:15328 <> Γ:229
+R15371:15375 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R15361:15367 COS.definitions <> eq_type ind
+R15369:15370 COS.definitions <> Γ:229 var
+R15378:15382 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R15376:15377 Corelib.Init.Logic <> eq ind
+R15385:15389 Corelib.Classes.Morphisms ProperNotations ::signature_scope:x_'==>'_x not
+R15383:15384 Corelib.Init.Logic <> eq ind
+R15390:15392 Corelib.Init.Logic <> iff def
+R15333:15339 COS.definitions <> eq_term ind
+R15341:15342 COS.definitions <> Γ:229 var
+R15461:15482 COS.definitions <> eq_term_over_type_quot constr
+R15461:15482 COS.definitions <> eq_term_over_type_quot constr
+R15520:15541 COS.definitions <> eq_term_over_type_quot constr
+R15520:15541 COS.definitions <> eq_term_over_type_quot constr
+prf 15962:15973 <> eq_ctx_press
+prf 16049:16061 <> eq_type_press
+prf 16168:16177 <> subs_press
+prf 16272:16281 <> type_press
+R15984:15989 COS.definitions <> preCtx ind
+binder 15976:15977 <> Γ:230
+binder 15979:15980 <> Δ:231
+R15996:16001 COS.definitions <> eq_ctx ind
+R16003:16004 COS.definitions <> Γ:230 var
+R16006:16007 COS.definitions <> Δ:231 var
+binder 15993:15993 <> H:232
+R16069:16074 COS.definitions <> preCtx ind
+binder 16064:16065 <> Γ:233
+R16084:16090 COS.definitions <> preType ind
+binder 16078:16078 <> A:234
+binder 16080:16080 <> B:235
+R16097:16098 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R16101:16105 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R16107:16110 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R16112:16118 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R16099:16100 COS.definitions <> Γ:233 var
+R16106:16106 COS.definitions <> A:234 var
+R16111:16111 COS.definitions <> B:235 var
+binder 16094:16094 <> H:236
+R16188:16193 COS.definitions <> preCtx ind
+binder 16180:16181 <> Δ:237
+binder 16183:16184 <> Γ:238
+R16201:16207 COS.definitions <> preSubs ind
+binder 16197:16197 <> y:239
+R16214:16215 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R16218:16222 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R16224:16226 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R16229:16230 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R16216:16217 COS.definitions <> Δ:237 var
+R16227:16228 COS.definitions <> Γ:238 var
+R16223:16223 COS.definitions <> y:239 var
+binder 16211:16211 <> H:240
+R16289:16294 COS.definitions <> preCtx ind
+binder 16284:16285 <> Γ:241
+R16302:16308 COS.definitions <> preType ind
+binder 16298:16298 <> A:242
+R16315:16316 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16319:16323 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16325:16331 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16317:16318 COS.definitions <> Γ:241 var
+R16324:16324 COS.definitions <> A:242 var
+binder 16312:16312 <> H:243
+R16026:16029 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R16013:16018 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16021:16025 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16019:16020 COS.definitions <> Γ:230 var
+R16030:16035 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16038:16042 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16036:16037 COS.definitions <> Δ:231 var
+R16141:16144 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R16124:16125 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16128:16132 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16134:16140 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16126:16127 COS.definitions <> Γ:233 var
+R16133:16133 COS.definitions <> A:234 var
+R16145:16146 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16149:16153 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16155:16161 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R16147:16148 COS.definitions <> Γ:233 var
+R16154:16154 COS.definitions <> B:235 var
+R16249:16252 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R16236:16241 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16244:16248 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16242:16243 COS.definitions <> Δ:237 var
+R16253:16258 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16261:16265 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16259:16260 COS.definitions <> Γ:238 var
+R16337:16342 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16345:16349 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R16343:16344 COS.definitions <> Γ:241 var
+R16421:16427 COS.definitions <> ctx_one constr
+R16421:16427 COS.definitions <> ctx_one constr
+R16421:16427 COS.definitions <> ctx_one constr
+R16505:16511 COS.definitions <> ctx_ext constr
+R16505:16511 COS.definitions <> ctx_ext constr
+R16505:16511 COS.definitions <> ctx_ext constr
+R16609:16617 COS.definitions <> type_subs constr
+R16620:16626 COS.definitions <> subs_id constr
+R16609:16617 COS.definitions <> type_subs constr
+R16620:16626 COS.definitions <> subs_id constr
+R16690:16698 COS.definitions <> type_subs constr
+R16701:16709 COS.definitions <> subs_comp constr
+R16690:16698 COS.definitions <> type_subs constr
+R16701:16709 COS.definitions <> subs_comp constr
+R16735:16743 COS.definitions <> type_subs constr
+R16748:16756 COS.definitions <> type_subs constr
+R16735:16743 COS.definitions <> type_subs constr
+R16748:16756 COS.definitions <> type_subs constr
+R16900:16908 COS.definitions <> type_subs constr
+R16900:16908 COS.definitions <> type_subs constr
+R16931:16939 COS.definitions <> type_base constr
+R16931:16939 COS.definitions <> type_base constr
+R16931:16939 COS.definitions <> type_base constr
+R17081:17087 COS.definitions <> ctx_ext constr
+R17081:17087 COS.definitions <> ctx_ext constr
+R17177:17183 COS.definitions <> ctx_ext constr
+R17177:17183 COS.definitions <> ctx_ext constr
+R17232:17238 COS.definitions <> ctx_one constr
+R17232:17238 COS.definitions <> ctx_one constr
+prf 17459:17468 <> term_press
+R17476:17481 COS.definitions <> preCtx ind
+binder 17471:17472 <> Γ:248
+R17489:17495 COS.definitions <> preType ind
+binder 17485:17485 <> A:249
+R17503:17509 COS.definitions <> preTerm ind
+binder 17499:17499 <> a:250
+R17516:17517 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R17520:17524 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R17526:17528 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R17530:17531 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R17518:17519 COS.definitions <> Γ:248 var
+R17529:17529 COS.definitions <> A:249 var
+R17525:17525 COS.definitions <> a:250 var
+binder 17513:17513 <> H:251
+R17550:17553 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R17537:17542 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R17545:17549 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R17543:17544 COS.definitions <> Γ:248 var
+R17554:17555 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R17558:17562 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R17564:17570 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R17556:17557 COS.definitions <> Γ:248 var
+R17563:17563 COS.definitions <> A:249 var
+R17625:17634 COS.definitions <> type_press thm
+R17625:17634 COS.definitions <> type_press thm
+R17669:17675 COS.definitions <> ctx_ext constr
+R17690:17698 COS.definitions <> type_subs constr
+R17701:17709 COS.definitions <> subs_weak constr
+R17669:17675 COS.definitions <> ctx_ext constr
+R17690:17698 COS.definitions <> type_subs constr
+R17701:17709 COS.definitions <> subs_weak constr
+R17759:17767 COS.definitions <> type_subs constr
+R17759:17767 COS.definitions <> type_subs constr
+R17787:17796 COS.definitions <> subs_press thm
+R17787:17796 COS.definitions <> subs_press thm
+R17889:17900 COS.definitions <> eq_ctx_press thm
+R17889:17900 COS.definitions <> eq_ctx_press thm
+R17974:17986 COS.definitions <> eq_type_press thm
+R17974:17986 COS.definitions <> eq_type_press thm
+prf 18032:18058 <> substitution_extensionality
+R18069:18074 COS.definitions <> preCtx ind
+binder 18061:18062 <> Δ:252
+binder 18064:18065 <> Γ:253
+R18085:18091 COS.definitions <> preSubs ind
+binder 18078:18078 <> y:254
+binder 18080:18081 <> y':255
+R18114:18117 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R18097:18098 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R18101:18105 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R18107:18109 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R18112:18113 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R18099:18100 COS.definitions <> Δ:252 var
+R18110:18111 COS.definitions <> Γ:253 var
+R18106:18106 COS.definitions <> y:254 var
+R18136:18140 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R18118:18119 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R18122:18126 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R18129:18131 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R18134:18135 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R18120:18121 COS.definitions <> Δ:252 var
+R18132:18133 COS.definitions <> Γ:253 var
+R18127:18128 COS.definitions <> y':255 var
+R18141:18141 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R18214:18219 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R18154:18160 COS.definitions <> preType ind
+binder 18150:18150 <> A:256
+R18181:18184 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R18164:18165 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R18168:18172 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R18174:18180 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R18166:18167 COS.definitions <> Γ:253 var
+R18173:18173 COS.definitions <> A:256 var
+R18185:18186 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R18189:18193 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R18198:18201 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R18207:18213 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'type'_']' not
+R18187:18188 COS.definitions <> Δ:252 var
+R18195:18195 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R18197:18197 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R18194:18194 COS.definitions <> A:256 var
+R18196:18196 COS.definitions <> y:254 var
+R18203:18203 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R18206:18206 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R18202:18202 COS.definitions <> A:256 var
+R18204:18205 COS.definitions <> y':255 var
+R18220:18220 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R18309:18314 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R18233:18239 COS.definitions <> preType ind
+binder 18229:18229 <> A:257
+R18247:18253 COS.definitions <> preTerm ind
+binder 18243:18243 <> a:258
+R18272:18275 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R18257:18258 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R18261:18265 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R18267:18269 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R18271:18271 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R18259:18260 COS.definitions <> Γ:253 var
+R18270:18270 COS.definitions <> A:257 var
+R18266:18266 COS.definitions <> a:258 var
+R18276:18277 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R18280:18284 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R18290:18293 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R18300:18302 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R18308:18308 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R18278:18279 COS.definitions <> Δ:252 var
+R18304:18305 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R18307:18307 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R18303:18303 COS.definitions <> A:257 var
+R18306:18306 COS.definitions <> y:254 var
+R18286:18287 COS.definitions <> ::term_scope:x_'['_x_']' not
+R18289:18289 COS.definitions <> ::term_scope:x_'['_x_']' not
+R18285:18285 COS.definitions <> a:258 var
+R18288:18288 COS.definitions <> y:254 var
+R18295:18296 COS.definitions <> ::term_scope:x_'['_x_']' not
+R18299:18299 COS.definitions <> ::term_scope:x_'['_x_']' not
+R18294:18294 COS.definitions <> a:258 var
+R18297:18298 COS.definitions <> y':255 var
+R18315:18316 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R18319:18323 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R18325:18328 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R18331:18333 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R18336:18337 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R18317:18318 COS.definitions <> Δ:252 var
+R18334:18335 COS.definitions <> Γ:253 var
+R18324:18324 COS.definitions <> y:254 var
+R18329:18330 COS.definitions <> y':255 var
+R18428:18439 COS.definitions <> eq_subs_bang constr
+R18428:18439 COS.definitions <> eq_subs_bang constr
+R18428:18439 COS.definitions <> eq_subs_bang constr
+R18459:18470 COS.definitions <> eq_subs_bang constr
+R18459:18470 COS.definitions <> eq_subs_bang constr
+R18494:18503 COS.definitions <> subs_press thm
+R18494:18503 COS.definitions <> subs_press thm
+R18558:18568 COS.definitions <> eq_subs_eta constr
+R18558:18568 COS.definitions <> eq_subs_eta constr
+R18558:18568 COS.definitions <> eq_subs_eta constr
+R18588:18598 COS.definitions <> eq_subs_eta constr
+R18588:18598 COS.definitions <> eq_subs_eta constr
+R18588:18598 COS.definitions <> eq_subs_eta constr
+R18616:18627 COS.definitions <> subs_ext_mor constr
+R18616:18627 COS.definitions <> subs_ext_mor constr
+R18655:18663 COS.definitions <> subs_comp constr
+R18669:18677 COS.definitions <> subs_weak constr
+R18655:18663 COS.definitions <> subs_comp constr
+R18669:18677 COS.definitions <> subs_weak constr
+R18697:18705 COS.definitions <> subs_comp constr
+R18712:18720 COS.definitions <> subs_weak constr
+R18697:18705 COS.definitions <> subs_comp constr
+R18712:18720 COS.definitions <> subs_weak constr
+R18754:18770 COS.definitions <> eq_type_subs_comp constr
+R18776:18784 COS.definitions <> subs_weak constr
+R18754:18770 COS.definitions <> eq_type_subs_comp constr
+R18776:18784 COS.definitions <> subs_weak constr
+R18754:18770 COS.definitions <> eq_type_subs_comp constr
+R18776:18784 COS.definitions <> subs_weak constr
+R18806:18822 COS.definitions <> eq_type_subs_comp constr
+R18829:18837 COS.definitions <> subs_weak constr
+R18806:18822 COS.definitions <> eq_type_subs_comp constr
+R18829:18837 COS.definitions <> subs_weak constr
+R18806:18822 COS.definitions <> eq_type_subs_comp constr
+R18829:18837 COS.definitions <> subs_weak constr
+R18873:18881 COS.definitions <> type_subs constr
+R18884:18892 COS.definitions <> subs_weak constr
+R18873:18881 COS.definitions <> type_subs constr
+R18884:18892 COS.definitions <> subs_weak constr
+R18934:18943 COS.definitions <> term_press thm
+R18934:18943 COS.definitions <> term_press thm
+R18971:18987 COS.definitions <> eq_term_subs_comp constr
+R18993:19001 COS.definitions <> subs_weak constr
+R18971:18987 COS.definitions <> eq_term_subs_comp constr
+R18993:19001 COS.definitions <> subs_weak constr
+R18971:18987 COS.definitions <> eq_term_subs_comp constr
+R18993:19001 COS.definitions <> subs_weak constr
+R19022:19038 COS.definitions <> eq_type_subs_comp constr
+R19044:19052 COS.definitions <> subs_weak constr
+R19022:19038 COS.definitions <> eq_type_subs_comp constr
+R19044:19052 COS.definitions <> subs_weak constr
+R19022:19038 COS.definitions <> eq_type_subs_comp constr
+R19044:19052 COS.definitions <> subs_weak constr
+R19084:19085 COS.definitions <> ::term_scope:x_'['_x_']' not
+R19088:19088 COS.definitions <> ::term_scope:x_'['_x_']' not
+R19080:19081 COS.definitions <> ::term_scope:x_'['_x_']' not
+R19083:19083 COS.definitions <> ::term_scope:x_'['_x_']' not
+R19082:19082 COS.definitions <> p abbrev
+R19084:19085 COS.definitions <> ::term_scope:x_'['_x_']' not
+R19088:19088 COS.definitions <> ::term_scope:x_'['_x_']' not
+R19080:19081 COS.definitions <> ::term_scope:x_'['_x_']' not
+R19083:19083 COS.definitions <> ::term_scope:x_'['_x_']' not
+R19082:19082 COS.definitions <> p abbrev
+R19117:19125 COS.definitions <> term_subs constr
+R19128:19136 COS.definitions <> subs_weak constr
+R19117:19125 COS.definitions <> term_subs constr
+R19128:19136 COS.definitions <> subs_weak constr
+R19175:19183 COS.definitions <> type_subs constr
+R19186:19194 COS.definitions <> subs_weak constr
+R19175:19183 COS.definitions <> type_subs constr
+R19186:19194 COS.definitions <> subs_weak constr
+R19175:19183 COS.definitions <> type_subs constr
+R19186:19194 COS.definitions <> subs_weak constr
+R19220:19236 COS.definitions <> eq_type_subs_comp constr
+R19243:19251 COS.definitions <> subs_weak constr
+R19220:19236 COS.definitions <> eq_type_subs_comp constr
+R19243:19251 COS.definitions <> subs_weak constr
+R19220:19236 COS.definitions <> eq_type_subs_comp constr
+R19243:19251 COS.definitions <> subs_weak constr
+R19275:19291 COS.definitions <> eq_term_subs_comp constr
+R19298:19306 COS.definitions <> subs_weak constr
+R19275:19291 COS.definitions <> eq_term_subs_comp constr
+R19298:19306 COS.definitions <> subs_weak constr
+R19338:19354 COS.definitions <> eq_type_subs_comp constr
+R19360:19368 COS.definitions <> subs_weak constr
+R19338:19354 COS.definitions <> eq_type_subs_comp constr
+R19360:19368 COS.definitions <> subs_weak constr
+R19338:19354 COS.definitions <> eq_type_subs_comp constr
+R19360:19368 COS.definitions <> subs_weak constr
+R19403:19410 COS.definitions <> term_qar constr
+R19403:19410 COS.definitions <> term_qar constr
+def 19434:19447 <> psubs_list_ext
+R19454:19460 COS.definitions <> preSubs ind
+binder 19450:19450 <> y:259
+R19469:19472 Corelib.Init.Datatypes <> list ind
+R19474:19480 COS.definitions <> preTerm ind
+binder 19464:19465 <> aL:260
+R19484:19490 COS.definitions <> preSubs ind
+R19496:19510 Stdlib.Lists.List <> fold_right def
+R19540:19541 COS.definitions <> aL:260 var
+R19538:19538 COS.definitions <> y:259 var
+binder 19517:19517 <> a:261
+binder 19519:19519 <> y:262
+R19526:19528 COS.definitions <> ::subs_scope:x_'#'_x not
+R19525:19525 COS.definitions <> y:262 var
+R19529:19529 COS.definitions <> a:261 var
+def 19556:19568 <> pctx_list_ext
+R19576:19581 COS.definitions <> preCtx ind
+binder 19571:19572 <> Γ:263
+R19590:19593 Corelib.Init.Datatypes <> list ind
+R19595:19601 COS.definitions <> preType ind
+binder 19585:19586 <> AL:264
+R19606:19611 COS.definitions <> preCtx ind
+R19617:19631 Stdlib.Lists.List <> fold_right def
+R19663:19664 COS.definitions <> AL:264 var
+R19660:19661 COS.definitions <> Γ:263 var
+binder 19638:19638 <> A:265
+binder 19640:19641 <> Γ:266
+R19649:19651 COS.definitions <> ::ctx_scope:x_'#'_x not
+R19647:19648 COS.definitions <> Γ:266 var
+R19652:19652 COS.definitions <> A:265 var
+prf 19675:19687 <> subs_list_ext
+R19698:19703 COS.definitions <> preCtx ind
+binder 19690:19691 <> Δ:267
+binder 19693:19694 <> Γ:268
+R19711:19717 COS.definitions <> preSubs ind
+binder 19707:19707 <> y:269
+R19727:19730 Corelib.Init.Datatypes <> list ind
+R19740:19742 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R19733:19739 COS.definitions <> preTerm ind
+R19743:19749 COS.definitions <> preType ind
+binder 19721:19723 <> AaL:270
+R19773:19777 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19756:19757 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R19760:19764 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R19766:19768 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R19771:19772 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R19758:19759 COS.definitions <> Δ:267 var
+R19769:19770 COS.definitions <> Γ:268 var
+R19765:19765 COS.definitions <> y:269 var
+R19778:19778 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20014:20019 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19799:19801 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R19792:19798 COS.definitions <> preTerm ind
+R19802:19808 COS.definitions <> preType ind
+binder 19787:19788 <> aA:271
+R19820:19823 Corelib.Init.Datatypes <> list ind
+R19833:19835 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R19826:19832 COS.definitions <> preTerm ind
+R19836:19842 COS.definitions <> preType ind
+binder 19812:19813 <> l1:272
+binder 19815:19816 <> l2:273
+R19858:19860 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R19855:19857 COS.definitions <> AaL:270 var
+R19863:19866 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R19861:19862 COS.definitions <> l1:272 var
+R19869:19872 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R19867:19868 COS.definitions <> aA:271 var
+R19873:19874 COS.definitions <> l2:273 var
+binder 19849:19851 <> Hin:274
+R19939:19944 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R19881:19883 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R19918:19924 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R19931:19938 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R19884:19896 COS.definitions <> pctx_list_ext def
+R19898:19899 COS.definitions <> Γ:268 var
+R19902:19909 Stdlib.Lists.List <> map abbrev
+R19915:19916 COS.definitions <> l2:273 var
+R19911:19913 Corelib.Init.Datatypes <> snd def
+R19925:19927 Corelib.Init.Datatypes <> snd def
+R19929:19930 COS.definitions <> aA:271 var
+R19945:19946 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R19949:19954 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R19961:19964 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R20012:20013 COS.definitions <> :::'['_x_'⊢'_x_'@'_x_']' not
+R19947:19948 COS.definitions <> Δ:267 var
+R19965:19965 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R19972:19975 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R20010:20011 COS.definitions <> ::ty_scope:x_'['_x_']' not
+R19966:19968 Corelib.Init.Datatypes <> snd def
+R19970:19971 COS.definitions <> aA:271 var
+R19976:19989 COS.definitions <> psubs_list_ext def
+R19991:19991 COS.definitions <> y:269 var
+R19994:20001 Stdlib.Lists.List <> map abbrev
+R20007:20008 COS.definitions <> l2:273 var
+R20003:20005 Corelib.Init.Datatypes <> fst def
+R19955:19957 Corelib.Init.Datatypes <> fst def
+R19959:19960 COS.definitions <> aA:271 var
+R20020:20021 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R20024:20028 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R20064:20066 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R20102:20103 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R20022:20023 COS.definitions <> Δ:267 var
+R20067:20079 COS.definitions <> pctx_list_ext def
+R20081:20082 COS.definitions <> Γ:268 var
+R20085:20092 Stdlib.Lists.List <> map abbrev
+R20098:20100 COS.definitions <> AaL:270 var
+R20094:20096 Corelib.Init.Datatypes <> snd def
+R20029:20042 COS.definitions <> psubs_list_ext def
+R20044:20044 COS.definitions <> y:269 var
+R20047:20054 Stdlib.Lists.List <> map abbrev
+R20060:20062 COS.definitions <> AaL:270 var
+R20056:20058 Corelib.Init.Datatypes <> fst def
+R20224:20231 Stdlib.Lists.List <> nil abbrev
+R20224:20231 Stdlib.Lists.List <> nil abbrev
+R20267:20274 COS.definitions <> subs_ext constr
+R20267:20274 COS.definitions <> subs_ext constr
+R20337:20340 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R20337:20340 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R20374:20386 Stdlib.Lists.List <> app_comm_cons thm
+R20374:20386 Stdlib.Lists.List <> app_comm_cons thm
+prf 20428:20438 <> ctx_ext_inv
+R20447:20452 COS.definitions <> preCtx ind
+binder 20442:20443 <> Γ:275
+R20460:20466 COS.definitions <> preType ind
+binder 20456:20456 <> A:276
+R20489:20492 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20472:20477 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R20484:20488 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R20480:20482 COS.definitions <> ::ctx_scope:x_'#'_x not
+R20478:20479 COS.definitions <> Γ:275 var
+R20483:20483 COS.definitions <> A:276 var
+R20506:20509 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R20493:20498 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R20501:20505 COS.definitions <> :::'['_'⊢'_x_'cx'_']' not
+R20499:20500 COS.definitions <> Γ:275 var
+R20510:20511 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R20514:20518 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R20520:20526 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R20512:20513 COS.definitions <> Γ:275 var
+R20519:20519 COS.definitions <> A:276 var
+def 20599:20605 <> ctx_len
+R20613:20618 COS.definitions <> preCtx ind
+binder 20608:20609 <> Γ:277
+R20623:20625 Corelib.Init.Datatypes <> nat ind
+R20637:20638 COS.definitions <> Γ:277 var
+R20648:20655 COS.definitions <> pctx_one constr
+R20665:20672 COS.definitions <> pctx_ext constr
+R20682:20682 Corelib.Init.Datatypes <> S constr
+R20685:20691 COS.definitions <> ctx_len:278 def
+R20693:20694 COS.definitions <> Γ:277 var
+def 20751:20769 <> subs_to_normal_form
+R20780:20785 COS.definitions <> preCtx ind
+binder 20772:20773 <> Δ:280
+binder 20775:20776 <> Γ:281
+R20793:20799 COS.definitions <> preSubs ind
+binder 20789:20789 <> y:282
+R20808:20809 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R20812:20816 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R20818:20820 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R20823:20824 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R20810:20811 COS.definitions <> Δ:280 var
+R20821:20822 COS.definitions <> Γ:281 var
+R20817:20817 COS.definitions <> y:282 var
+binder 20803:20804 <> Hy:283
+R20830:20831 Corelib.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R20834:20836 Corelib.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R20849:20853 Corelib.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R20926:20927 Corelib.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R20837:20840 Corelib.Init.Datatypes <> list ind
+R20842:20848 COS.definitions <> preTerm ind
+binder 20832:20833 <> aL:284
+R20893:20898 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R20854:20855 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R20858:20862 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R20864:20867 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R20887:20889 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R20892:20892 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R20856:20857 COS.definitions <> Δ:280 var
+R20890:20891 COS.definitions <> Γ:281 var
+R20863:20863 COS.definitions <> y:282 var
+R20868:20881 COS.definitions <> psubs_list_ext def
+R20883:20883 COS.definitions <> :::'!' not
+R20885:20886 COS.definitions <> aL:284 var
+R20913:20915 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R20899:20909 Stdlib.Lists.List <> length abbrev
+R20911:20912 COS.definitions <> aL:284 var
+R20916:20922 COS.definitions <> ctx_len def
+R20924:20925 COS.definitions <> Γ:281 var
+R20988:20995 Stdlib.Lists.List <> nil abbrev
+R20988:20995 Stdlib.Lists.List <> nil abbrev
+R21041:21052 COS.definitions <> eq_subs_bang constr
+R21041:21052 COS.definitions <> eq_subs_bang constr
+R21089:21098 COS.definitions <> subs_press thm
+R21089:21098 COS.definitions <> subs_press thm
+R21127:21137 COS.definitions <> ctx_ext_inv thm
+R21127:21137 COS.definitions <> ctx_ext_inv thm
+R21184:21192 COS.definitions <> subs_comp constr
+R21198:21206 COS.definitions <> subs_weak constr
+R21184:21192 COS.definitions <> subs_comp constr
+R21198:21206 COS.definitions <> subs_weak constr
+R21254:21257 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21245:21246 COS.definitions <> ::term_scope:x_'['_x_']' not
+R21248:21248 COS.definitions <> ::term_scope:x_'['_x_']' not
+R21244:21244 COS.definitions <> q abbrev
+R21254:21257 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21245:21246 COS.definitions <> ::term_scope:x_'['_x_']' not
+R21248:21248 COS.definitions <> ::term_scope:x_'['_x_']' not
+R21244:21244 COS.definitions <> q abbrev
+R21283:21293 COS.definitions <> eq_subs_eta constr
+R21283:21293 COS.definitions <> eq_subs_eta constr
+R21283:21293 COS.definitions <> eq_subs_eta constr
+R21326:21337 COS.definitions <> subs_ext_mor constr
+R21326:21337 COS.definitions <> subs_ext_mor constr
+R21356:21367 COS.definitions <> eq_term_refl thm
+R21356:21367 COS.definitions <> eq_term_refl thm
+R21381:21397 COS.definitions <> eq_type_subs_comp constr
+R21403:21411 COS.definitions <> subs_weak constr
+R21381:21397 COS.definitions <> eq_type_subs_comp constr
+R21403:21411 COS.definitions <> subs_weak constr
+R21381:21397 COS.definitions <> eq_type_subs_comp constr
+R21403:21411 COS.definitions <> subs_weak constr
+R21431:21439 COS.definitions <> term_subs constr
+R21431:21439 COS.definitions <> term_subs constr
+R21455:21462 COS.definitions <> term_qar constr
+R21455:21462 COS.definitions <> term_qar constr
+R21481:21484 Corelib.Init.Peano <> eq_S def
+R21481:21484 Corelib.Init.Peano <> eq_S def
+def 21509:21524 <> EqSubsNormalForm
+R21535:21540 COS.definitions <> preCtx ind
+binder 21527:21528 <> Δ:285
+binder 21530:21531 <> Γ:286
+R21551:21557 COS.definitions <> preSubs ind
+binder 21544:21544 <> y:287
+binder 21546:21547 <> y':288
+R21566:21567 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21570:21574 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21576:21578 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21581:21582 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21568:21569 COS.definitions <> Δ:285 var
+R21579:21580 COS.definitions <> Γ:286 var
+R21575:21575 COS.definitions <> y:287 var
+binder 21561:21562 <> Hy:289
+R21592:21593 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21596:21600 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21603:21605 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21608:21609 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21594:21595 COS.definitions <> Δ:285 var
+R21606:21607 COS.definitions <> Γ:286 var
+R21601:21602 COS.definitions <> y':288 var
+binder 21586:21588 <> Hy':290
+R21648:21666 COS.definitions <> subs_to_normal_form def
+R21668:21669 COS.definitions <> Hy:289 var
+R21629:21634 Corelib.Init.Specif <> existT constr
+R21700:21718 COS.definitions <> subs_to_normal_form def
+R21720:21722 COS.definitions <> Hy':290 var
+R21681:21686 Corelib.Init.Specif <> existT constr
+R21728:21739 Stdlib.Lists.List <> Forall2 ind
+binder 21748:21748 <> a:291
+binder 21750:21750 <> b:292
+R21755:21761 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R21766:21767 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 21762:21763 <> Θ:293
+binder 21765:21765 <> A:294
+R21785:21788 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R21768:21769 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R21772:21776 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R21778:21784 COS.definitions <> :::'['_x_'⊢'_x_'type'_']' not
+R21770:21771 COS.definitions <> Θ:293 var
+R21777:21777 COS.definitions <> A:294 var
+R21789:21790 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R21793:21797 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R21799:21802 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R21804:21806 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R21808:21809 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'@'_x_']' not
+R21791:21792 COS.definitions <> Θ:293 var
+R21807:21807 COS.definitions <> A:294 var
+R21798:21798 COS.definitions <> a:291 var
+R21803:21803 COS.definitions <> b:292 var
+prf 21828:21847 <> EqSubsNormalForm_sym
+R21858:21863 COS.definitions <> preCtx ind
+binder 21850:21851 <> Δ:295
+binder 21853:21854 <> Γ:296
+R21874:21880 COS.definitions <> preSubs ind
+binder 21867:21867 <> y:297
+binder 21869:21870 <> y':298
+R21890:21891 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21894:21898 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21900:21902 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21905:21906 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21892:21893 COS.definitions <> Δ:295 var
+R21903:21904 COS.definitions <> Γ:296 var
+R21899:21899 COS.definitions <> y:297 var
+binder 21885:21886 <> Hy:299
+R21916:21917 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21920:21924 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21927:21929 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21932:21933 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R21918:21919 COS.definitions <> Δ:295 var
+R21930:21931 COS.definitions <> Γ:296 var
+R21925:21926 COS.definitions <> y':298 var
+binder 21910:21912 <> Hy':300
+R21962:21966 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R21939:21954 COS.definitions <> EqSubsNormalForm def
+R21959:21961 COS.definitions <> Hy':300 var
+R21956:21957 COS.definitions <> Hy:299 var
+R21967:21982 COS.definitions <> EqSubsNormalForm def
+R21988:21989 COS.definitions <> Hy:299 var
+R21984:21986 COS.definitions <> Hy':300 var
+R22007:22022 COS.definitions <> EqSubsNormalForm def
+R22036:22054 COS.definitions <> subs_to_normal_form def
+R22036:22054 COS.definitions <> subs_to_normal_form def
+R22090:22108 COS.definitions <> subs_to_normal_form def
+R22090:22108 COS.definitions <> subs_to_normal_form def
+R22153:22164 Stdlib.Lists.List <> Forall2_flip thm
+R22153:22164 Stdlib.Lists.List <> Forall2_flip thm
+R22185:22196 Stdlib.Lists.List <> Forall2_impl thm
+R22185:22196 Stdlib.Lists.List <> Forall2_impl thm
+prf 22760:22770 <> eq_sub_norm
+R22781:22786 COS.definitions <> preCtx ind
+binder 22773:22774 <> Δ:301
+binder 22776:22777 <> Γ:302
+R22796:22802 COS.definitions <> preSubs ind
+binder 22790:22790 <> y:303
+binder 22792:22793 <> y':304
+R22811:22812 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R22815:22819 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R22821:22823 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R22826:22827 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R22813:22814 COS.definitions <> Δ:301 var
+R22824:22825 COS.definitions <> Γ:302 var
+R22820:22820 COS.definitions <> y:303 var
+binder 22806:22807 <> Hy:305
+R22837:22838 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R22841:22845 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R22848:22850 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R22853:22854 COS.definitions <> :::'['_x_'⊢'_x_'~'_x_']' not
+R22839:22840 COS.definitions <> Δ:301 var
+R22851:22852 COS.definitions <> Γ:302 var
+R22846:22847 COS.definitions <> y':304 var
+binder 22831:22833 <> Hy':306
+R22883:22887 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R22860:22861 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R22864:22868 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R22870:22873 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R22876:22878 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R22881:22882 COS.definitions <> :::'['_x_'⊢'_x_'=='_x_'~'_x_']' not
+R22862:22863 COS.definitions <> Δ:301 var
+R22879:22880 COS.definitions <> Γ:302 var
+R22869:22869 COS.definitions <> y:303 var
+R22874:22875 COS.definitions <> y':304 var
+R22888:22903 COS.definitions <> EqSubsNormalForm def
+R22908:22910 COS.definitions <> Hy':306 var
+R22905:22906 COS.definitions <> Hy:305 var

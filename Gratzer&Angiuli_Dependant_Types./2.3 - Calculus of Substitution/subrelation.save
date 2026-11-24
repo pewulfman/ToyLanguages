@@ -1,0 +1,157 @@
+Fixpoint is_ctx_eq (Δ Γ : preContext) : Prop :=
+   match Δ, Γ with
+   | pctx_one, pctx_one => True
+| pctx_ext Δ A, pctx_ext Γ B =>
+      is_ctx_eq Δ Γ
+      /\ [ Γ ⊢ A == B type ]
+      /\ [ Δ ⊢ A == B type ]
+   | _, _ => False
+   end.
+
+(* Lemma eq_ctx_eq : forall Δ Γ, eq_ctx Δ Γ <-> is_ctx_eq Δ Γ.
+Proof.
+   split; intro H.
+   -  induction H.
+      +  simpl; tauto.
+      +  simpl; tauto.
+   -  dependent induction Δ;
+      destruct Γ.
+      + apply eq_ctx_one.
+      + simpl in H. contradiction.
+      + simpl in H. contradiction.
+      + simpl in H. destruct H as [H1 [H2 H3]].
+         apply IHΔ in H1.
+         apply (eq_ctx_ext H1 H2 H3).
+Qed. *)
+
+
+(** Subsrelations **)
+(* Inductive eq_subs_clos Δ Γ : relation preSubs :=
+   | eq_subs_clos_refl {y} : [ Δ ⊢ y ~ Γ ] -> eq_subs_clos Δ Γ y y
+   | eq_subs_clos_sym {y d} : eq_subs_clos Δ Γ y d -> eq_subs_clos Δ Γ d y
+   | eq_subs_clos_trans {y1 y2 y3} : eq_subs_clos Δ Γ y1 y2 -> eq_subs_clos Δ Γ y2 y3 -> eq_subs_clos Δ Γ y1 y3
+   .
+Add Parametric Relation Δ Γ : (preSubs) (@eq_subs_clos Δ Γ)
+   symmetry proved by (@eq_subs_clos_sym Δ Γ)
+   transitivity proved by (@eq_subs_clos_trans Δ Γ)
+as eq_subs_closure_rel.
+
+Instance eq_clos_eq_subs_subrelation {Δ Γ} : subrelation (@eq_subs_clos Δ Γ) (eq_subs Δ Γ).
+Proof.
+   intros y d H.
+   dependent induction H; try (tauto).
+   apply (eq_subs_refl H).
+   apply (eq_subs_sym IHeq_subs_clos).
+   apply (eq_subs_trans IHeq_subs_clos1 IHeq_subs_clos2).
+Qed.
+Inductive eq_type_clos Γ : relation preType :=
+   | eq_type_clos_refl {A} : [ Γ ⊢ A type ] -> eq_type_clos Γ A A
+   | eq_type_clos_sym {A B} : eq_type_clos Γ A B -> eq_type_clos Γ B A
+   | eq_type_clos_trans {A B C} : eq_type_clos Γ A B -> eq_type_clos Γ B C -> eq_type_clos Γ A C
+   .
+Add Parametric Relation Γ : (preType) (@eq_type_clos Γ)
+   symmetry proved by (@eq_type_clos_sym Γ)
+   transitivity proved by (@eq_type_clos_trans Γ)
+as eq_type_closure_rel.
+
+Instance eq_eq_type_subrelation {Γ} : subrelation (@eq_type_clos Γ) (eq_type Γ).
+Proof.
+   intros A B H.
+   dependent induction H; try (tauto).
+   apply (eq_type_refl H).
+   apply (eq_type_sym IHeq_type_clos).
+   apply (eq_type_trans IHeq_type_clos1 IHeq_type_clos2).
+Qed.
+
+Inductive eq_term_clos Γ A : relation preTerm :=
+   | eq_term_clos_refl {a} : [ Γ ⊢ a @ A ] -> eq_term_clos Γ A a a
+   | eq_term_clos_sym {a b} : eq_term_clos Γ A a b -> eq_term_clos Γ A b a
+   | eq_term_clos_trans {a b c} : eq_term_clos Γ A a b -> eq_term_clos Γ A b c -> eq_term_clos Γ A a c
+   .
+Add Parametric Relation Γ A : (preTerm) (@eq_term_clos Γ A)
+   symmetry proved by (@eq_term_clos_sym Γ A)
+   transitivity proved by (@eq_term_clos_trans Γ A)
+as eq_term_closure_rel.
+
+Instance eq_eq_term_subrelation {Γ A} : subrelation (@eq_term_clos Γ A) (eq_term Γ A).
+Proof.
+   intros a b H.
+   dependent induction H; try (tauto).
+   apply (eq_term_refl H).
+   apply (eq_term_sym IHeq_term_clos).
+   apply (eq_term_trans IHeq_term_clos1 IHeq_term_clos2).
+Qed. *)
+
+(* End Subrelation Definitions *)
+
+Fixpoint eq_ctx : preContext -> preContext -> Prop :=
+   fun (Γ1 Γ2 : preContext) =>
+      match Γ1, Γ2 with
+      | (1)%ctx, (1)%ctx => True
+      | (Δ # B)%ctx, (Γ # A)%ctx =>
+         eq_ctx Δ Γ /\
+         eq_type Γ A B
+      | _, _ => False
+      end.
+
+Lemma type_conv {Γ A B} :
+   [ ⊢ Γ Cx ] -> [ Γ ⊢ A == B type ] ->
+   (forall C, [  Γ # A ⊢ C type ] <-> [ Γ # B ⊢ C type ]).
+Proof.
+   intro Hcx.
+   dependent induction Hcx generalizing A B; try (tauto).
+   intro Heq.
+   dependent induction Heq generalizing A B Heq; intros; try (tauto).
+   symmetry. apply (IHHeq eq_refl).
+   rewrite (IHHeq1 eq_refl).
+   apply (IHHeq2 eq_refl).
+   admit.
+   admit.
+
+Lemma type_conv {Δ Γ A} :
+   eq_ctx Δ Γ -> [ Γ ⊢ A type ] <-> [ Δ ⊢ A type ].
+Proof.
+   induction Δ in Γ,A |- *.
+   destruct Γ; try (tauto).
+   simpl. tauto.
+   destruct Γ; try (tauto).
+   simpl. tauto.
+   simpl.
+   intros [Hx Heq].
+   dependent induction Heq generalizing A; intros; try (tauto).
+   apply IHΓ.
+   assumption.
+   destruct H as [Heq_ctx [Heq_type1 Heq_type2]].
+   apply (type_subs (subs_weak Heq_type1) Heq_type2).
+
+Lemma eq_ctx_sym {Δ Γ} :
+   eq_ctx Δ Γ -> eq_ctx Γ Δ.
+Proof.
+   induction Δ in Γ |- *;
+   destruct Γ; try (tauto).
+   simpl.
+   intro.
+   destruct H as [Heq_ctx [Heq_type1 Heq_type2]].
+   split. apply IHΔ. assumption.
+   symmetry in Heq_type1, Heq_type2.
+   tauto.
+Qed.
+
+Lemma eq_ctx_trans {E Δ Γ} :
+   eq_ctx E Δ -> eq_ctx Δ Γ -> eq_ctx E Γ.
+Proof.
+   induction Δ in E,Γ |- *.
+   destruct E, Γ; try (tauto);
+   simpl. tauto.
+   induction E in Γ, Δ, A, IHΔ |- *.
+   simpl. tauto.
+   induction Γ in E, Δ, A, A0, IHΔ,  |- *;
+   simpl. tauto.
+   intros [ Heq_ctx1 [Heq_type1_1 Heq_type1_2]] [Heq_ctx2 [Heq_type2_1 Heq_type2_2]].
+   split. auto.
+   assert (eq_ctx E # A0 Δ # A) as Heq_ctx_ext.
+   { simpl. tauto. }
+   specialize (IHΓ A0 A Heq_ctx_ext).
+   destruct Γ, E.
+   auto.
+
